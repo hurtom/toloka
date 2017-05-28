@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+
+  mysql:
+    image: mariadb:10.2
+    restart: always
+    ports:
+      - "33061:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./docker/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+    env_file:
+      - .env
+
+  toloka:
+    image: hurtom/php:nginx
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php.ini:/usr/local/etc/php/php.ini
+    env_file:
+      - .env
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8082:80"
+    environment:
+      - PMA_HOST=mysql
+
+  cron:
+    image: hurtom/curl
+    command: sh -c "echo '* * * * * curl -I toloka/cron.php' > /var/spool/cron/crontabs/root && crond -l 2 -f"
+
+volumes:
+  mysql:
+    driver: local
