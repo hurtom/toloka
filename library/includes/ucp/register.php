@@ -92,6 +92,7 @@ switch ($mode) {
             'username' => true,
             'user_password' => true,
             'user_email' => true,
+            'user_sig' => true,
             'user_timezone' => true,
             'user_lang' => true,
             'user_opt' => true,
@@ -102,6 +103,7 @@ switch ($mode) {
             'username' => '',
             'user_password' => '',
             'user_email' => '',
+            'user_sig' => '',
             'user_timezone' => $bb_cfg['board_timezone'],
             'user_lang' => $bb_cfg['default_lang'],
             'user_opt' => 0,
@@ -450,7 +452,7 @@ foreach ($profile_fields as $field => $can_edit) {
          */
         case 'user_sig':
             $sig = isset($_POST['user_sig']) ? (string)$_POST['user_sig'] : $pr_data['user_sig'];
-            if ($submit && $sig != $pr_data['user_sig']) {
+            if ($submit) {
                 $sig = prepare_message($sig);
 
                 if (mb_strlen($sig, 'UTF-8') > $bb_cfg['max_sig_chars']) {
