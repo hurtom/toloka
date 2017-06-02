@@ -367,11 +367,11 @@ $bb_cfg['invalid_logins'] = 5;
 $bb_cfg['new_user_reg_disabled'] = false;
 $bb_cfg['unique_ip'] = false;
 $bb_cfg['new_user_reg_restricted'] = false;
-$bb_cfg['reg_email_activation'] = true;
+$bb_cfg['reg_email_activation'] = false;
 
 // Email
 $bb_cfg['emailer'] = [
-    'enabled' => true,
+    'enabled' => false,
     'smtp' => [
         'enabled' => false, // send email via external SMTP server
         'host' => '', // SMTP server host
@@ -633,7 +633,7 @@ $bb_cfg['group_avatars'] = array(
 // Captcha
 // Get a Google reCAPTCHA API Key: https://www.google.com/recaptcha/admin
 $bb_cfg['captcha'] = array(
-    'disabled' => false,
+    'disabled' => true,
     'public_key' => '', // your public key
     'secret_key' => '', // your secret key
     'theme' => 'light', // light or dark
