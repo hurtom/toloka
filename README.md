@@ -13,6 +13,8 @@ docker-compose up -d
 docker-compose exec toloka composer install
 ```
 
+Якщо ви встановили toolbox, `docker-compose` треба запускати з нього
+
 #### Оновлення
 
 ```
@@ -33,6 +35,7 @@ docker-compose rm
 
 ```
 docker-compose logs -f toloka
+tail -f internal_data/log/php_err.log
 ```
 
 #### Консоль
