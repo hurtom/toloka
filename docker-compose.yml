@@ -26,6 +26,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    restart: always
     ports:
       - "8082:80"
     environment:
@@ -33,6 +34,7 @@ services:
 
   cron:
     image: hurtom/curl
+    restart: always
     command: sh -c "echo '* * * * * curl -I toloka/cron.php' > /var/spool/cron/crontabs/root && crond -l 2 -f"
 
 volumes:
