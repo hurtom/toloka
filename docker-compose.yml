@@ -9,7 +9,7 @@ services:
       - "33061:3306"
     volumes:
       - mysql:/var/lib/mysql
-      - ./docker/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+      - ./install/sql/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
     env_file:
       - .env
 
