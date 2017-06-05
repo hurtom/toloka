@@ -110,7 +110,7 @@
 				<!-- BEGIN last -->
 					<!-- IF SHOW_LAST_TOPIC -->
 					<h6 class="last_topic">
-						<a href="{TOPIC_URL}{c.f.last.LAST_TOPIC_ID}{NEWEST_URL}" title="{c.f.last.LAST_TOPIC_TIP}">{c.f.last.LAST_TOPIC_TITLE}</a>
+						<a href="{c.f.last.HREF_TOPIC_LAST_PAGE_URL}#{c.f.last.LAST_TOPIC_POST_ID}" title="{c.f.last.LAST_TOPIC_TIP}">{c.f.last.LAST_TOPIC_TITLE}</a>
 					</h6>
 					<!-- ENDIF / SHOW_LAST_TOPIC -->
 

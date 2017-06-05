@@ -206,7 +206,7 @@ function create_atom($file_path, $mode, $id, $title, $topics)
         $atom .= "	</author>\n";
         $atom .= "	<updated>" . $date . "T$time+00:00</updated>\n";
         $atom .= "	<id>tag:rto.feed," . $date . ":/t/$topic_id</id>\n";
-        $atom .= "	<link href=\"viewtopic.php?t=$topic_id\" />\n";
+        $atom .= "	<link href=\"t$topic_id\" />\n";
         $atom .= "</entry>\n";
     }
     $atom .= "</feed>";

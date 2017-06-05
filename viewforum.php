@@ -84,7 +84,7 @@ $moderation = (!empty($_REQUEST['mod']) && $is_auth['auth_mod']);
 
 if (!$is_auth['auth_view']) {
     if (IS_GUEST) {
-        $redirect = ($start) ? "&start=$start" : '';
+        $redirect = ($start) ? "-$start" : '';
         redirect(LOGIN_URL . "?redirect=" . FORUM_URL . $forum_id . $redirect);
     }
     // The user is not authed to read this forum ...
@@ -388,7 +388,7 @@ if ($forum_data['allow_reg_tracker']) {
 $template->assign_vars(array(
     'U_POST_NEW_TOPIC' => $post_new_topic_url,
     'S_SELECT_TOPIC_DAYS' => build_select('topicdays', array_flip($sel_previous_days), $topic_days),
-    'S_POST_DAYS_ACTION' => "viewforum.php?f=$forum_id&amp;start=$start",
+    'S_POST_DAYS_ACTION' => "f$forum_id-$start",
     'S_DISPLAY_ORDER' => $s_display_order,
 ));
 
@@ -455,11 +455,12 @@ foreach ($topic_rowset as $topic) {
             $separator = $lang['TOPICS_NORMAL'];
         }
     }
-
+//    var_dump($topic);die;
     $template->assign_block_vars('t', array(
         'FORUM_ID' => $forum_id,
         'TOPIC_ID' => $topic_id,
         'HREF_TOPIC_ID' => ($moved) ? $topic['topic_moved_id'] : $topic['topic_id'],
+        'HREF_TOPIC_LAST_PAGE_URL' => get_last_post_full_url(TOPIC_URL . $topic_id, $replies, $bb_cfg['posts_per_page']),
         'TOPIC_TITLE' => wbr($topic['topic_title']),
         'TOPICS_SEPARATOR' => $separator,
         'IS_UNREAD' => $is_unread,

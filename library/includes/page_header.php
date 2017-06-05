@@ -200,7 +200,7 @@ $template->assign_vars(array(
     'FORUM_URL' => BB_ROOT . FORUM_URL,
     'GROUP_URL' => BB_ROOT . GROUP_URL,
     'LOGIN_URL' => $bb_cfg['login_url'],
-    'NEWEST_URL' => '&amp;view=newest#newest',
+    'NEWEST_URL' => '#newest',
     'PM_URL' => $bb_cfg['pm_url'],
     'POST_URL' => BB_ROOT . POST_URL,
     'POSTING_URL' => $bb_cfg['posting_url'],
@@ -244,7 +244,7 @@ if (!empty($page_cfg['show_torhelp'][BB_SCRIPT]) && !empty($userdata['torhelp'])
         $torhelp_topics = array();
 
         foreach (DB()->fetch_rowset($sql) as $row) {
-            $torhelp_topics[] = '<a href="viewtopic.php?t=' . $row['topic_id'] . '">' . $row['topic_title'] . '</a>';
+            $torhelp_topics[] = '<a href="t' . $row['topic_id'] . '">' . $row['topic_title'] . '</a>';
         }
 
         $template->assign_vars(array(
