@@ -7,6 +7,11 @@ services:
     restart: always
     ports:
       - "33061:3306"
+    command: |-
+      --performance_schema=0
+      --innodb_buffer_pool_size=32M
+      --key_buffer_size=8M
+      --query_cache_size=0
     volumes:
       - mysql:/var/lib/mysql
       - ./install/sql/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
@@ -37,6 +42,18 @@ services:
     restart: always
     command: sh -c "echo '* * * * * curl -I toloka/cron.php' > /var/spool/cron/crontabs/root && crond -l 2 -f"
 
+  elasticsearch:
+    image: elasticsearch:alpine
+    restart: always
+    ports:
+      - "9200:9200"
+    environment:
+      - ES_JAVA_OPTS=-Xms32m -Xmx32m
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+
 volumes:
   mysql:
+    driver: local
+  elasticsearch:
     driver: local
