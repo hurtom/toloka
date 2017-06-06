@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sensetivity
- * Date: 30.05.2017
- * Time: 0:04
- */
 
 $viewTopicPattern = '/^' . str_replace('/', '\/', '/t(\d+)') . '$/';
 $viewTopicPatternPagination = '/^' . str_replace('/', '\/', '/t(\d+)-(\d+)') . '$/';

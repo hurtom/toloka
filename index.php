@@ -25,7 +25,6 @@
 
 // toloka pretty URls
 require __DIR__ . '/toloka_routes.php';
-//var_dump($_REQUEST);die;
 
 define('IN_FORUM', true);
 define('BB_SCRIPT', 'index');
