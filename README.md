@@ -7,21 +7,37 @@ docker >= v17.03.0-ce
 #### Початок
 
 ```
-git clone https://github.com/hurtom/toloka
+# fork
+git clone https://github.com/<username>/toloka
+git remote add upstream https://github.com/hurtom/toloka
 cd toloka
 docker-compose up -d
 docker-compose exec toloka composer install
 ```
 
-Якщо ви встановили toolbox, `docker-compose` треба запускати з нього
+Якщо ви встановили toolbox:
+- `docker-compose` треба запускати із Quickstart Terminal
+- на Windows `toloka` має бути в `C:\Users\<user>\`
 
 #### Оновлення
 
 ```
-git pull
+git pull upstream master
 docker-compose pull
 docker-compose up -d
 docker-compose exec toloka composer update
+```
+
+#### Створення зміни
+
+```
+git checkout -b some-feature
+# розробка
+# оновлення
+git commit -a -m "Add some feature"
+git push origin some-feature
+# pull request
+git checkout master
 ```
 
 #### Очищення
@@ -43,6 +59,10 @@ tail -f internal_data/log/php_err.log
 ```
 docker-compose exec toloka bash
 ```
+
+#### Xdebug
+
+Працює без додаткових налаштувань. Потрібно тільки [закладки](https://www.jetbrains.com/phpstorm/marklets/) або [розширення](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc) для браузера, та IDE
 
 #### Адреси
 
