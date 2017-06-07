@@ -573,7 +573,7 @@ td.topic_id { cursor: pointer; }
 		<p>{t.LAST_POST_TIME}</p>
 		<p>
 			{t.LAST_POSTER}
-			<a href="{POST_URL}{t.LAST_POST_ID}#{t.LAST_POST_ID}">{ICON_LATEST_REPLY}</a>
+			<a href="{t.HREF_TOPIC_LAST_PAGE_URL}#{t.LAST_POST_ID}">{ICON_LATEST_REPLY}</a>
 		</p>
 	</td>
 </tr>

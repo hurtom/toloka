@@ -23,6 +23,9 @@
  * SOFTWARE.
  */
 
+// toloka pretty URls
+require __DIR__ . '/toloka_routes.php';
+
 define('IN_FORUM', true);
 define('BB_SCRIPT', 'index');
 define('BB_ROOT', './');
@@ -121,7 +124,7 @@ $sql = "
 	SELECT SQL_CACHE
 		f.cat_id, f.forum_id, f.forum_status, f.forum_parent, f.show_on_index,
 		p.post_id AS last_post_id, p.post_time AS last_post_time,
-		t.topic_id AS last_topic_id, t.topic_title AS last_topic_title,
+		t.topic_id AS last_topic_id, t.topic_title AS last_topic_title, t.topic_replies,
 		u.user_id AS last_post_user_id, u.user_rank AS last_post_user_rank,
 		IF(p.poster_id = $anon, p.post_username, u.username) AS last_post_username
 	FROM         " . BB_CATEGORIES . " c
@@ -261,6 +264,8 @@ foreach ($cat_forums as $cid => $c) {
 
         if ($f['last_post_id']) {
             $template->assign_block_vars('c.f.last', array(
+                'HREF_TOPIC_LAST_PAGE_URL' => get_last_post_full_url(TOPIC_URL . $f['last_topic_id'], commify($f['topic_replies']), $bb_cfg['posts_per_page']),
+                'LAST_TOPIC_POST_ID' => $f['last_post_id'],
                 'LAST_TOPIC_ID' => $f['last_topic_id'],
                 'LAST_TOPIC_TIP' => $f['last_topic_title'],
                 'LAST_TOPIC_TITLE' => wbr(str_short($f['last_topic_title'], $last_topic_max_len)),

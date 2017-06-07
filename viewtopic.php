@@ -144,7 +144,7 @@ if (isset($t_data['topic_attachment'])) {
 }
 
 // Find newest post
-if (($next_topic_id || @$_GET['view'] === 'newest') && !IS_GUEST && $topic_id) {
+if (($next_topic_id || (isset($_GET['view']) && $_GET['view'] === 'newest')) && !IS_GUEST && $topic_id) {
     $post_time = 'post_time >= ' . get_last_read($topic_id, $forum_id);
     $post_id_altern = ($next_topic_id) ? '' : ' OR post_id = ' . $t_data['topic_last_post_id'];
 
@@ -178,7 +178,7 @@ $is_auth = auth(AUTH_ALL, $forum_id, $userdata, $t_data);
 if (!$is_auth['auth_read']) {
     if (IS_GUEST) {
         $redirect = ($post_id) ? POST_URL . "$post_id#$post_id" : TOPIC_URL . $topic_id;
-        $redirect .= ($start && !$post_id) ? "&start=$start" : '';
+        $redirect .= ($start && !$post_id) ? "-$start" : '';
         redirect(LOGIN_URL . "?redirect=$redirect");
     }
     bb_die($lang['TOPIC_POST_NOT_EXIST']);

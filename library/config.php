@@ -191,10 +191,10 @@ $bb_cfg['ocelot'] = array(
 );
 
 // FAQ url help link
-$bb_cfg['how_to_download_url_help'] = 'viewtopic.php?t=1'; // How to download?
-$bb_cfg['what_is_torrent_url_help'] = 'viewtopic.php?t=2'; // What is a torrent?
-$bb_cfg['ratio_url_help'] = 'viewtopic.php?t=3'; // Ration
-$bb_cfg['search_help_url'] = 'viewtopic.php?t=4'; // Search
+$bb_cfg['how_to_download_url_help'] = 't1'; // How to download?
+$bb_cfg['what_is_torrent_url_help'] = 't2'; // What is a torrent?
+$bb_cfg['ratio_url_help'] = 't3'; // Ration
+$bb_cfg['search_help_url'] = 't4'; // Search
 
 // Torrents
 $bb_cfg['bt_min_ratio_allow_dl_tor'] = 0.3;        // 0 - disable

@@ -412,7 +412,7 @@ if (defined('IN_FORUM')) {
     require INC_DIR . '/init_bb.php';
 } // Tracker init
 elseif (defined('IN_TRACKER')) {
-    define('DUMMY_PEER', pack('Nn', ip2long($_SERVER['REMOTE_ADDR']), !empty($_GET['port']) ? (int) $_GET['port'] : mt_rand(1000, 65000)));
+    define('DUMMY_PEER', pack('Nn', ip2long($_SERVER['REMOTE_ADDR']), !empty($_GET['port']) ? (int)$_GET['port'] : mt_rand(1000, 65000)));
 
     function dummy_exit($interval = 1800)
     {
