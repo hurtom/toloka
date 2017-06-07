@@ -455,7 +455,7 @@ foreach ($topic_rowset as $topic) {
             $separator = $lang['TOPICS_NORMAL'];
         }
     }
-//    var_dump($topic);die;
+
     $template->assign_block_vars('t', array(
         'FORUM_ID' => $forum_id,
         'TOPIC_ID' => $topic_id,
