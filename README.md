@@ -6,11 +6,18 @@ docker >= v17.03.0-ce
 
 #### Початок
 
+git
+
 ```
 # fork
 git clone https://github.com/<username>/toloka
-git remote add upstream https://github.com/hurtom/toloka
 cd toloka
+git remote add upstream https://github.com/hurtom/toloka
+```
+
+docker
+
+```
 docker-compose up -d
 docker-compose exec toloka composer install
 ```
