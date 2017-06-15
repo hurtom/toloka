@@ -1738,7 +1738,7 @@ $lang['CLICK_RETURN_FORUMAUTH'] = '%sHere%s İzinleri Foruma dönmek için tıkl
 
 // Banning
 $lang['BAN_CONTROL'] = 'Ban Kontrol';
-$lang['BAN_EXPLAIN'] = 'Burada kullanıcılar yasaklanması kontrol edebilirsiniz. Belirli bir kullanıcı veya IP adresi veya hostname bir birey veya bir dizi ya da yasaklayan bu elde edebilirsiniz. Bu yöntemler, Yönetim Kurulu indeks sayfası ulaşmak bile bir kullanıcı önlemek. Ayrıca yasaklı e-posta adresi belirtebilirsiniz farklı bir kullanıcı adı altında kayıt bir kullanıcı önlemek için. Yalnız bir e-posta adresi yasaklama oturum ya da Yönetim Kurulu için post edememek kullanıcı engellemez unutmayın. Bunu başarmak için ilk iki yöntemden birini kullanmalısınız.';
+$lang['BAN_EXPLAIN'] = 'Burada kullanıcılar yasaklanması kontrol edebilirsiniz. Belirli bir kullanıcı veya IP adresleri tek tek ya da bir dizi ya da yasaklayan bu elde edebilirsiniz. Bu yöntemler, Yönetim Kurulu indeks sayfası ulaşmak bile bir kullanıcı önlemek. Ayrıca yasaklı e-posta adresi belirtebilirsiniz farklı bir kullanıcı adı altında kayıt bir kullanıcı önlemek için. Yalnız bir e-posta adresi yasaklama oturum ya da Yönetim Kurulu için post edememek kullanıcı engellemez unutmayın. Bunu başarmak için ilk iki yöntemden birini kullanmalısınız.';
 $lang['BAN_EXPLAIN_WARN'] = 'IP aralığı girerek status eklenen başlangıç ve bitiş arasındaki tüm adresleri sonuçları adreslerini unutmayın. Çalışır veritabanına otomatik olarak uygun yere joker tanıtarak ekledi adresleri sayısını en aza indirmek için yapılır. Eğer gerçekten bir dizi girin, küçük ya da daha iyisi belirli adresleri devlet tutmaya çalışın.';
 
 $lang['SELECT_IP'] = 'Bir IP adresi seçin';
@@ -1747,9 +1747,9 @@ $lang['SELECT_EMAIL'] = 'E-Posta adresi seçin';
 $lang['BAN_USERNAME'] = 'Bir veya daha fazla belirli kullanıcılar Ban';
 $lang['BAN_USERNAME_EXPLAIN'] = 'Bir bilgisayar fare ve klavye uygun kombinasyonu kullanılarak tarayıcı birden çok kullanıcının yasağı ve';
 
-$lang['BAN_IP'] = 'Bir veya daha fazla IP adreslerini veya ana Ban';
-$lang['IP_HOSTNAME'] = 'IP adresi ya da hostname';
-$lang['BAN_IP_EXPLAIN'] = 'Birkaç farklı IP adreslerini belirtmek için ana ya da virgül ile ayırın. IP adreslerini belirtmek için bir tire ( - ) ile başlangıç ve bitiş ayrı; bir joker belirtmek için yıldız işareti (*) kullanın.';
+$lang['BAN_IP'] = 'Bir veya daha fazla IP adresleri yasağı';
+$lang['IP_HOSTNAME'] = 'IP adresleri';
+$lang['BAN_IP_EXPLAIN'] = 'Birkaç farklı IP adreslerini belirtmek için virgül ile ayırın.';
 
 $lang['BAN_EMAIL'] = 'Bir veya daha fazla e-posta adresleri yasağı';
 $lang['BAN_EMAIL_EXPLAIN'] = 'Birden fazla e-posta adresi belirtmek için, bir virgül ile ayırın. Joker bir kullanıcı adı belirtmek için * *@hotmail.com gibi kullanın';
@@ -2278,7 +2278,7 @@ $lang['TRACKER_CFG_TITLE'] = 'İzci';
 $lang['FORUM_CFG_TITLE'] = 'Forum Ayarları';
 $lang['TRACKER_SETTINGS'] = 'İzleyici ayarları';
 
-$lang['CHANGES_DISABLED'] = 'Config.php engelli değişiklikler (bkz <b>$tr_cfg</b>)';
+$lang['CHANGES_DISABLED'] = 'Config.php engelli değişiklikler (bkz <b>$bb_cfg[\'tracker\']</b>)';
 
 $lang['OFF_TRACKER'] = 'Devre dışı bırakmak tracker';
 $lang['OFF_REASON'] = 'Devre dışı bırakma nedeni';
@@ -2575,7 +2575,7 @@ $lang['ACTS_LOG_FORUM'] = 'Forum';
 $lang['ACTS_LOG_ACTION'] = 'Eylem';
 $lang['ACTS_LOG_USER'] = 'Kullanıcı';
 $lang['ACTS_LOG_LOGS_FROM'] = 'Günlükleri ';
-$lang['ACTS_LOG_FIRST'] = 'ilk ';
+$lang['ACTS_LOG_FIRST'] = 'başlangıç';
 $lang['ACTS_LOG_DAYS_BACK'] = 'gün önce';
 $lang['ACTS_LOG_TOPIC_MATCH'] = 'Konu başlığı maç';
 $lang['ACTS_LOG_SORT_BY'] = 'Sırala';
@@ -2585,6 +2585,7 @@ $lang['ACTS_LOG_TIME'] = 'Zaman';
 $lang['ACTS_LOG_INFO'] = 'Bilgi';
 $lang['ACTS_LOG_FILTER'] = 'Filtre';
 $lang['ACTS_LOG_TOPICS'] = 'Konular:';
+$lang['ACTS_LOG_OR'] = 'veya';
 
 $lang['RELEASE'] = 'Sürüm Şablonları';
 $lang['RELEASES'] = 'Bültenleri';
@@ -2661,7 +2662,7 @@ $lang['SEARCH_USERS_ADVANCED'] = 'Gelişmiş Kullanıcı Arama';
 $lang['SEARCH_USERS_EXPLAIN'] = 'Bu Modül kriterleri geniş bir yelpazede kullanıcılar için gelişmiş bir arama yapmak için izin verir. Tamamen her bir arama seçeneği anlamak için her alanın altındaki açıklamaları okuyun.';
 $lang['SEARCH_USERNAME_EXPLAIN'] = 'Burada kullanıcı adları için büyük / küçük harf duyarlı bir arama yapabilirsiniz. Kullanıcı adı, bir joker olarak (asterix) kullanın. * bir parçası maç isterseniz.';
 $lang['SEARCH_EMAIL_EXPLAIN'] = 'Bir kullanıcının e-posta adresini eşleştirmek için bir ifade girin. Bu duyarsız. Eğer bir joker olarak (asterix) kısmi eşleşme kullanın * yapmak istiyorsan.';
-$lang['SEARCH_IP_EXPLAIN'] = 'Belirli bir IP adresi (xxx kullanıcıları için arama.xxx.xxx.xxx), joker (xxx.xxx.xxx.*) veya aralık (xxx.xxx.xxx.xxx-yyy.yyy.yyy.yyy). Not: 255 son dört dört tüm IP aralığı olarak kabul edilir. Eğer 10.0.0.255 girerseniz,* sadece deneyimi içine girer gibi. (IP. 255 bu konuda atanır, ayrılmıştır. Bu aralıkları içinde karşılaşabileceğiniz nerede, 10.0.0.5-10.0.0.255* deneyimi olarak "aynı." . Gerçekten 10.0.0.5-10.0.0.254 girmeniz gerekir .';
+$lang['SEARCH_IP_EXPLAIN'] = 'Belirli bir IP adresi (xxx kullanıcıları için arama.xxx.xxx.xxx).';
 $lang['SEARCH_USERS_JOINED'] = 'Kullanıcılar katıldı';
 $lang['SEARCH_USERS_LASTVISITED'] = 'Kullanıcılar ziyaret etti';
 $lang['IN_THE_LAST'] = 'son';

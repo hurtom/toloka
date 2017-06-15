@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'memberlist');
 define('BB_ROOT', './');
 require __DIR__ . '/common.php';
@@ -135,7 +134,7 @@ if ($by_letter_req) {
     } elseif ($by_letter_req === 'others') {
         $by_letter = 'others';
         $letter_sql = "username REGEXP '^[!-@\\[-`].*$'";
-    } elseif ($letter_req = preg_replace("#[^$letters_range]#ui", '', iconv('windows-1251', 'UTF-8', reset($by_letter_req)))) {
+    } elseif ($letter_req = preg_replace("#[^$letters_range]#ui", '', iconv('windows-1251', 'UTF-8', $by_letter_req))) {
         $by_letter = DB()->escape($letter_req);
         $letter_sql = "LOWER(username) LIKE '$by_letter%'";
     }
@@ -162,7 +161,7 @@ $template->assign_vars(array(
 ));
 
 // per-letter selection end
-$sql = "SELECT username, user_id, user_rank, user_opt, user_posts, user_regdate, user_from, user_website, user_email FROM " . BB_USERS . " WHERE user_id NOT IN(" . EXCLUDED_USERS_CSV . ")";
+$sql = "SELECT username, user_id, user_rank, user_opt, user_posts, user_regdate, user_from, user_website, user_email FROM " . BB_USERS . " WHERE user_id NOT IN(" . EXCLUDED_USERS . ")";
 if ($username) {
     $username = preg_replace('/\*/', '%', clean_username($username));
     $letter_sql = "username LIKE '" . DB()->escape($username) . "'";
@@ -176,17 +175,17 @@ if ($result = DB()->fetch_rowset($sql)) {
         $from = $row['user_from'];
         $joined = bb_date($row['user_regdate'], $bb_cfg['date_format']);
         $posts = $row['user_posts'];
-        $pm = ($bb_cfg['text_buttons']) ? '<a class="txtb" href="' . (PM_URL . "?mode=post&amp;" . POST_USERS_URL . "=$user_id") . '">' . $lang['SEND_PM_TXTB'] . '</a>' : '<a href="' . (PM_URL . "?mode=post&amp;" . POST_USERS_URL . "=$user_id") . '"><img src="' . $images['icon_pm'] . '" alt="' . $lang['SEND_PRIVATE_MESSAGE'] . '" title="' . $lang['SEND_PRIVATE_MESSAGE'] . '" border="0" /></a>';
+        $pm = $bb_cfg['text_buttons'] ? '<a class="txtb" href="' . (PM_URL . "?mode=post&amp;" . POST_USERS_URL . "=$user_id") . '">' . $lang['SEND_PM_TXTB'] . '</a>' : '<a href="' . (PM_URL . "?mode=post&amp;" . POST_USERS_URL . "=$user_id") . '"><img src="' . $images['icon_pm'] . '" alt="' . $lang['SEND_PRIVATE_MESSAGE'] . '" title="' . $lang['SEND_PRIVATE_MESSAGE'] . '" border="0" /></a>';
 
         if (bf($row['user_opt'], 'user_opt', 'user_viewemail') || IS_ADMIN) {
-            $email_uri = ($bb_cfg['board_email_form']) ? ("profile.php?mode=email&amp;" . POST_USERS_URL . "=$user_id") : 'mailto:' . $row['user_email'];
+            $email_uri = $bb_cfg['board_email_form'] ? ("profile.php?mode=email&amp;" . POST_USERS_URL . "=$user_id") : 'mailto:' . $row['user_email'];
             $email = '<a class="editable" href="' . $email_uri . '">' . $row['user_email'] . '</a>';
         } else {
             $email = '';
         }
 
         if ($row['user_website']) {
-            $www = ($bb_cfg['text_buttons']) ? '<a class="txtb" href="' . $row['user_website'] . '"  target="_userwww">' . $lang['VISIT_WEBSITE_TXTB'] . '</a>' : '<a class="txtb" href="' . $row['user_website'] . '" target="_userwww"><img src="' . $images['icon_www'] . '" alt="' . $lang['VISIT_WEBSITE'] . '" title="' . $lang['VISIT_WEBSITE'] . '" border="0" /></a>';
+            $www = $bb_cfg['text_buttons'] ? '<a class="txtb" href="' . $row['user_website'] . '"  target="_userwww">' . $lang['VISIT_WEBSITE_TXTB'] . '</a>' : '<a class="txtb" href="' . $row['user_website'] . '" target="_userwww"><img src="' . $images['icon_www'] . '" alt="' . $lang['VISIT_WEBSITE'] . '" title="' . $lang['VISIT_WEBSITE'] . '" border="0" /></a>';
         } else {
             $www = '';
         }
@@ -218,7 +217,7 @@ if ($paginationusername) {
 }
 if ($mode != 'topten' || $bb_cfg['topics_per_page'] < 10) {
     $sql = "SELECT COUNT(*) AS total FROM " . BB_USERS;
-    $sql .= ($letter_sql) ? " WHERE $letter_sql" : " WHERE user_id NOT IN(". EXCLUDED_USERS_CSV .")";
+    $sql .= ($letter_sql) ? " WHERE $letter_sql" : " WHERE user_id NOT IN(". EXCLUDED_USERS .")";
     if (!$result = DB()->sql_query($sql)) {
         bb_die('Error getting total users');
     }

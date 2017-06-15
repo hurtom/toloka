@@ -159,7 +159,7 @@ function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
     if ($update_post_time && $mode == 'editpost' && $post_data['last_post'] && !$post_data['first_post']) {
         $edited_sql .= ", post_time = $current_time ";
         //lpt
-        DB()->sql_query("UPDATE " . BB_TOPICS . " SET topic_last_post_time = $current_time WHERE topic_id = $topic_id LIMIT 1");
+        DB()->sql_query("UPDATE " . BB_TOPICS . " SET topic_last_post_time = $current_time WHERE topic_id = $topic_id");
     }
 
     $sql = ($mode != "editpost") ? "INSERT INTO " . BB_POSTS . " (topic_id, forum_id, poster_id, post_username, post_time, poster_ip, poster_rg_id, attach_rg_sig) VALUES ($topic_id, $forum_id, " . $userdata['user_id'] . ", '$post_username', $current_time, '" . USER_IP . "', $poster_rg_id, $attach_rg_sig)" : "UPDATE " . BB_POSTS . " SET post_username = '$post_username'" . $edited_sql . ", poster_rg_id = $poster_rg_id, attach_rg_sig = $attach_rg_sig WHERE post_id = $post_id";
@@ -323,7 +323,7 @@ function user_notification($mode, &$post_data, &$topic_title, &$forum_id, &$topi
             $watch_list = DB()->fetch_rowset("SELECT u.username, u.user_id, u.user_email, u.user_lang
 				FROM " . BB_TOPICS_WATCH . " tw, " . BB_USERS . " u
 				WHERE tw.topic_id = $topic_id
-					AND tw.user_id NOT IN (" . $userdata['user_id'] . ", " . EXCLUDED_USERS_CSV . $user_id_sql . ")
+					AND tw.user_id NOT IN (" . $userdata['user_id'] . ", " . EXCLUDED_USERS . $user_id_sql . ")
 					AND tw.notify_status = " . TOPIC_WATCH_NOTIFIED . "
 					AND u.user_id = tw.user_id
 					AND u.user_active = 1

@@ -116,7 +116,7 @@ function tracker_unregister($attach_id, $mode = '')
 
     // Unset DL-Type for topic
     if ($bb_cfg['bt_unset_dltype_on_tor_unreg'] && $topic_id) {
-        $sql = "UPDATE " . BB_TOPICS . " SET topic_dl_type = " . TOPIC_DL_TYPE_NORMAL . " WHERE topic_id = $topic_id LIMIT 1";
+        $sql = "UPDATE " . BB_TOPICS . " SET topic_dl_type = " . TOPIC_DL_TYPE_NORMAL . " WHERE topic_id = $topic_id";
 
         if (!$result = DB()->sql_query($sql)) {
             bb_die('Could not update topics table #1');
@@ -146,7 +146,7 @@ function tracker_unregister($attach_id, $mode = '')
     }
 
     // Update tracker_status
-    $sql = "UPDATE " . BB_ATTACHMENTS_DESC . " SET tracker_status = 0 WHERE attach_id = $attach_id LIMIT 1";
+    $sql = "UPDATE " . BB_ATTACHMENTS_DESC . " SET tracker_status = 0 WHERE attach_id = $attach_id";
 
     if (!DB()->sql_query($sql)) {
         bb_die('Could not update torrent status #1');
@@ -226,7 +226,7 @@ function change_tor_type($attach_id, $tor_status_gold)
     $tor_status_gold = (int)$tor_status_gold;
     $info_hash = null;
 
-    DB()->query("UPDATE " . BB_BT_TORRENTS . " SET tor_type = $tor_status_gold WHERE topic_id = $topic_id LIMIT 1");
+    DB()->query("UPDATE " . BB_BT_TORRENTS . " SET tor_type = $tor_status_gold WHERE topic_id = $topic_id");
 
     // Ocelot
     if ($bb_cfg['ocelot']['enabled']) {
@@ -239,7 +239,7 @@ function change_tor_type($attach_id, $tor_status_gold)
 
 function tracker_register($attach_id, $mode = '', $tor_status = TOR_NOT_APPROVED, $reg_time = TIMENOW)
 {
-    global $bb_cfg, $lang, $reg_mode, $tr_cfg;
+    global $bb_cfg, $lang, $reg_mode;
 
     $attach_id = (int)$attach_id;
     $reg_mode = $mode;
@@ -273,6 +273,7 @@ function tracker_register($attach_id, $mode = '', $tor_status = TOR_NOT_APPROVED
     torrent_auth_check($forum_id, $torrent['poster_id']);
 
     $filename = get_attachments_dir() . '/' . $torrent['physical_filename'];
+    $file_contents = file_get_contents($filename);
 
     if (!is_file($filename)) {
         return torrent_error_exit('File name error');
@@ -280,7 +281,7 @@ function tracker_register($attach_id, $mode = '', $tor_status = TOR_NOT_APPROVED
     if (!file_exists($filename)) {
         return torrent_error_exit('File not exists');
     }
-    if (!$tor = bdecode_file($filename)) {
+    if (!$tor = \Rych\Bencode\Bencode::decode($file_contents)) {
         return torrent_error_exit('This is not a bencoded file');
     }
 
@@ -355,7 +356,7 @@ function tracker_register($attach_id, $mode = '', $tor_status = TOR_NOT_APPROVED
     }
 
     // update tracker status for this attachment
-    $sql = 'UPDATE ' . BB_ATTACHMENTS_DESC . " SET tracker_status = 1 WHERE attach_id = $attach_id LIMIT 1";
+    $sql = 'UPDATE ' . BB_ATTACHMENTS_DESC . " SET tracker_status = 1 WHERE attach_id = $attach_id";
 
     if (!DB()->sql_query($sql)) {
         bb_die('Could not update torrent status #2');
@@ -363,15 +364,15 @@ function tracker_register($attach_id, $mode = '', $tor_status = TOR_NOT_APPROVED
 
     // set DL-Type for topic
     if ($bb_cfg['bt_set_dltype_on_tor_reg']) {
-        $sql = 'UPDATE ' . BB_TOPICS . ' SET topic_dl_type = ' . TOPIC_DL_TYPE_DL . " WHERE topic_id = $topic_id LIMIT 1";
+        $sql = 'UPDATE ' . BB_TOPICS . ' SET topic_dl_type = ' . TOPIC_DL_TYPE_DL . " WHERE topic_id = $topic_id";
 
         if (!$result = DB()->sql_query($sql)) {
             bb_die('Could not update topics table #2');
         }
     }
 
-    if ($tr_cfg['tor_topic_up']) {
-        DB()->query("UPDATE " . BB_TOPICS . " SET topic_last_post_time = GREATEST(topic_last_post_time, " . (TIMENOW - 3 * 86400) . ") WHERE topic_id = $topic_id LIMIT 1");
+    if ($bb_cfg['tracker']['tor_topic_up']) {
+        DB()->query("UPDATE " . BB_TOPICS . " SET topic_last_post_time = GREATEST(topic_last_post_time, " . (TIMENOW - 3 * 86400) . ") WHERE topic_id = $topic_id");
     }
 
     if ($reg_mode == 'request' || $reg_mode == 'newtopic') {
@@ -385,7 +386,7 @@ function tracker_register($attach_id, $mode = '', $tor_status = TOR_NOT_APPROVED
 
 function send_torrent_with_passkey($filename)
 {
-    global $attachment, $auth_pages, $userdata, $bb_cfg, $tr_cfg, $lang;
+    global $attachment, $auth_pages, $userdata, $bb_cfg, $lang;
 
     if (!$bb_cfg['bt_add_auth_key'] || $attachment['extension'] !== TORRENT_EXT || !$size = @filesize($filename)) {
         return;
@@ -458,7 +459,8 @@ function send_torrent_with_passkey($filename)
     // Announce URL
     $ann_url = $bb_cfg['bt_announce_url'];
 
-    if (!$tor = bdecode_file($filename)) {
+    $file_contents = file_get_contents($filename);
+    if (!$tor = \Rych\Bencode\Bencode::decode($file_contents)) {
         bb_die('This is not a bencoded file');
     }
 
@@ -477,15 +479,15 @@ function send_torrent_with_passkey($filename)
     }
 
     // Add retracker
-    if (isset($tr_cfg['retracker']) && $tr_cfg['retracker']) {
+    if (isset($bb_cfg['tracker']['retracker']) && $bb_cfg['tracker']['retracker']) {
         if (bf($userdata['user_opt'], 'user_opt', 'user_retracker') || IS_GUEST) {
             if (!isset($tor['announce-list'])) {
                 $tor['announce-list'] = array(
                     array($announce),
-                    array($tr_cfg['retracker_host'])
+                    array($bb_cfg['tracker']['retracker_host'])
                 );
             } else {
-                $tor['announce-list'] = array_merge($tor['announce-list'], array(array($tr_cfg['retracker_host'])));
+                $tor['announce-list'] = array_merge($tor['announce-list'], array(array($bb_cfg['tracker']['retracker_host'])));
             }
         }
     }
@@ -505,7 +507,7 @@ function send_torrent_with_passkey($filename)
 
     // Send torrent
     $output = \Rych\Bencode\Bencode::encode($tor);
-    $dl_fname = ($bb_cfg['torrent_name_style'] ? '[' . $bb_cfg['server_name'] . '].t' . $topic_id . '.torrent' : clean_filename(basename($attachment['real_filename'])));
+    $dl_fname = '[' . $bb_cfg['server_name'] . '].t' . $topic_id . '.torrent';
 
     if (!empty($_COOKIE['explain'])) {
         $out = "attach path: $filename<br /><br />";
@@ -555,7 +557,7 @@ function generate_passkey($user_id, $force_generate = false)
             return $passkey_val;
         }
         // Update
-        DB()->query("UPDATE IGNORE " . BB_BT_USERS . " SET auth_key = '$passkey_val' WHERE user_id = $user_id LIMIT 1");
+        DB()->query("UPDATE IGNORE " . BB_BT_USERS . " SET auth_key = '$passkey_val' WHERE user_id = $user_id");
 
         if (DB()->affected_rows() == 1) {
             // Ocelot
@@ -632,25 +634,20 @@ function ocelot_send_request($get, $max_attempts = 1, &$err = false)
     global $bb_cfg;
 
     $header = "GET /$get HTTP/1.1\r\nConnection: Close\r\n\r\n";
-    $attempts = $sleep = $success = $response = 0;
+    $attempts = $success = $response = 0;
     $start_time = microtime(true);
 
     while (!$success && $attempts++ < $max_attempts) {
-        if ($sleep) {
-            sleep($sleep);
-        }
 
         // Send request
         $file = fsockopen($bb_cfg['ocelot']['host'], $bb_cfg['ocelot']['port'], $error_num, $error_string);
         if ($file) {
             if (fwrite($file, $header) === false) {
                 $err = "Failed to fwrite()";
-                $sleep = 3;
                 continue;
             }
         } else {
             $err = "Failed to fsockopen() - $error_num - $error_string";
-            $sleep = 6;
             continue;
         }
 
@@ -672,101 +669,4 @@ function ocelot_send_request($get, $max_attempts = 1, &$err = false)
     }
 
     return $success;
-}
-
-// bdecode: based on OpenTracker
-function bdecode_file($filename)
-{
-    $file_contents = file_get_contents($filename);
-    return bdecode($file_contents);
-}
-
-function bdecode($str)
-{
-    $pos = 0;
-    return bdecode_r($str, $pos);
-}
-
-function bdecode_r($str, &$pos)
-{
-    $strlen = strlen($str);
-
-    if (($pos < 0) || ($pos >= $strlen)) {
-        return null;
-    } elseif ($str[$pos] == 'i') {
-        $pos++;
-        $numlen = strspn($str, '-0123456789', $pos);
-        $spos = $pos;
-        $pos += $numlen;
-
-        if (($pos >= $strlen) || ($str[$pos] != 'e')) {
-            return null;
-        } else {
-            $pos++;
-            return (float)substr($str, $spos, $numlen);
-        }
-    } elseif ($str[$pos] == 'd') {
-        $pos++;
-        $ret = array();
-
-        while ($pos < $strlen) {
-            if ($str[$pos] == 'e') {
-                $pos++;
-                return $ret;
-            } else {
-                $key = bdecode_r($str, $pos);
-
-                if ($key === null) {
-                    return null;
-                } else {
-                    $val = bdecode_r($str, $pos);
-
-                    if ($val === null) {
-                        return null;
-                    } elseif (!is_array($key)) {
-                        $ret[$key] = $val;
-                    }
-                }
-            }
-        }
-        return null;
-    } elseif ($str[$pos] == 'l') {
-        $pos++;
-        $ret = array();
-
-        while ($pos < $strlen) {
-            if ($str[$pos] == 'e') {
-                $pos++;
-                return $ret;
-            } else {
-                $val = bdecode_r($str, $pos);
-
-                if ($val === null) {
-                    return null;
-                } else {
-                    $ret[] = $val;
-                }
-            }
-        }
-        return null;
-    } else {
-        $numlen = strspn($str, '0123456789', $pos);
-        $spos = $pos;
-        $pos += $numlen;
-
-        if (($pos >= $strlen) || ($str[$pos] != ':')) {
-            return null;
-        } else {
-            $vallen = (int)substr($str, $spos, $numlen);
-            $pos++;
-            $val = substr($str, $pos, $vallen);
-
-            if (strlen($val) != $vallen) {
-                return null;
-            } else {
-                $pos += $vallen;
-                return $val;
-            }
-        }
-    }
 }

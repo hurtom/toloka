@@ -1738,7 +1738,7 @@ $lang['CLICK_RETURN_FORUMAUTH'] = 'Klikkaa %sHere%s palata Foorumin Oikeudet';
 
 // Banning
 $lang['BAN_CONTROL'] = 'Kiellon Valvonta';
-$lang['BAN_EXPLAIN'] = 'Täällä voit hallita kieltää käyttäjiä. Voit saavuttaa tämän kieltämällä jompikumpi tai molemmat tietyn käyttäjän tai yksilön tai IP-osoitteita tai isäntänimiä. Nämä menetelmät estävät käyttäjää jopa saavuttaa indeksin sivu teidän aluksella. Estää käyttäjän rekisteröinti eri käyttäjätunnuksella voit myös määrittää kielletty sähköpostiosoite. Huomaa, että kieltäminen sähköpostiosoite yksin ei estä, että käyttäjä voi kirjautua sisään tai lähettää oman hallituksen. Sinun pitäisi käyttää yksi ensimmäisistä kaksi tapaa saavuttaa tämä.';
+$lang['BAN_EXPLAIN'] = 'Täällä voit hallita kieltää käyttäjiä. Voit saavuttaa tämän kieltämällä jompikumpi tai molemmat tietyn käyttäjän tai yksilön tai IP-osoitteiden alueen. Nämä menetelmät estävät käyttäjää jopa saavuttaa indeksin sivu teidän aluksella. Estää käyttäjän rekisteröinti eri käyttäjätunnuksella voit myös määrittää kielletty sähköpostiosoite. Huomaa, että kieltäminen sähköpostiosoite yksin ei estä, että käyttäjä voi kirjautua sisään tai lähettää oman hallituksen. Sinun pitäisi käyttää yksi ensimmäisistä kaksi tapaa saavuttaa tämä.';
 $lang['BAN_EXPLAIN_WARN'] = 'Huomaa, että kirjoittamalla IP-osoitteiden alueen tulokset kaikki osoitteet välillä alkuun ja loppuun lisätään bannilista. Yritetään minimoida määrä osoitteita lisätään tietokantaan ottamalla käyttöön yleismerkkejä automaattisesti tarvittaessa. Jos todella täytyy syöttää alue, yritä pitää se pieni tai parempi vielä valtion erityisiä osoitteita.';
 
 $lang['SELECT_IP'] = 'Valitse IP-osoite';
@@ -1747,9 +1747,9 @@ $lang['SELECT_EMAIL'] = 'Valitse Sähköpostiosoite';
 $lang['BAN_USERNAME'] = 'Ban yksi tai useampi tietyille käyttäjille';
 $lang['BAN_USERNAME_EXPLAIN'] = 'Voit estää useita käyttäjiä kerralla käyttämällä sopivan yhdistelmän hiirtä ja näppäimistöä tietokoneen ja selaimen';
 
-$lang['BAN_IP'] = 'Ban yksi tai useampi IP-osoitteista, isäntänimiä tai';
-$lang['IP_HOSTNAME'] = 'IP-osoitteista, isäntänimiä tai';
-$lang['BAN_IP_EXPLAIN'] = 'Voit määrittää useita eri IP-osoitteista, isäntänimiä tai erottamalla ne pilkuilla. Voit määrittää useita IP-osoitteita, erota alku ja loppu väliviivalla (-); määrittää jokerina, käytä tähti (*).';
+$lang['BAN_IP'] = 'Ban yksi tai useampi IP-osoitteita';
+$lang['IP_HOSTNAME'] = 'IP-osoitteet';
+$lang['BAN_IP_EXPLAIN'] = 'Voit määrittää useita eri IP-osoitteita, erota ne pilkuilla.';
 
 $lang['BAN_EMAIL'] = 'Ban on yksi tai useampia sähköposti osoitteita';
 $lang['BAN_EMAIL_EXPLAIN'] = 'Voit määrittää useamman kuin yhden sähköpostiosoitteen, erota ne pilkuilla. Määritä jokeri käyttäjätunnus, * *@hotmail.com';
@@ -2278,7 +2278,7 @@ $lang['TRACKER_CFG_TITLE'] = 'Tracker';
 $lang['FORUM_CFG_TITLE'] = 'Foorumin asetuksia';
 $lang['TRACKER_SETTINGS'] = 'Tracker asetukset';
 
-$lang['CHANGES_DISABLED'] = 'Muutokset käytöstä (ks. <b>$tr_cfg</b> vuonna config.php)';
+$lang['CHANGES_DISABLED'] = 'Muutokset käytöstä (ks. <b>$bb_cfg[\'tracker\']</b> vuonna config.php)';
 
 $lang['OFF_TRACKER'] = 'Poistaa tracker';
 $lang['OFF_REASON'] = 'Poistaa syy';
@@ -2575,7 +2575,7 @@ $lang['ACTS_LOG_FORUM'] = 'Forum';
 $lang['ACTS_LOG_ACTION'] = 'Toiminta';
 $lang['ACTS_LOG_USER'] = 'Käyttäjä';
 $lang['ACTS_LOG_LOGS_FROM'] = 'Lokit ';
-$lang['ACTS_LOG_FIRST'] = 'ensimmäinen ';
+$lang['ACTS_LOG_FIRST'] = 'alkaen';
 $lang['ACTS_LOG_DAYS_BACK'] = 'päivää takaisin';
 $lang['ACTS_LOG_TOPIC_MATCH'] = 'Aiheen otsikko ottelu';
 $lang['ACTS_LOG_SORT_BY'] = 'Lajittele';
@@ -2585,6 +2585,7 @@ $lang['ACTS_LOG_TIME'] = 'Aika';
 $lang['ACTS_LOG_INFO'] = 'Info';
 $lang['ACTS_LOG_FILTER'] = 'Suodatin';
 $lang['ACTS_LOG_TOPICS'] = 'Aiheet:';
+$lang['ACTS_LOG_OR'] = 'tai';
 
 $lang['RELEASE'] = 'Julkaisu Malleja';
 $lang['RELEASES'] = 'Tiedotteet';
@@ -2661,7 +2662,7 @@ $lang['SEARCH_USERS_ADVANCED'] = 'Tarkennettu Haku';
 $lang['SEARCH_USERS_EXPLAIN'] = 'Tämän Moduulin avulla voit suorittaa tarkennettuja hakuja käyttäjille monenlaisia kriteerejä. Lue kuvaukset kunkin alan ymmärtää jokainen haku vaihtoehto kokonaan.';
 $lang['SEARCH_USERNAME_EXPLAIN'] = 'Täällä voit suorittaa kirjainkoko etsi käyttäjätunnukset. Jos haluat ottelu osa käyttäjätunnus, käytä * (asterix) jokerina.';
 $lang['SEARCH_EMAIL_EXPLAIN'] = 'Kirjoita lauseke, joka vastaa käyttäjän sähköpostiosoite. Tämä on kirjainkoko. Jos haluat tehdä osittainen vastaavuus, käytä * (asterix) jokerina.';
-$lang['SEARCH_IP_EXPLAIN'] = 'Etsi käyttäjien tietyn IP-osoite (xxx.xxx.xxx.xxx), asteriskia (xxx.xxx.xxx.*) tai-alue (xxx.xxx.xxx.xxx-yyy.yyy.yyy.yyy). Huom: viimeinen quad .255 pidetään välillä kaikki IPs, että quad. Jos annat 10.0.0.255, se on aivan kuin kirjoittamalla 10.0.0.* (Ei IP on määritetty .255, että asia, se on varattu). Missä saatat olla, tämä on alueilla, 10.0.0.5-10.0.0.255 on sama kuin "10.0.0.*" . Sinun pitäisi todella päästä 10.0.0.5-10.0.0.254 .';
+$lang['SEARCH_IP_EXPLAIN'] = 'Etsi käyttäjien tietyn IP-osoite (xxx.xxx.xxx.xxx).';
 $lang['SEARCH_USERS_JOINED'] = 'Käyttäjät, jotka liittyivät';
 $lang['SEARCH_USERS_LASTVISITED'] = 'Käyttäjät, joille on käynyt';
 $lang['IN_THE_LAST'] = 'viime';

@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'callseed');
 define('BB_ROOT', './');
 require __DIR__ . '/common.php';
@@ -44,7 +43,7 @@ if ($t_data['seeders'] > 2) {
     bb_die(sprintf($lang['CALLSEED_MSG_SPAM'], $time_left));
 }
 
-$ban_user_id = array();
+$ban_user_id = [];
 
 $sql = DB()->fetch_rowset("SELECT ban_userid FROM " . BB_BANLIST . " WHERE ban_userid != 0");
 
@@ -60,7 +59,7 @@ $user_list = DB()->fetch_rowset("
 	LEFT JOIN " . BB_BT_TRACKER . " tr ON(tr.user_id = dl.user_id)
 	WHERE dl.topic_id = $topic_id
 		AND dl.user_status IN (" . DL_STATUS_COMPLETE . ", " . DL_STATUS_DOWN . ")
-		AND dl.user_id NOT IN ({$userdata['user_id']}, " . EXCLUDED_USERS_CSV . $ban_user_id . ")
+		AND dl.user_id NOT IN ({$userdata['user_id']}, " . EXCLUDED_USERS . $ban_user_id . ")
 		AND u.user_active = 1
 	GROUP BY dl.user_id
 ");
@@ -82,7 +81,7 @@ if ($user_list) {
     send_pm($t_data['poster_id'], $subject, $message, BOT_UID);
 }
 
-DB()->query("UPDATE " . BB_BT_TORRENTS . " SET call_seed_time = " . TIMENOW . " WHERE topic_id = $topic_id LIMIT 1");
+DB()->query("UPDATE " . BB_BT_TORRENTS . " SET call_seed_time = " . TIMENOW . " WHERE topic_id = $topic_id");
 
 meta_refresh(TOPIC_URL . $topic_id);
 bb_die($lang['CALLSEED_MSG_OK']);
