@@ -1738,7 +1738,7 @@ $lang['CLICK_RETURN_FORUMAUTH'] = 'をクリックし%sHere%sに戻すフォー�
 
 // Banning
 $lang['BAN_CONTROL'] = '禁止制御';
-$lang['BAN_EXPLAIN'] = 'こちらを制御することができ禁止ユーザーです。 できする"という目標の達成に向けての禁止は、特定のユーザーまたは個人またはIPアドレスまたはホスト名ます。 これらの方法をユーザーからのインデックスページのボードです。 を防止するユーザーからの登録はどのような由来があるのですかユーザー名を指定することもできますメールアドレスを禁止します。 ごとの禁止、メールアドレスだけを妨げない限りにおいてユーザーできるようになってしまうことへのログインまたはポストをボードです。 のものを使用できる最初の二つの方法でこれを達成する。';
+$lang['BAN_EXPLAIN'] = 'こちらを制御することができ禁止ユーザーです。 できする"という目標の達成に向けての禁止は、特定のユーザーまたは個人の範囲の全てのIPアドレスを使います。 これらの方法をユーザーからのインデックスページのボードです。 を防止するユーザーからの登録はどのような由来があるのですかユーザー名を指定することもできますメールアドレスを禁止します。 ごとの禁止、メールアドレスだけを妨げない限りにおいてユーザーできるようになってしまうことへのログインまたはポストをボードです。 のものを使用できる最初の二つの方法でこれを達成する。';
 $lang['BAN_EXPLAIN_WARN'] = 'ご入力IPアドレスの結果すべてのアドレスの開始と終了の間の追加にbanlistます。 うにすることを最小限にとどめるためのアドレス数のデータベースの導入によるワイルドカードを自動的に適切な場合です。 なので、しばらく日本に再入力が必要となる範囲になるように心がけていますので小型による状態で特定のメールアドレスです。';
 
 $lang['SELECT_IP'] = '選択IPアドレス';
@@ -1747,9 +1747,9 @@ $lang['SELECT_EMAIL'] = 'を選択メールアドレス';
 $lang['BAN_USERNAME'] = '禁止一又は二以上の特定のユーザー';
 $lang['BAN_USERNAME_EXPLAIN'] = 'でき禁止複数のユーザーの利用の適切な組合せマウスやキーボードのためのコンピュータのブラウザ';
 
-$lang['BAN_IP'] = '禁止はIPアドレスまたはホスト名';
-$lang['IP_HOSTNAME'] = 'IPアドレスまたはホスト名';
-$lang['BAN_IP_EXPLAIN'] = '指定数の異なるIPアドレスまたはホスト名を作成しておくこともできカンマ区切りで入力します。 範囲を指定し、IPアドレスの別途の開始と終了のため、ハイフン(-);を指定するにはワイルドカード、アスタリスク(*)をつけます。';
+$lang['BAN_IP'] = '禁止はIPアドレス';
+$lang['IP_HOSTNAME'] = 'IPアドレス';
+$lang['BAN_IP_EXPLAIN'] = '指定数の異なるIPアドレスとカンマ区切りで入力します。';
 
 $lang['BAN_EMAIL'] = '禁止を一つ以上のメールアドレス';
 $lang['BAN_EMAIL_EXPLAIN'] = '一つ以上指定するにはメールアドレスとカンマ区切りで入力します。 を指定するにはワイルドカードのユーザー名を使用**@hotmail.com';
@@ -2278,7 +2278,7 @@ $lang['TRACKER_CFG_TITLE'] = 'トラッカー';
 $lang['FORUM_CFG_TITLE'] = 'フォーラムの設定';
 $lang['TRACKER_SETTINGS'] = 'トラッカーの設定';
 
-$lang['CHANGES_DISABLED'] = 'の変更無効（<b>$tr_cfg</b>にconfig.php)';
+$lang['CHANGES_DISABLED'] = 'の変更無効（<b>$bb_cfg[\'tracker\']</b>にconfig.php)';
 
 $lang['OFF_TRACKER'] = 'トラッカーを無効に';
 $lang['OFF_REASON'] = '無効理由';
@@ -2575,7 +2575,7 @@ $lang['ACTS_LOG_FORUM'] = 'フォーラム';
 $lang['ACTS_LOG_ACTION'] = '行動';
 $lang['ACTS_LOG_USER'] = 'ユーザー';
 $lang['ACTS_LOG_LOGS_FROM'] = 'ログから ';
-$lang['ACTS_LOG_FIRST'] = '第 ';
+$lang['ACTS_LOG_FIRST'] = 'はじめ';
 $lang['ACTS_LOG_DAYS_BACK'] = '日帰';
 $lang['ACTS_LOG_TOPIC_MATCH'] = '話題のタイトルマッチ';
 $lang['ACTS_LOG_SORT_BY'] = '並べ替え';
@@ -2585,6 +2585,7 @@ $lang['ACTS_LOG_TIME'] = '時間';
 $lang['ACTS_LOG_INFO'] = '詳細情報';
 $lang['ACTS_LOG_FILTER'] = 'フィルター';
 $lang['ACTS_LOG_TOPICS'] = 'テーマ：';
+$lang['ACTS_LOG_OR'] = 'または';
 
 $lang['RELEASE'] = 'リリーステンプレート';
 $lang['RELEASES'] = 'リリース';
@@ -2661,7 +2662,7 @@ $lang['SEARCH_USERS_ADVANCED'] = '先進のユーザを検索';
 $lang['SEARCH_USERS_EXPLAIN'] = 'このモジュールで行う高度な検索のためのユーザーの広範な基準です。 をお読みください記述をそれぞれの分野を理解した検索オプションです。';
 $lang['SEARCH_USERNAME_EXPLAIN'] = 'こちらを行うことができ、大文字と小文字を区別しませんの検索のためのユーザ名です。 い合わせの一部のユーザー名を使用*(する際はブラウザ設定でjavascriptを有効として、ワイルドカードです。';
 $lang['SEARCH_EMAIL_EXPLAIN'] = '式を入力し合わせ、ユーザーのメールアドレスです。 これは大文字と小文字を区別しません。 だいたい部分一致の使用*(する際はブラウザ設定でjavascriptを有効として、ワイルドカードです。';
-$lang['SEARCH_IP_EXPLAIN'] = '検索ユーザーにより特定のIPアドレス(xxx.xxx.xxx.xxx)は、ワイルドカード(xxx.xxx.xxx.*) 範囲(xxx.xxx.xxx.xxx-yyyます。yyyます。yyyます。yyyます。 注:最後のクアッド.255るすべての範囲のIPsることを意味します。 入力した場合は10.0.0.255でのように入10.0.0ます。* (No IPを割り当て.255こでreservedます。 が直面する可能性がありこの範囲は、10.0.0.5-10.0.0.255と同じ"10.0.0ます。*" ます。 るべきとい入10.0.0.5-10.0.0.254ます。';
+$lang['SEARCH_IP_EXPLAIN'] = '検索ユーザーにより特定のIPアドレス(xxx.xxx.xxx.xxx)です。';
 $lang['SEARCH_USERS_JOINED'] = 'ユーザー入社';
 $lang['SEARCH_USERS_LASTVISITED'] = 'ユーザーを訪れてい';
 $lang['IN_THE_LAST'] = '最後の';

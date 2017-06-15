@@ -1,0 +1,105 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2005-2017 TorrentPier
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+.menu-root {
+  padding-right: 13px;
+  white-space: nowrap;
+  background: transparent url(../images/menu_open.gif) no-repeat right;
+}
+
+.menu-alt1 {
+  padding-right: 0;
+  background: transparent;
+}
+
+img.menu-alt1 {
+  width: 9px;
+  height: 9px;
+}
+
+a.menu-root, a.menu-root:visited, a.menu-root:hover {
+  text-decoration: none !important;
+}
+
+.menu-sub {
+  position: absolute;
+  display: none;
+  z-index: 1000;
+}
+
+.menu-sub table {
+  background: #FFFFFF;
+  border: 1px solid #92A3A4;
+}
+
+.menu-sub table th {
+  background: #71869F;
+  color: #F0F8FF;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.menu-sub table td {
+  background: #E7E7E7;
+  font-size: 11px;
+}
+
+.menu-sub table td.cat {
+  background: #B5BEC3;
+}
+
+.menu-sub legend {
+  font-weight: bold;
+}
+
+.menu-sub label {
+  display: block;
+  padding-right: 2px;
+  margin-right: 1px;
+}
+
+.menu-sub label:hover {
+  background: #D1D7DC;
+  color: #993300;
+}
+
+.menu-a {
+  background: #FFFFFF;
+  border: 1px solid #92A3A4;
+}
+
+.menu-a a {
+  color: #0000A0;
+  background: #E7E7E7;
+  padding: 4px 10px 5px;
+  margin: 1px;
+  display: block;
+  text-decoration: none !important;
+}
+
+.menu-a a:hover {
+  color: #0000FF;
+  background: #D1D7DC;
+  text-decoration: none !important;
+}
