@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'dl_list');
 define('BB_ROOT', './');
 require __DIR__ . '/common.php';
@@ -57,10 +56,10 @@ $full_url = isset($_POST['full_url']) ? str_replace('&amp;', '&', htmlspecialcha
 
 if (isset($_POST['redirect_type']) && $_POST['redirect_type'] == 'search') {
     $redirect_type = "search.php";
-    $redirect = ($full_url) ?: "$dl_key=1";
+    $redirect = $full_url ?: "$dl_key=1";
 } else {
     $redirect_type = (!$topic_id) ? "viewforum.php" : "viewtopic.php";
-    $redirect = ($full_url) ?: ((!$topic_id) ? POST_FORUM_URL . "=$forum_id" : POST_TOPIC_URL . "=$topic_id");
+    $redirect = $full_url ?: ((!$topic_id) ? POST_FORUM_URL . "=$forum_id" : POST_TOPIC_URL . "=$topic_id");
 }
 
 // Start session management

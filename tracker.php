@@ -414,7 +414,7 @@ if (!$set_default) {
             }
         } elseif ($search_id && $previous_settings[$poster_id_key]) {
             $poster_id_val = (int)$previous_settings[$poster_id_key];
-            $poster_name_val = ($previous_settings[$poster_name_key]) ?: '';
+            $poster_name_val = $previous_settings[$poster_name_key] ?: '';
         }
 
         if ($req_poster_id) {
@@ -432,7 +432,7 @@ if (!$set_default) {
         hash_search($_REQUEST[$hash_key]);
     }
 
-    if ($tm =& $_REQUEST[$title_match_key] and is_string($tm)) {
+    if (($tm =& $_REQUEST[$title_match_key]) && is_string($tm)) {
         if ($tmp = mb_substr(trim($tm), 0, $title_match_max_len)) {
             $title_match_val = $tmp;
             $title_match_sql = clean_text_match($title_match_val, true, false);
@@ -755,10 +755,10 @@ if ($allowed_forums) {
                 'TOR_SIZE' => humn_size($size),
                 'UL_SPEED' => $ul_sp,
                 'DL_SPEED' => $dl_sp,
-                'SEEDS' => ($seeds) ?: 0,
+                'SEEDS' => $seeds ?: 0,
                 'SEEDS_TITLE' => ($seeds) ? $lang['SEEDERS'] : ($lang['SEED_NOT_SEEN'] . ":\n " . (($s_last) ? bb_date($s_last, $date_format) : $lang['NEVER'])),
-                'LEECHS' => ($leechs) ?: 0,
-                'COMPLETED' => ($compl) ?: 0,
+                'LEECHS' => $leechs ?: 0,
+                'COMPLETED' => $compl ?: 0,
                 'REPLIES' => $tor['topic_replies'],
                 'VIEWS' => $tor['topic_views'],
                 'ADDED_RAW' => $tor['reg_time'],
@@ -813,7 +813,7 @@ foreach ($cat_forum['c'] as $cat_id => $forums_ary) {
     $opt .= "</optgroup>\n";
 }
 $search_all_opt = '<option value="' . $search_all . '" value="fs-' . $search_all . '"' . (($forum_val == $search_all) ? HTML_SELECTED : '') . '>&nbsp;' . htmlCHR($lang['ALL_AVAILABLE']) . "</option>\n";
-$cat_forum_select = "\n" . '<select id="fs-main" style="width: 100%;" name="' . $forum_key . '[]" multiple="multiple" size="' . $forum_select_size . "\">\n" . $search_all_opt . $opt . "</select>\n";
+$cat_forum_select = "\n" . '<select id="fs-main" style="width: 100%;" name="' . $forum_key . '[]" multiple size="' . $forum_select_size . "\">\n" . $search_all_opt . $opt . "</select>\n";
 
 // Sort dir
 $template->assign_vars(array(

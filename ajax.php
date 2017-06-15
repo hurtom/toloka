@@ -60,12 +60,8 @@ switch ($ajax->action) {
     case 'view_torrent':
     case 'mod_action':
     case 'change_tor_status':
-    case 'gen_passkey':
-        require ATTACH_DIR . '/attachment_mod.php';
-        require INC_DIR . '/functions_torrent.php';
-        break;
-
     case 'change_torrent':
+    case 'gen_passkey':
         require ATTACH_DIR . '/attachment_mod.php';
         require INC_DIR . '/functions_torrent.php';
         break;
@@ -92,6 +88,6 @@ $ajax->exec();
 
 /**
  * @deprecated ajax_common
- * Dirty class removed from here since 2.1.6
+ * Dirty class removed from here since 2.2.0
  * To add new actions see at src/Legacy/Ajax.php
  */

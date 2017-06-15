@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'group_edit');
 define('BB_ROOT', './');
 require __DIR__ . '/common.php';
@@ -51,8 +50,6 @@ if ($group_id) {
 }
 
 if ($is_moderator) {
-    // TODO Admin panel, some tasty features
-
     // Avatar
     if ($submit) {
         if (!empty($_FILES['avatar']['name']) && $bb_cfg['group_avatars']['up_allowed']) {
@@ -86,7 +83,7 @@ if ($is_moderator) {
         'GROUP_DESCRIPTION' => htmlCHR($group_info['group_description']),
         'GROUP_SIGNATURE' => htmlCHR($group_info['group_signature']),
         'U_GROUP_URL' => GROUP_URL . $group_id,
-        'RELEASE_GROUP' => ($group_info['release_group']) ? true : false,
+        'RELEASE_GROUP' => $group_info['release_group'] ? true : false,
         'GROUP_TYPE' => $group_type,
         'S_GROUP_OPEN_TYPE' => GROUP_OPEN,
         'S_GROUP_CLOSED_TYPE' => GROUP_CLOSED,

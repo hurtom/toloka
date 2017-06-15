@@ -16,22 +16,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bb_ads`
---
-
-CREATE TABLE `bb_ads` (
-  `ad_id` mediumint(8) UNSIGNED NOT NULL,
-  `ad_block_ids` varchar(255) NOT NULL DEFAULT '',
-  `ad_start_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ad_active_days` smallint(6) NOT NULL DEFAULT 0,
-  `ad_status` tinyint(4) NOT NULL DEFAULT 1,
-  `ad_desc` varchar(255) NOT NULL DEFAULT '',
-  `ad_html` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `bb_attachments`
 --
 
@@ -78,7 +62,7 @@ INSERT INTO `bb_attachments_config` (`config_name`, `config_value`) VALUES
 ('max_filesize', '262144'),
 ('max_filesize_pm', '262144'),
 ('topic_icon', 'styles/images/icon_clip.gif'),
-('upload_dir', 'data/old_files'),
+('upload_dir', 'data/torrent_files'),
 ('upload_img', 'styles/images/icon_clip.gif'),
 ('use_gd2', '1'),
 ('wma_autoplay', '0');
@@ -149,7 +133,7 @@ CREATE TABLE `bb_auth_access_snap` (
 CREATE TABLE `bb_banlist` (
   `ban_id` mediumint(8) UNSIGNED NOT NULL,
   `ban_userid` mediumint(8) NOT NULL DEFAULT 0,
-  `ban_ip` varchar(32) NOT NULL DEFAULT '',
+  `ban_ip` varchar(42) NOT NULL DEFAULT '0',
   `ban_email` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -288,7 +272,7 @@ CREATE TABLE `bb_bt_tracker` (
   `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `peer_id` varchar(20) NOT NULL DEFAULT '0',
   `user_id` mediumint(9) NOT NULL DEFAULT 0,
-  `ip` char(8) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `ip` varchar(42) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `ipv6` varchar(32) DEFAULT NULL,
   `port` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `client` varchar(51) NOT NULL DEFAULT 'Unknown',
@@ -393,7 +377,6 @@ CREATE TABLE `bb_config` (
 --
 
 INSERT INTO `bb_config` (`config_name`, `config_value`) VALUES
-('active_ads', ''),
 ('allow_autologin', '1'),
 ('allow_bbcode', '1'),
 ('allow_namechange', '0'),
@@ -454,7 +437,6 @@ INSERT INTO `bb_config` (`config_name`, `config_value`) VALUES
 ('max_sig_chars', '255'),
 ('network_news_count', '5'),
 ('network_news_forum_id', '2'),
-('new_tpls', '1'),
 ('posts_per_page', '15'),
 ('premod', '0'),
 ('prune_enable', '1'),
@@ -662,7 +644,7 @@ CREATE TABLE `bb_forums` (
 --
 
 INSERT INTO `bb_forums` (`forum_id`, `cat_id`, `forum_name`, `forum_desc`, `forum_status`, `forum_order`, `forum_posts`, `forum_topics`, `forum_last_post_id`, `forum_tpl_id`, `prune_days`, `auth_view`, `auth_read`, `auth_post`, `auth_reply`, `auth_edit`, `auth_delete`, `auth_sticky`, `auth_announce`, `auth_vote`, `auth_pollcreate`, `auth_attachments`, `auth_download`, `allow_reg_tracker`, `allow_porno_topic`, `self_moderated`, `forum_parent`, `show_on_index`, `forum_display_sort`, `forum_display_order`) VALUES
-(1, 1, 'Фільми', '', 0, 10, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 3, 3, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0);
+(1, 1, 'Фільми', '', 0, 10, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 3, 3, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -693,8 +675,7 @@ CREATE TABLE `bb_groups` (
 CREATE TABLE `bb_log` (
   `log_type_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `log_user_id` mediumint(9) NOT NULL DEFAULT 0,
-  `log_username` varchar(25) NOT NULL DEFAULT '',
-  `log_user_ip` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `log_user_ip` varchar(42) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `log_forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `log_forum_id_new` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `log_topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
@@ -714,7 +695,7 @@ CREATE TABLE `bb_log` (
 CREATE TABLE `bb_poll_users` (
   `topic_id` int(10) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
-  `vote_ip` varchar(32) NOT NULL,
+  `vote_ip` varchar(42) NOT NULL DEFAULT '0',
   `vote_dt` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -743,7 +724,7 @@ CREATE TABLE `bb_posts` (
   `forum_id` smallint(5) UNSIGNED NOT NULL DEFAULT 0,
   `poster_id` mediumint(8) NOT NULL DEFAULT 0,
   `post_time` int(11) NOT NULL DEFAULT 0,
-  `poster_ip` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `poster_ip` char(42) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `poster_rg_id` mediumint(8) NOT NULL DEFAULT 0,
   `attach_rg_sig` tinyint(4) NOT NULL DEFAULT 0,
   `post_username` varchar(25) NOT NULL DEFAULT '',
@@ -761,7 +742,7 @@ CREATE TABLE `bb_posts` (
 --
 
 INSERT INTO `bb_posts` (`post_id`, `topic_id`, `forum_id`, `poster_id`, `post_time`, `poster_ip`, `poster_rg_id`, `attach_rg_sig`, `post_username`, `post_edit_time`, `post_edit_count`, `post_attachment`, `user_post`, `mc_comment`, `mc_type`, `mc_user_id`) VALUES
-(1, 1, 1, 2, 0, '', 0, 0, '', 0, 0, 0, 1, '', 0, 0);
+(1, 1, 1, 2, 0, '0', 0, 0, '', 0, 0, 0, 1, '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -772,7 +753,7 @@ INSERT INTO `bb_posts` (`post_id`, `topic_id`, `forum_id`, `poster_id`, `post_ti
 CREATE TABLE `bb_posts_html` (
   `post_id` mediumint(9) NOT NULL DEFAULT 0,
   `post_html_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `post_html` mediumtext NOT NULL DEFAULT ''
+  `post_html` mediumtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -831,7 +812,7 @@ CREATE TABLE `bb_privmsgs` (
   `privmsgs_from_userid` mediumint(8) NOT NULL DEFAULT 0,
   `privmsgs_to_userid` mediumint(8) NOT NULL DEFAULT 0,
   `privmsgs_date` int(11) NOT NULL DEFAULT 0,
-  `privmsgs_ip` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT ''
+  `privmsgs_ip` varchar(42) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -934,7 +915,7 @@ CREATE TABLE `bb_sessions` (
   `session_user_id` mediumint(8) NOT NULL DEFAULT 0,
   `session_start` int(11) NOT NULL DEFAULT 0,
   `session_time` int(11) NOT NULL DEFAULT 0,
-  `session_ip` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `session_ip` char(42) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `session_logged_in` tinyint(1) NOT NULL DEFAULT 0,
   `session_admin` tinyint(2) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1096,9 +1077,9 @@ CREATE TABLE `bb_users` (
   `user_password` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
   `user_session_time` int(11) NOT NULL DEFAULT 0,
   `user_lastvisit` int(11) NOT NULL DEFAULT 0,
-  `user_last_ip` char(32) NOT NULL DEFAULT '',
+  `user_last_ip` char(42) NOT NULL DEFAULT '0',
   `user_regdate` int(11) NOT NULL DEFAULT 0,
-  `user_reg_ip` char(32) NOT NULL DEFAULT '',
+  `user_reg_ip` char(42) NOT NULL DEFAULT '0',
   `user_level` tinyint(4) NOT NULL DEFAULT 0,
   `user_posts` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
   `user_timezone` decimal(5,2) NOT NULL DEFAULT 0.00,
@@ -1194,12 +1175,6 @@ INSERT INTO `buf_topic_view` (`topic_id`, `topic_views`) VALUES
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `bb_ads`
---
-ALTER TABLE `bb_ads`
-  ADD PRIMARY KEY (`ad_id`);
 
 --
 -- Indexes for table `bb_attachments`
@@ -1547,11 +1522,6 @@ ALTER TABLE `buf_topic_view`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `bb_ads`
---
-ALTER TABLE `bb_ads`
-  MODIFY `ad_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `bb_attachments_desc`
 --

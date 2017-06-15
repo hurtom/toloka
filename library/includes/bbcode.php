@@ -29,6 +29,7 @@ if (!defined('BB_ROOT')) {
 
 $datastore->enqueue(array(
     'smile_replacements',
+    'cat_forums',
 ));
 
 $page_cfg['include_bbcode_js'] = true;
@@ -405,7 +406,7 @@ function add_search_words($post_id, $post_message, $topic_title = '', $only_retu
 
 /**
  * @deprecated bb_code
- * Dirty class removed from here since 2.1.6
+ * Dirty class removed from here since 2.2.0
  * To add new bbcodes see at src/Legacy/BBCode.php
  */
 
