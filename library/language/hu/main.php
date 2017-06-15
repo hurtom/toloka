@@ -1738,7 +1738,7 @@ $lang['CLICK_RETURN_FORUMAUTH'] = 'Kattintson %sHere%s vissza Fórum Jogosultsá
 
 // Banning
 $lang['BAN_CONTROL'] = 'Tilalom Ellenőrzése';
-$lang['BAN_EXPLAIN'] = 'Itt tudod irányítani a banning a felhasználók. Ezt úgy tudod elérni, betiltásával vagy mindkettő egy adott felhasználó vagy az egyén, vagy IP címek tartománya, vagy az állomásneveket. Ezek a módszerek megakadályozzák, hogy a felhasználó is elérte az index oldalt a fórumon. Megakadályozza, hogy a felhasználó a regisztráció alatt egy másik felhasználónevet is megadhatja betiltották e-mail címét. Kérjük, vegye figyelembe, hogy a tiltó e-mail címét, hogy egyedül nem akadályozza meg, hogy a felhasználó nem tudja, hogy jelentkezzen be, vagy hozzászólást a fórumon. Használja az első két módszer ennek elérésére.';
+$lang['BAN_EXPLAIN'] = 'Itt tudod irányítani a banning a felhasználók. Ezt úgy tudod elérni, betiltásával vagy mindkettő egy adott felhasználó vagy az egyén, vagy IP címek tartománya. Ezek a módszerek megakadályozzák, hogy a felhasználó is elérte az index oldalt a fórumon. Megakadályozza, hogy a felhasználó a regisztráció alatt egy másik felhasználónevet is megadhatja betiltották e-mail címét. Kérjük, vegye figyelembe, hogy a tiltó e-mail címét, hogy egyedül nem akadályozza meg, hogy a felhasználó nem tudja, hogy jelentkezzen be, vagy hozzászólást a fórumon. Használja az első két módszer ennek elérésére.';
 $lang['BAN_EXPLAIN_WARN'] = 'Kérjük, vegye figyelembe, hogy a belépő egy IP címek tartománya eredmények a címek között a start, majd a végén hozzáadjuk a banlist. Kísérlet történik számának minimalizálása címek az adatbázisba bevezetésével a helyettesítő karakterek automatikusan adott esetben. Ha tényleg meg kell adnia egy tartomány, próbálja meg, hogy kis vagy még inkább állami adott címet.';
 
 $lang['SELECT_IP'] = 'Válassza ki az IP cím';
@@ -1747,9 +1747,9 @@ $lang['SELECT_EMAIL'] = 'Válasszon ki egy e-Mail címet';
 $lang['BAN_USERNAME'] = 'Tilalmát egy vagy több meghatározott felhasználók';
 $lang['BAN_USERNAME_EXPLAIN'] = 'Lehet tilalom több felhasználó egyszerre használja a megfelelő kombinációja, az egér, a billentyűzet a számítógép, illetve böngésző';
 
-$lang['BAN_IP'] = 'Tilalmát egy vagy több IP-címet vagy az állomásneveket';
-$lang['IP_HOSTNAME'] = 'Az IP-címek vagy az állomásneveket';
-$lang['BAN_IP_EXPLAIN'] = 'Adja meg, több különböző IP-címeket vagy az állomásneveket, külön nekik a vesszőt. Adjon meg egy IP címek tartománya, külön a start, majd a végén egy kötőjel (-); adjon meg egy helyettesítő, használja a csillaggal (*).';
+$lang['BAN_IP'] = 'Tilalmát egy vagy több IP-címek';
+$lang['IP_HOSTNAME'] = 'IP-címek';
+$lang['BAN_IP_EXPLAIN'] = 'Adja meg, több különböző IP-címeket külön nekik a vesszőt.';
 
 $lang['BAN_EMAIL'] = 'Tilalmát egy vagy több e-mail címek';
 $lang['BAN_EMAIL_EXPLAIN'] = 'Adja meg több e-mail címet, külön nekik a vesszőt. Adjon meg egy helyettesítő felhasználónevét, használja * *@hotmail.com';
@@ -2278,7 +2278,7 @@ $lang['TRACKER_CFG_TITLE'] = 'Tracker';
 $lang['FORUM_CFG_TITLE'] = 'Fórum beállítások';
 $lang['TRACKER_SETTINGS'] = 'Tracker beállítások';
 
-$lang['CHANGES_DISABLED'] = 'Változások a disabled (lásd a <b>$tr_cfg</b> config.php)';
+$lang['CHANGES_DISABLED'] = 'Változások a disabled (lásd a <b>$bb_cfg[\'tracker\']</b> config.php)';
 
 $lang['OFF_TRACKER'] = 'Tiltsa le tracker';
 $lang['OFF_REASON'] = 'A letiltás oka';
@@ -2575,7 +2575,7 @@ $lang['ACTS_LOG_FORUM'] = 'Fórum';
 $lang['ACTS_LOG_ACTION'] = 'Akció';
 $lang['ACTS_LOG_USER'] = 'Felhasználó';
 $lang['ACTS_LOG_LOGS_FROM'] = 'Naplók ';
-$lang['ACTS_LOG_FIRST'] = 'első ';
+$lang['ACTS_LOG_FIRST'] = 'a kezdet';
 $lang['ACTS_LOG_DAYS_BACK'] = 'nap vissza';
 $lang['ACTS_LOG_TOPIC_MATCH'] = 'Téma címe mérkőzés';
 $lang['ACTS_LOG_SORT_BY'] = 'Rendezés';
@@ -2585,6 +2585,7 @@ $lang['ACTS_LOG_TIME'] = 'Idő';
 $lang['ACTS_LOG_INFO'] = 'Információ';
 $lang['ACTS_LOG_FILTER'] = 'Szűrő';
 $lang['ACTS_LOG_TOPICS'] = 'Témák:';
+$lang['ACTS_LOG_OR'] = 'vagy';
 
 $lang['RELEASE'] = 'Kiadás Sablonok';
 $lang['RELEASES'] = 'Kiadások';
@@ -2661,7 +2662,7 @@ $lang['SEARCH_USERS_ADVANCED'] = 'Fejlett Felhasználói Keresés';
 $lang['SEARCH_USERS_EXPLAIN'] = 'Ez a Modul lehetővé teszi, hogy végre a speciális keresést a felhasználók széles körű kritériumoknak. Kérjük, olvassa el a leírásokat az egyes mező megérteni, hogy egyes keresési opciót teljesen.';
 $lang['SEARCH_USERNAME_EXPLAIN'] = 'Itt végre egy esetben érzéketlen keresés felhasználónév. Ha szeretné, hogy megfeleljen része a felhasználónevét, használja a * (csillag) helyettesítő karaktert.';
 $lang['SEARCH_EMAIL_EXPLAIN'] = 'Írjon be egy kifejezést, hogy megfeleljen a felhasználó e-mail címét. Ez esetben érzéketlen. Ha azt szeretné, hogy egy részleges egyezés, használja a * (csillag) helyettesítő karaktert.';
-$lang['SEARCH_IP_EXPLAIN'] = 'Keresés a felhasználók által egy adott IP-cím (xxx.xxx.xxx.xxx), helyettesítő (xxx.xxx.xxx.*) vagy tartomány (xxx.xxx.xxx.xxx-yyy.yyy.yyy.yyy). Megjegyzés: az utolsó quad .255 tekinthető a tartomány összes IPs a quad. Ha meg 10.0.0.255, mint a belépő 10.0.0.* (Nem IP rendelt .255, ami azt illeti, van fenntartva). Hol találkozhat ez a tartományok, 10.0.0.5-10.0.0.255 ugyanaz, mint a "10.0.0.*" . Meg kéne adnia 10.0.0.5-10.0.0.254 .';
+$lang['SEARCH_IP_EXPLAIN'] = 'Keresés a felhasználók által egy adott IP-cím (xxx.xxx.xxx.xxx).';
 $lang['SEARCH_USERS_JOINED'] = 'Felhasználó csatlakozott';
 $lang['SEARCH_USERS_LASTVISITED'] = 'A felhasználók, akiket meglátogatott';
 $lang['IN_THE_LAST'] = 'a múlt';

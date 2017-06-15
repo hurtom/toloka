@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'login');
 define('IN_LOGIN', true);
 define('BB_ROOT', './');
@@ -119,9 +118,6 @@ if (isset($_POST['login'])) {
             $login_err = CACHE('bb_login_err')->get('l_err_' . USER_IP);
             if ($login_err > $bb_cfg['invalid_logins']) {
                 $need_captcha = true;
-            }
-            if ($login_err > 50) {
-                // TODO temp ban ip
             }
             CACHE('bb_login_err')->set('l_err_' . USER_IP, ($login_err + 1), 3600);
         } else {

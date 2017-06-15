@@ -27,7 +27,6 @@ if (isset($_REQUEST['GLOBALS'])) {
     die();
 }
 
-ignore_user_abort(true);
 define('TIMESTART', utime());
 define('TIMENOW', time());
 
@@ -47,11 +46,19 @@ if (empty($_SERVER['SERVER_NAME'])) {
 if (!defined('BB_ROOT')) {
     define('BB_ROOT', './');
 }
-if (!defined('IN_FORUM') && !defined('IN_TRACKER')) {
-    define('IN_FORUM', true);
+if (!defined('BB_SCRIPT')) {
+    define('BB_SCRIPT', 'undefined');
 }
 
 header('X-Frame-Options: SAMEORIGIN');
+
+// Cloudflare
+if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_CF_CONNECTING_IP'];
+}
+
+// Get all constants
+require_once __DIR__ . '/library/defines.php';
 
 // Composer
 if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
@@ -59,14 +66,52 @@ if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
 }
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Get initial config
-require __DIR__ . '/library/config.php';
+/**
+ * Gets the value of an environment variable. Supports boolean, empty and null.
+ *
+ * @param  string $key
+ * @param  mixed $default
+ * @return mixed
+ */
+function env($key, $default = null)
+{
+    $value = getenv($key);
+    if (!$value) return value($default);
+    switch (strtolower($value)) {
+        case 'true':
+        case '(true)':
+            return true;
+        case 'false':
+        case '(false)':
+            return false;
+        case '(null)':
+            return null;
+        case '(empty)':
+            return '';
+    }
+    return $value;
+}
 
-// Bugsnag error reporting
-if ($bb_cfg['bugsnag']['enabled'] && !empty($bb_cfg['bugsnag']['api_key'])) {
-    /** @var Bugsnag\Handler $bugsnag */
-    $bugsnag = Bugsnag\Client::make($bb_cfg['bugsnag']['api_key']);
-    Bugsnag\Handler::register($bugsnag);
+/**
+ * Return the default value of the given value.
+ *
+ * @param  mixed $value
+ * @return mixed
+ */
+function value($value)
+{
+    return $value instanceof Closure ? $value() : $value;
+}
+
+// Get initial config
+if (!getenv('APP_DEBUG') && file_exists(__DIR__ . '/.env')) {
+    (new Symfony\Component\Dotenv\Dotenv())->load(__DIR__ . '/.env');
+}
+require_once __DIR__ . '/library/config.php';
+
+// Local config
+if (file_exists(__DIR__ . '/library/config.local.php')) {
+    require_once __DIR__ . '/library/config.local.php';
 }
 
 $server_protocol = $bb_cfg['cookie_secure'] ? 'https://' : 'http://';
@@ -78,7 +123,7 @@ unset($server_protocol, $server_port);
 // Debug options
 define('DBG_USER', (isset($_COOKIE[COOKIE_DBG])));
 
-// Board/Tracker shared constants and functions
+// Board / tracker shared constants and functions
 define('BB_BT_TORRENTS', 'bb_bt_torrents');
 define('BB_BT_TRACKER', 'bb_bt_tracker');
 define('BB_BT_TRACKER_SNAP', 'bb_bt_tracker_snap');
@@ -88,7 +133,7 @@ define('BT_AUTH_KEY_LENGTH', 10);
 
 define('PEER_HASH_PREFIX', 'peer_');
 define('PEERS_LIST_PREFIX', 'peers_list_');
-define('PEER_HASH_EXPIRE', round($bb_cfg['announce_interval'] * (0.85 * $tr_cfg['expire_factor']))); // sec
+define('PEER_HASH_EXPIRE', round($bb_cfg['announce_interval'] * (0.85 * $bb_cfg['tracker']['expire_factor']))); // sec
 define('PEERS_LIST_EXPIRE', round($bb_cfg['announce_interval'] * 0.7)); // sec
 
 define('DL_STATUS_RELEASER', -1);
@@ -104,11 +149,27 @@ define('GUEST_UID', -1);
 define('BOT_UID', -746);
 
 /**
+ * Progressive error reporting
+ */
+if ($bb_cfg['bugsnag']['enabled'] && env('APP_ENV', 'production') !== 'local') {
+    /** @var Bugsnag\Handler $bugsnag */
+    $bugsnag = Bugsnag\Client::make($bb_cfg['bugsnag']['api_key']);
+    Bugsnag\Handler::register($bugsnag);
+}
+
+if (DBG_USER && env('APP_ENV', 'production') === 'local') {
+    /** @var Whoops\Run $whoops */
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+}
+
+/**
  * Database
  */
 $DBS = new TorrentPier\Legacy\Dbs($bb_cfg);
 
-function DB($db_alias = 'db1')
+function DB($db_alias = 'db')
 {
     global $DBS;
     return $DBS->get_db_obj($db_alias);
@@ -197,7 +258,7 @@ function file_write($str, $file, $max_size = LOG_MAX_SIZE, $lock = true, $replac
 {
     $bytes_written = false;
 
-    if ($max_size && @filesize($file) >= $max_size) {
+    if ($max_size && file_exists($file) && filesize($file) >= $max_size) {
         $old_name = $file;
         $ext = '';
         if (preg_match('#^(.+)(\.[^\\/]+)$#', $file, $matches)) {
@@ -206,25 +267,25 @@ function file_write($str, $file, $max_size = LOG_MAX_SIZE, $lock = true, $replac
         }
         $new_name = $old_name . '_[old]_' . date('Y-m-d_H-i-s_') . getmypid() . $ext;
         clearstatcache();
-        if (@file_exists($file) && @filesize($file) >= $max_size && !@file_exists($new_name)) {
-            @rename($file, $new_name);
+        if (!file_exists($new_name)) {
+            rename($file, $new_name);
         }
     }
-    if (!$fp = @fopen($file, 'ab')) {
+    if (!$fp = fopen($file, 'ab')) {
         if ($dir_created = bb_mkdir(dirname($file))) {
-            $fp = @fopen($file, 'ab');
+            $fp = fopen($file, 'ab');
         }
     }
     if ($fp) {
         if ($lock) {
-            @flock($fp, LOCK_EX);
+            flock($fp, LOCK_EX);
         }
         if ($replace_content) {
-            @ftruncate($fp, 0);
-            @fseek($fp, 0, SEEK_SET);
+            ftruncate($fp, 0);
+            fseek($fp, 0, SEEK_SET);
         }
-        $bytes_written = @fwrite($fp, $str);
-        @fclose($fp);
+        $bytes_written = fwrite($fp, $str);
+        fclose($fp);
     }
 
     return $bytes_written;
@@ -244,7 +305,7 @@ function mkdir_rec($path, $mode)
         return ($path !== '.' && $path !== '..') ? is_writable($path) : false;
     }
 
-    return mkdir_rec(dirname($path), $mode) ? @mkdir($path, $mode) : false;
+    return mkdir_rec(dirname($path), $mode) ? mkdir($path, $mode) : false;
 }
 
 function verify_id($id, $length)
@@ -258,28 +319,35 @@ function clean_filename($fname)
     return str_replace($s, '_', str_compact($fname));
 }
 
+/**
+ * Декодирование оригинального IP
+ * @param $ip
+ * @return string
+ */
 function encode_ip($ip)
 {
-    $d = explode('.', $ip);
-    return sprintf('%02x%02x%02x%02x', $d[0], $d[1], $d[2], $d[3]);
+    return Longman\IPTools\Ip::ip2long($ip);
 }
 
+/**
+ * Восстановление декодированного IP
+ * @param $ip
+ * @return string
+ */
 function decode_ip($ip)
 {
-    return long2ip("0x{$ip}");
+    return Longman\IPTools\Ip::long2ip($ip);
 }
 
-function ip2int($ip)
+/**
+ * Проверка IP на валидность
+ *
+ * @param $ip
+ * @return bool
+ */
+function verify_ip($ip)
 {
-    return (float)sprintf('%u', ip2long($ip));  // для совместимости с 32 битными системами
-}
-
-// long2ip( mask_ip_int(ip2int('1.2.3.4'), 24) ) = '1.2.3.255'
-function mask_ip_int($ip, $mask)
-{
-    $ip_int = is_numeric($ip) ? $ip : ip2int($ip);
-    $ip_masked = $ip_int | ((1 << (32 - $mask)) - 1);
-    return (float)sprintf('%u', $ip_masked);
+    return Longman\IPTools\Ip::isValid($ip);
 }
 
 function bb_crc32($str)
@@ -290,11 +358,6 @@ function bb_crc32($str)
 function hexhex($value)
 {
     return dechex(hexdec($value));
-}
-
-function verify_ip($ip)
-{
-    return preg_match('#^(\d{1,3}\.){3}\d{1,3}$#', $ip);
 }
 
 function str_compact($str)
@@ -379,7 +442,7 @@ function log_request($file = '', $prepend_str = false, $add_post = true)
 {
     global $user;
 
-    $file = ($file) ?: 'req/' . date('m-d');
+    $file = $file ?: 'req/' . date('m-d');
     $str = array();
     $str[] = date('m-d H:i:s');
     if ($prepend_str !== false) {
@@ -407,11 +470,10 @@ function log_request($file = '', $prepend_str = false, $add_post = true)
     bb_log($str, $file);
 }
 
-// Board init
-if (defined('IN_FORUM')) {
+// Board or tracker init
+if (!defined('IN_TRACKER')) {
     require INC_DIR . '/init_bb.php';
-} // Tracker init
-elseif (defined('IN_TRACKER')) {
+} else {
     define('DUMMY_PEER', pack('Nn', ip2long($_SERVER['REMOTE_ADDR']), !empty($_GET['port']) ? (int)$_GET['port'] : mt_rand(1000, 65000)));
 
     function dummy_exit($interval = 1800)

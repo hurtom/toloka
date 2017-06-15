@@ -24,7 +24,6 @@
  */
 
 define('BB_ROOT', './../');
-define('IN_FORUM', true);
 define('IN_ADMIN', true);
 
 require dirname(__DIR__) . '/common.php';
@@ -35,7 +34,7 @@ require_once INC_DIR . '/functions_admin.php';
 $user->session_start();
 
 if (IS_GUEST) {
-    redirect(LOGIN_URL . "?redirect=admin/index.php");
+    redirect(LOGIN_URL . '?redirect=admin/index.php');
 }
 
 if (!IS_ADMIN) {

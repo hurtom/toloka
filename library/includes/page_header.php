@@ -125,11 +125,9 @@ $template->assign_vars(array(
 // The following assigns all _common_ variables that may be used at any point in a template
 $template->assign_vars(array(
     'SIMPLE_HEADER' => !empty($gen_simple_header),
-    'CONTENT_ENCODING' => isset($bb_cfg['lang'][$userdata['user_lang']]['encoding']) ?
-        $bb_cfg['lang'][$userdata['user_lang']]['encoding'] : 'utf-8',
+    'CONTENT_ENCODING' => $bb_cfg['charset'],
 
     'IN_ADMIN' => defined('IN_ADMIN'),
-    'SHOW_ADS' => (!$logged_in || isset($bb_cfg['show_ads_users'][$user->id]) || (!IS_AM && $user->show_ads)),
     'USER_HIDE_CAT' => (BB_SCRIPT == 'index'),
 
     'USER_LANG' => $userdata['user_lang'],
@@ -184,8 +182,8 @@ $template->assign_vars(array(
     'U_TERMS' => $bb_cfg['terms_and_conditions_url'],
     'U_TRACKER' => "tracker.php",
 
-    'SHOW_SIDEBAR1' => (!empty($page_cfg['show_sidebar1'][BB_SCRIPT]) || $bb_cfg['show_sidebar1_on_every_page']),
-    'SHOW_SIDEBAR2' => (!empty($page_cfg['show_sidebar2'][BB_SCRIPT]) || $bb_cfg['show_sidebar2_on_every_page']),
+    'SHOW_SIDEBAR1' => !empty($bb_cfg['page']['show_sidebar1'][BB_SCRIPT]) || $bb_cfg['show_sidebar1_on_every_page'],
+    'SHOW_SIDEBAR2' => !empty($bb_cfg['page']['show_sidebar2'][BB_SCRIPT]) || $bb_cfg['show_sidebar2_on_every_page'],
 
     'HTML_AGREEMENT' => LANG_DIR . 'html/user_agreement.html',
     'HTML_COPYRIGHT' => LANG_DIR . 'html/copyright_holders.html',
@@ -227,7 +225,7 @@ $template->assign_vars(array(
     'U_WATCHED_TOPICS' => "profile.php?mode=watch",
 ));
 
-if (!empty($page_cfg['show_torhelp'][BB_SCRIPT]) && !empty($userdata['torhelp'])) {
+if (!empty($bb_cfg['page']['show_torhelp'][BB_SCRIPT]) && !empty($userdata['torhelp'])) {
     $ignore_time = !empty($_COOKIE['torhelp']) ? (int)$_COOKIE['torhelp'] : 0;
 
     if (TIMENOW > $ignore_time) {
@@ -250,17 +248,6 @@ if (!empty($page_cfg['show_torhelp'][BB_SCRIPT]) && !empty($userdata['torhelp'])
         $template->assign_vars(array(
             'TORHELP_TOPICS' => implode("</li>\n<li>", $torhelp_topics),
         ));
-    }
-}
-
-// Ads
-if ($user->show_ads) {
-    $load_ads = array('trans');
-    if (defined('BB_SCRIPT')) {
-        $load_ads[] = BB_SCRIPT;
-    }
-    foreach ($ads->get($load_ads) as $block_id => $ad_html) {
-        $template->assign_var("AD_BLOCK_{$block_id}", $ad_html);
     }
 }
 

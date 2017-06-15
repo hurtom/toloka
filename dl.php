@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'dl');
 define('NO_GZIP', true);
 define('BB_ROOT', './');
@@ -32,6 +31,7 @@ require ATTACH_DIR . '/attachment_mod.php';
 
 $datastore->enqueue(array(
     'attach_extensions',
+    'cat_forums',
 ));
 
 $download_id = request_var('id', 0);
@@ -68,7 +68,7 @@ function send_file_to_browser($attachment, $upload_dir)
     header('Pragma: public');
     $real_filename = clean_filename(basename($attachment['real_filename']));
     $mimetype = $attachment['mimetype'] . ';';
-    $charset = "charset={$bb_cfg['lang'][$userdata['user_lang']]['encoding']};";
+    $charset = "charset={$bb_cfg['charset']};";
 
     // Send out the Headers
     header("Content-Type: $mimetype $charset name=\"$real_filename\"");

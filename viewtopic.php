@@ -23,7 +23,6 @@
  * SOFTWARE.
  */
 
-define('IN_FORUM', true);
 define('BB_SCRIPT', 'topic');
 define('BB_ROOT', './');
 require __DIR__ . '/common.php';
@@ -31,6 +30,7 @@ require INC_DIR . '/bbcode.php';
 
 $datastore->enqueue(array(
     'ranks',
+    'cat_forums',
 ));
 
 $page_cfg['load_tpl_vars'] = array(
@@ -127,6 +127,7 @@ if (!$t_data = DB()->fetch_row($sql)) {
 $forum_topic_data =& $t_data;
 $topic_id = $t_data['topic_id'];
 $forum_id = $t_data['forum_id'];
+$topic_attachment = isset($t_data['topic_attachment']) ? (int)$t_data['topic_attachment'] : null;
 
 if ($t_data['allow_porno_topic'] && bf($userdata['user_opt'], 'user_opt', 'user_porn_forums')) {
     bb_die($lang['ERROR_PORNO_FORUM']);
@@ -137,11 +138,13 @@ if ($userdata['session_admin'] && !empty($_REQUEST['mod'])) {
         $datastore->enqueue(array('viewtopic_forum_select'));
     }
 }
-if (isset($t_data['topic_attachment'])) {
+if ($topic_attachment) {
     $datastore->enqueue(array(
         'attach_extensions',
     ));
 }
+
+set_die_append_msg($forum_id);
 
 // Find newest post
 if (($next_topic_id || (isset($_GET['view']) && $_GET['view'] === 'newest')) && !IS_GUEST && $topic_id) {
@@ -238,9 +241,7 @@ if ($post_id && !empty($t_data['prev_posts'])) {
     $start = floor(($t_data['prev_posts'] - 1) / $posts_per_page) * $posts_per_page;
 }
 
-//
 // Is user watching this thread?
-//
 $can_watch_topic = $is_watching_topic = false;
 
 if ($bb_cfg['topic_notify_enabled']) {
@@ -381,23 +382,16 @@ if (!$ranks = $datastore->get('ranks')) {
     $ranks = $datastore->get('ranks');
 }
 
-//
 // Define censored word matches
-//
 $orig_word = $replacement_word = array();
 obtain_word_list($orig_word, $replacement_word);
 
-//
 // Censor topic title
-//
 if (count($orig_word)) {
     $topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 }
 
-//
-// Post, reply and other URL generation for
-// templating vars
-//
+// Post, reply and other URL generation for templating vars
 $new_topic_url = POSTING_URL . "?mode=newtopic&amp;f=" . $forum_id;
 $reply_topic_url = POSTING_URL . "?mode=reply&amp;t=" . $topic_id;
 $view_forum_url = FORUM_URL . $forum_id;
@@ -421,8 +415,8 @@ $s_auth_can .= (($is_auth['auth_vote']) ? $lang['RULES_VOTE_CAN'] : $lang['RULES
 $s_auth_can .= (($is_auth['auth_attachments']) ? $lang['RULES_ATTACH_CAN'] : $lang['RULES_ATTACH_CANNOT']) . '<br />';
 $s_auth_can .= (($is_auth['auth_download']) ? $lang['RULES_DOWNLOAD_CAN'] : $lang['RULES_DOWNLOAD_CANNOT']) . '<br />';
 
+// Moderator output
 $topic_mod = '';
-
 if ($is_auth['auth_mod']) {
     $s_auth_can .= $lang['RULES_MODERATE'];
     $topic_mod .= "<a href=\"modcp.php?" . POST_TOPIC_URL . "=$topic_id&amp;mode=delete&amp;sid=" . $userdata['session_id'] . '"><img src="' . $images['topic_mod_delete'] . '" alt="' . $lang['DELETE_TOPIC'] . '" title="' . $lang['DELETE_TOPIC'] . '" border="0" /></a>&nbsp;';
@@ -441,9 +435,7 @@ if ($is_auth['auth_mod']) {
     $topic_mod .= "<a href=\"modcp.php?" . POST_TOPIC_URL . "=$topic_id&amp;mode=move&amp;sid=" . $userdata['session_id'] . '"><img src="' . $images['topic_mod_move'] . '" alt="' . $lang['MOVE_TOPIC'] . '" title="' . $lang['MOVE_TOPIC'] . '" border="0" /></a>&nbsp;';
 }
 
-//
 // Topic watch information
-//
 $s_watching_topic = $s_watching_topic_img = '';
 if ($can_watch_topic) {
     if ($is_watching_topic) {
@@ -465,9 +457,7 @@ $pg_url .= ($posts_per_page != $bb_cfg['posts_per_page']) ? "&amp;ppp=$posts_per
 
 generate_pagination($pg_url, $total_replies, $posts_per_page, $start);
 
-//
 // Selects
-//
 $sel_previous_days = array(
     0 => $lang['ALL_POSTS'],
     1 => $lang['1_DAY'],
@@ -556,7 +546,7 @@ $template->assign_vars(array(
 ));
 require INC_DIR . '/torrent_show_dl_list.php';
 
-if (isset($t_data['topic_attachment'])) {
+if ($topic_attachment) {
     require ATTACH_DIR . '/attachment_mod.php';
     init_display_post_attachments($t_data['topic_attachment']);
 }
@@ -716,6 +706,8 @@ for ($i = 0; $i < $total_posts; $i++) {
         $mc_select_type[$key] = $value['type'];
     }
 
+    $is_first_post = ($post_id == $t_data['topic_first_post_id']);
+
     $template->assign_block_vars('postrow', array(
         'ROW_CLASS' => !($i % 2) ? 'row1' : 'row2',
         'POST_ID' => $post_id,
@@ -735,7 +727,7 @@ for ($i = 0; $i < $total_posts; $i++) {
         'POSTER_GENDER' => ($bb_cfg['gender']) ? gender_image($postrow[$i]['user_gender']) : '',
         'POSTED_AFTER' => ($prev_post_time) ? delta_time($postrow[$i]['post_time'], $prev_post_time) : '',
         'IS_UNREAD' => is_unread($postrow[$i]['post_time'], $topic_id, $forum_id),
-        'IS_FIRST_POST' => (!$start && ($post_id == $t_data['topic_first_post_id'])),
+        'IS_FIRST_POST' => (!$start && $is_first_post),
         'MOD_CHECKBOX' => ($moderation && ($start || defined('SPLIT_FORM_START'))),
         'POSTER_AVATAR' => $poster_avatar,
         'POST_NUMBER' => ($i + $start + 1),
@@ -823,7 +815,7 @@ $template->assign_vars(array(
 
 if (IS_ADMIN) {
     $template->assign_vars(array(
-        'U_LOGS' => "admin/admin_log.php?sid={$userdata['session_id']}&amp;t=$topic_id&amp;db=900",
+        'U_LOGS' => "admin/admin_log.php?t=$topic_id&amp;db=365",
     ));
 }
 
