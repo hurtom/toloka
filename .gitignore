@@ -18,6 +18,7 @@ library/config.local.php
 node_modules
 vendor
 yarn.lock
+sitemap/*.xml
 
 ### Archives ###
 *.log
