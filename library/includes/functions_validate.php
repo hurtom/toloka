@@ -60,7 +60,7 @@ function validate_username($username, $check_ban_and_taken = true)
         // Занято
         $username_sql = DB()->escape($username);
 
-        if ($row = DB()->fetch_row("SELECT username FROM " . BB_USERS . " WHERE username = '$username_sql' LIMIT 1")) {
+        if ($row = DB()->fetch_row("SELECT username FROM " . BB_USERS . " WHERE username = '$username_sql' OR user_email='$username_sql' LIMIT 1")) {
             if ((!IS_GUEST && $row['username'] != $user->name) || IS_GUEST) {
                 return $lang['USERNAME_TAKEN'];
             }
