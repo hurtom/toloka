@@ -1115,7 +1115,6 @@ function setup_style()
         'EXT_LINK_NEW_WIN' => $bb_cfg['ext_link_new_win'],
         'TPL_DIR' => make_url($css_dir),
         'SITE_URL' => make_url('/'),
-		'TEMPLATE' =>   make_url('styles/' . basename(TEMPLATES_DIR) . '/' . $tpl_dir_name),
     ));
 
     require TEMPLATES_DIR . '/' . $tpl_dir_name . '/tpl_config.php';

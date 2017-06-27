@@ -10,13 +10,9 @@
 <link rel="shortcut icon" href="{SITE_URL}favicon.png" type="image/x-icon">
 <link rel="search" type="application/opensearchdescription+xml" href="{SITE_URL}opensearch_desc.xml" title="{SITENAME} (Forum)" />
 <link rel="search" type="application/opensearchdescription+xml" href="{SITE_URL}opensearch_desc_bt.xml" title="{SITENAME} (Tracker)" />
-<link rel="stylesheet" href="{TEMPLATE}/css/bootstrap.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
-<script src="{TEMPLATE}/js/tablesorter.js"></script>
+<script type="text/javascript" src="{SITE_URL}styles/js/jquery.pack.js?v={$bb_cfg['js_ver']}"></script>
 <script type="text/javascript" src="{SITE_URL}styles/js/main.js?v={$bb_cfg['js_ver']}"></script>
-<script type="text/javascript" src="{TEMPLATE}/js/bootstrap.min.js"></script>
 
 <!-- IF INCLUDE_BBCODE_JS -->
 <script type="text/javascript" src="{SITE_URL}styles/js/bbcode.js?v={$bb_cfg['js_ver']}"></script>

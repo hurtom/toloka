@@ -2834,12 +2834,3 @@ $lang['EMAILER_SUBJECT'] = [
     'USER_WELCOME' => 'Ласкаво просимо на сайт %s',
     'USER_WELCOME_INACTIVE' => 'Ласкаво просимо на сайт %s',
 ];
-
-
-//Інші мовні коди
-//Вкладення торрент
-$lang['THANKS'] = 'Дякую!';
-$lang['THANKED'] = 'Подякували';
-$lang['THANK'] = 'Подякувати';
-$lang['RATING'] = 'Оцінка';
-$lang['VOICES'] = 'Голосів';

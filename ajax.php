@@ -79,7 +79,6 @@ switch ($ajax->action) {
     case 'manage_group':
         require INC_DIR . '/functions_group.php';
         break;
-	case 'thanks':
 }
 
 // Position in $ajax->valid_actions['xxx']

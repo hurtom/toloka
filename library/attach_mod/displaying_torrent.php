@@ -79,7 +79,6 @@ $bt_user_id = $userdata['user_id'];
 $attach_id = $attachments['_' . $post_id][$i]['attach_id'];
 $tracker_status = $attachments['_' . $post_id][$i]['tracker_status'];
 $download_count = $attachments['_' . $post_id][$i]['download_count'];
-$thanked_count = $attachments['_' . $post_id][$i]['thanked_count'];
 $tor_file_size = humn_size($attachments['_' . $post_id][$i]['filesize']);
 $tor_file_time = bb_date($attachments['_' . $post_id][$i]['filetime']);
 
@@ -198,15 +197,6 @@ if ($tor_reged && $tor_info) {
             ));
         }
     }
-	
-	$thanked = DB()->fetch_row("SELECT thanked FROM " . BB_ATTACHMENTS_DESC . " WHERE attach_id = " . $attach_id);
-	$u_thanked = true;
-	$json = json_decode($thanked['thanked']);
-	foreach($json->data as $data) {
-		if($data->id == $userdata['user_id']) {
-			$u_thanked = false;
-		}
-	}	
 
     if (!$dl_allowed) {
         $template->assign_block_vars('postrow.attach.tor_reged', array());
@@ -242,10 +232,6 @@ if ($tor_reged && $tor_info) {
             'REGED_DELTA' => delta_time($tor_info['reg_time']),
             'TORRENT_SIZE' => humn_size($tor_size),
             'COMPLETED' => sprintf($lang['DOWNLOAD_NUMBER'], $tor_info['complete_count']),
-			'THANKED_COUNT' => $thanked_count,
-			'U_THANKED' => $u_thanked,
-			'U_ID' => $bt_user_id,
-			'tor_id' => $tor_id,
         ));
 
         if ($comment) {
