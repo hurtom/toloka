@@ -85,6 +85,8 @@ CREATE TABLE `bb_attachments_desc` (
   `filetime` int(11) NOT NULL DEFAULT 0,
   `thumbnail` tinyint(1) NOT NULL DEFAULT 0,
   `tracker_status` tinyint(1) NOT NULL DEFAULT 0
+  `thanked_count` int(11) NOT NULL DEFAULT 0 COMMENT 'Кількість "Дякую" на прикріпленні',
+  `thanked` text NOT NULL DEFAULT '{"data":[]}' COMMENT 'Хто подякував за вкладення'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
