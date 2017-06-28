@@ -84,10 +84,20 @@ CREATE TABLE `bb_attachments_desc` (
   `filesize` int(20) NOT NULL DEFAULT 0,
   `filetime` int(11) NOT NULL DEFAULT 0,
   `thumbnail` tinyint(1) NOT NULL DEFAULT 0,
-  `tracker_status` tinyint(1) NOT NULL DEFAULT 0
+  `tracker_status` tinyint(1) NOT NULL DEFAULT 0,
+  `thanks` mediumint(8) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `bb_attachments_rating`;
+CREATE TABLE `bb_attachments_rating` (
+  `attach_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `user_id` mediumint(9) NOT NULL DEFAULT '0',
+  `thanked` tinyint(1) NOT NULL DEFAULT '0',
+  `rating` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`attach_id`,`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `bb_attach_quota`
