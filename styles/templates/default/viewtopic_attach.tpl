@@ -220,6 +220,55 @@
 		<td><span title="{L_DOWNLOADED}: {postrow.attach.tor_reged.DOWNLOAD_COUNT}">{postrow.attach.tor_reged.COMPLETED}</span></td>
 	</tr>
 	<tr class="row1">
+		<td>{L_REGISTERED}:</td>
+		<td><span title="{L_REGISTERED}: {postrow.attach.tor_reged.REGED_TIME}">{postrow.attach.tor_reged.REGED_TIME}</span></td>
+	</tr>
+	<tr class="row1">
+		<td>{L_SIZE}:</td>
+		<td><span title="{L_SIZE}: {postrow.attach.tor_reged.TORRENT_SIZE}">{postrow.attach.tor_reged.TORRENT_SIZE}</span></td>
+	</tr>
+
+	<tr class="row1">
+		<td>{L_THANKED}:</td>
+		<td>
+			<span class="t_count">{postrow.attach.tor_reged.THANKED_COUNT}</span>
+			<span>
+<!-- IF postrow.attach.tor_reged.U_THANKED -->
+				<input id="btn_thanks" onclick="ajax.thanks('thanks'); return false;" type="button" class="liteoption" name="" value="{L_THANKS}" title="{L_THANK}">
+<!-- ENDIF -->
+			</span>
+			(<span id="list_thanked" >
+				<a onclick="ajax.thanks('list'); return false;"href="#">{L_LIST}</a>
+			</span>)
+		</td>
+	</tr>
+	<tr class="row1">
+		<td><b>{L_RATING}:</b></td>
+		<td>
+			<span>{L_VOICES}: 11</span>
+		</td>
+	</tr>
+	
+	<script type="text/javascript">
+		ajax.thanks = function(mode) {
+			ajax.exec({
+				action    : 'thanks',
+				attach_id : {postrow.attach.tor_reged.ATTACH_ID},
+				mode      : mode,
+			});
+		};
+		ajax.callback.thanks = function(data) {
+			if (data.type === 1) {
+				document.getElementById("btn_thanks").remove();
+				$('.t_count').html(data.status);
+			}
+			if (data.type === 2) {
+				$('#list_thanked').html(data.status);
+			}
+		};
+	</script>
+
+	<tr class="row1">
 		<td>{L_SIZE}:</td>
 		<td>{postrow.attach.tor_reged.TORRENT_SIZE}</td>
 	</tr>
