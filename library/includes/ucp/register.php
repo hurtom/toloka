@@ -232,16 +232,16 @@ foreach ($profile_fields as $field => $can_edit) {
                     } elseif ($new_pass != $cfm_pass) {
                         $errors[] = $lang['CHOOSE_PASS_ERR'];
                     }
-                    $db_data['user_password'] = md5(md5($new_pass));
+					$db_data['user_password'] = password_hash(md5($new_pass), PASSWORD_DEFAULT);
                 }
 
                 if ($mode == 'register') {
                     if (empty($new_pass)) {
-                        $errors[] = $lang['CHOOSE_PASS'];
+					$errors[] = $lang['CHOOSE_PASS'];
                     }
                 } else {
                     if (!empty($cur_pass)) {
-                        $cur_pass_valid = ($pr_data['user_password'] === md5(md5($cur_pass)));
+                        $cur_pass_valid = (password_verify(md5($cur_pass), $pr_data['user_password']));
                     }
                     if (!empty($new_pass) && !$cur_pass_valid) {
                         $errors[] = $lang['CHOOSE_PASS_FAILED'];

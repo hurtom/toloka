@@ -394,20 +394,19 @@ class User
 
         if ($username && $password) {
             $username_sql = str_replace("\\'", "''", $username);
-            $password_sql = md5(md5($password));
 
             $sql = "
 				SELECT *
 				FROM " . BB_USERS . "
 				WHERE username = '$username_sql'
-				  AND user_password = '$password_sql'
 				  AND user_active = 1
 				  AND user_id != " . GUEST_UID . "
 				LIMIT 1
 			";
 
-            if ($userdata = DB()->fetch_row($sql)) {
-                if (!$userdata['username'] || !$userdata['user_password'] || $userdata['user_id'] == GUEST_UID || md5(md5($password)) !== $userdata['user_password'] || !$userdata['user_active']) {
+			$userdata = DB()->fetch_row($sql);
+            if (password_verify(md5($password), $userdata['user_password'])) {
+                if (!$userdata['username'] || !$userdata['user_password'] || $userdata['user_id'] == GUEST_UID /*|| md5(md5($password)) !== $userdata['user_password']*/ || !$userdata['user_active']) {
                     trigger_error('invalid userdata', E_USER_ERROR);
                 }
 

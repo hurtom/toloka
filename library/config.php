@@ -391,7 +391,7 @@ $bb_cfg['last_visit_update_intrv'] = 3600; // sec
 
 
 
-$bb_cfg['invalid_logins'] = 5;
+$bb_cfg['invalid_logins'] = 50000000; //змінити після завершення на стандартне '5'
 $bb_cfg['new_user_reg_disabled'] = false;
 $bb_cfg['unique_ip'] = false;
 $bb_cfg['new_user_reg_restricted'] = false;
