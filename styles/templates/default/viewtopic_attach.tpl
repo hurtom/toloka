@@ -242,13 +242,6 @@
 			</span>)
 		</td>
 	</tr>
-	<tr class="row1">
-		<td><b>{L_RATING}:</b></td>
-		<td>
-			<span>{L_VOICES}: 11</span>
-		</td>
-	</tr>
-	
 	<script type="text/javascript">
 		ajax.thanks = function(mode) {
 			ajax.exec({
@@ -267,11 +260,6 @@
 			}
 		};
 	</script>
-
-	<tr class="row1">
-		<td>{L_SIZE}:</td>
-		<td>{postrow.attach.tor_reged.TORRENT_SIZE}</td>
-	</tr>
 	<!-- BEGIN comment -->
 	<tr class="row1 tCenter">
 		<td colspan="3">{postrow.attach.tor_reged.comment.COMMENT}</td>
