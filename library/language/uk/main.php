@@ -2839,5 +2839,3 @@ $lang['EMAILER_SUBJECT'] = [
 $lang['THANKS'] = 'Дякую!';
 $lang['THANKED'] = 'Подякували';
 $lang['THANK'] = 'Подякувати';
-$lang['RATING'] = 'Оцінка';
-$lang['VOICES'] = 'Голосів';

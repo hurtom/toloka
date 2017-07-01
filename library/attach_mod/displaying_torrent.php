@@ -188,8 +188,8 @@ if ($tor_reged && $tor_info) {
     /*//*/
 	$sql_rating = DB()->fetch_rowset("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
 
-    $thanked = DB()->fetch_row("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
-    $u_thanked = true;
+	$thanked = DB()->fetch_row("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
+	$u_thanked = true;
 	foreach ($sql_rating as $row) {
 		if ($userdata['user_id'] == $row['user_id']) $u_thanked = false;
 	}

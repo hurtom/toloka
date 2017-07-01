@@ -19,7 +19,7 @@ switch ($mode) {
 			if ($row['user_id'] == $user_id) die;
 		}
 		$amount = $sql_desc['thanks'] + 1;
-		DB()->query("UPDATE " . BB_ATTACHMENTS_DESC . " SET thanks = $amount WHERE attach_id = $attach_id");
+		DB()->query("UPDATE " . BB_ATTACHMENTS_DESC . " SET thanks = thanks + 1 WHERE attach_id = $attach_id");
 		DB()->sql_query("INSERT INTO " . BB_ATTACHMENTS_RATING . " (attach_id, user_id, thanked) VALUES ($attach_id,$user_id,1) ON DUPLICATE KEY UPDATE thanked=1");
 		$type = 1;
 		$this->response['status'] = $amount;
