@@ -185,7 +185,6 @@ if ($tor_reged && $tor_info) {
 
     $user_status = isset($bt_userdata['user_status']) ? $bt_userdata['user_status'] : null;
 
-    /*//*/
 	$sql_rating = DB()->fetch_rowset("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
 
     $thanked = DB()->fetch_row("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
