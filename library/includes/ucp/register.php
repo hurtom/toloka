@@ -232,12 +232,13 @@ foreach ($profile_fields as $field => $can_edit) {
                     } elseif ($new_pass != $cfm_pass) {
                         $errors[] = $lang['CHOOSE_PASS_ERR'];
                     }
-					$db_data['user_password'] = password_hash(md5($new_pass), PASSWORD_DEFAULT);
+					$options = ['cost' => 12,];
+					$db_data['user_password'] = password_hash(md5($new_pass), PASSWORD_BCRYPT, $options);
                 }
 
                 if ($mode == 'register') {
                     if (empty($new_pass)) {
-					$errors[] = $lang['CHOOSE_PASS'];
+						$errors[] = $lang['CHOOSE_PASS'];
                     }
                 } else {
                     if (!empty($cur_pass)) {

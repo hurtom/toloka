@@ -406,7 +406,7 @@ class User
 
 			$userdata = DB()->fetch_row($sql);
             if (password_verify(md5($password), $userdata['user_password'])) {
-                if (!$userdata['username'] || !$userdata['user_password'] || $userdata['user_id'] == GUEST_UID /*|| md5(md5($password)) !== $userdata['user_password']*/ || !$userdata['user_active']) {
+                if (!$userdata['username'] || !$userdata['user_password'] || $userdata['user_id'] == GUEST_UID || !$userdata['user_active']) {
                     trigger_error('invalid userdata', E_USER_ERROR);
                 }
 
