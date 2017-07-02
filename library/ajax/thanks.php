@@ -30,7 +30,7 @@ switch ($mode) {
         foreach($sql_thanked as $row) {
             $list[] = "<a href=\"u".$row['user_id']."\">".$row['username']."</a>, ";
         }
-        $this->response['status'] = rtrim(implode('', $list), ', ');
+        $this->response['html'] = rtrim(implode('', $list), ', ');
         break;
 }
 $this->response['mode'] = $mode;

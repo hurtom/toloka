@@ -227,14 +227,14 @@
 	<tr class="row1">
 		<td>{L_THANKED}:</td>
 		<td>
-			<span class="t_count">{postrow.attach.tor_reged.THANKED_COUNT}</span>
-			<span>
+			<span id="thanks_count">{postrow.attach.tor_reged.THANKED_COUNT}</span>
 			<!-- IF postrow.attach.tor_reged.U_CAN_THANK -->
-				<input id="btn_thanks" onclick="ajax.thanks('thanks'); return false;" type="button" class="liteoption" name="" value="{L_THANKS}" title="{L_THANK}">
-			<!-- ENDIF -->
+			<span>
+				<input id="thanks_button" onclick="ajax.thanks('thanks'); return false;" type="button" class="liteoption" name="" value="{L_THANKS}" title="{L_THANK}">
 			</span>
+			<!-- ENDIF -->
 			<!-- IF postrow.attach.tor_reged.THANKED_COUNT -->
-			(<span id="list_thanked"><a onclick="ajax.thanks('list'); return false;"href="#">{L_LIST}</a></span>)
+			(<span id="thanks_list"><a onclick="ajax.thanks('list'); return false;"href="#">{L_LIST}</a></span>)
 			<!-- ENDIF -->
 		</td>
 	</tr>
@@ -248,11 +248,11 @@
 		};
 		ajax.callback.thanks = function(data) {
 			if (data.mode === 'thanks') {
-				document.getElementById("btn_thanks").remove();
-				$('.t_count').html({postrow.attach.tor_reged.THANKED_COUNT} + 1);
+				document.getElementById("thanks_button").remove();
+				$('#thanks_count').html({postrow.attach.tor_reged.THANKED_COUNT} + 1);
 			}
 			if (data.mode === 'list') {
-				$('#list_thanked').html(data.status);
+				$('#thanks_list').html(data.html);
 			}
 		};
 	</script>
