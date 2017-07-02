@@ -81,6 +81,7 @@ $tracker_status = $attachments['_' . $post_id][$i]['tracker_status'];
 $download_count = $attachments['_' . $post_id][$i]['download_count'];
 $tor_file_size = humn_size($attachments['_' . $post_id][$i]['filesize']);
 $tor_file_time = bb_date($attachments['_' . $post_id][$i]['filetime']);
+$thanked_count = $attachments['_' . $post_id][$i]['thanks'];
 
 $tor_reged = (bool)$tracker_status;
 $show_peers = (bool)$bb_cfg['bt_show_peers'];
@@ -185,16 +186,12 @@ if ($tor_reged && $tor_info) {
 
     $user_status = isset($bt_userdata['user_status']) ? $bt_userdata['user_status'] : null;
 
-	$sql_rating = DB()->fetch_rowset("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
-
-	$thanked = DB()->fetch_row("SELECT user_id, thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
-	$u_thanked = true;
-	foreach ($sql_rating as $row) {
-		if ($userdata['user_id'] == $row['user_id']) $u_thanked = false;
-	}
-    $row = DB()->fetch_row("SELECT COUNT(*) AS thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id");
-    $thanked_count = $row['thanked'];
-
+    if ($poster_id === $bt_user_id) {
+        $can_thank = false;
+    } else {
+        $row = DB()->fetch_row("SELECT thanked FROM " . BB_ATTACHMENTS_RATING . " WHERE attach_id = $attach_id AND user_id = $bt_user_id");
+        $can_thank = isset($row['thanked']) ? false : true;
+    }
 
     if (($min_ratio_dl || $min_ratio_warn) && $user_status != DL_STATUS_COMPLETE && $bt_user_id != $poster_id && $tor_type != TOR_TYPE_GOLD) {
         if (($user_ratio = get_bt_ratio($bt_userdata)) !== null) {
@@ -244,9 +241,7 @@ if ($tor_reged && $tor_info) {
             'TORRENT_SIZE' => humn_size($tor_size),
             'COMPLETED' => sprintf($lang['DOWNLOAD_NUMBER'], $tor_info['complete_count']),
             'THANKED_COUNT' => $thanked_count,
-      			'U_THANKED' => $u_thanked,
-      			'U_ID' => $bt_user_id,
-      			'tor_id' => $tor_id,
+            'U_CAN_THANK' => $can_thank
         ));
 
         if ($comment) {
