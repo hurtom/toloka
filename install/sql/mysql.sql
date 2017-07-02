@@ -1116,7 +1116,7 @@ CREATE TABLE `bb_users` (
 INSERT INTO `bb_users` (`user_id`, `user_active`, `username`, `user_password`, `user_session_time`, `user_lastvisit`, `user_last_ip`, `user_regdate`, `user_reg_ip`, `user_level`, `user_posts`, `user_timezone`, `user_lang`, `user_new_privmsg`, `user_unread_privmsg`, `user_last_privmsg`, `user_opt`, `user_rank`, `avatar_ext_id`, `user_gender`, `user_birthday`, `user_email`, `user_skype`, `user_twitter`, `user_icq`, `user_website`, `user_from`, `user_sig`, `user_occ`, `user_interests`, `user_actkey`, `user_newpasswd`, `autologin_id`, `user_newest_pm_id`, `user_points`, `tpl_name`) VALUES
 (-746, 0, 'bot', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 144, 0, 0, 0, '0000-00-00', 'bot@torrentpier.me', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
 (-1, 0, 'Guest', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
-(2, 1, 'admin', '$2y$10$fjuYdcS0DmOdPsY/LXliq.zQsp3bUR2D.Jw8w5w3HUswBvGgkLSRi', 0, 0, 'c0a86301', 0, '0', 1, 1, 2.00, '', 0, 0, 0, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'XCbkm1SmP1GB', 0, 0.00, 'default');
+(2, 1, 'admin', '$2y$12$9kPH9v2ayVP63JFp71FonuNtqc9qQlObeqG0Rhp8rtFl4/M5CcoYW', 0, 0, 'c0a86301', 0, '0', 1, 1, 2.00, '', 0, 0, 0, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'XCbkm1SmP1GB', 0, 0.00, 'default');
 
 -- --------------------------------------------------------
 

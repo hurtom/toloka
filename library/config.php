@@ -33,6 +33,9 @@ $domain_name = $_SERVER['HTTP_HOST'];
 
 $bb_cfg = [];
 
+//Алгоритм хешування
+$bb_cfg['passhash_cost'] = ['cost' => 12,];
+
 // Increase number after changing js or css
 $bb_cfg['js_ver'] = $bb_cfg['css_ver'] = 1;
 
