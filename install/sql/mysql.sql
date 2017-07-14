@@ -856,8 +856,6 @@ INSERT INTO `bb_quota_limits` (`quota_limit_id`, `quota_desc`, `quota_limit`) VA
 CREATE TABLE `bb_ranks` (
   `rank_id` smallint(5) UNSIGNED NOT NULL,
   `rank_title` varchar(50) NOT NULL DEFAULT '',
-  `rank_min` mediumint(8) NOT NULL DEFAULT 0,
-  `rank_special` tinyint(1) NOT NULL DEFAULT 1,
   `rank_image` varchar(255) NOT NULL DEFAULT '',
   `rank_style` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -866,8 +864,8 @@ CREATE TABLE `bb_ranks` (
 -- Dumping data for table `bb_ranks`
 --
 
-INSERT INTO `bb_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`, `rank_style`) VALUES
-(1, 'Адміністратор', -1, 1, 'styles/images/ranks/admin.png', 'colorAdmin');
+INSERT INTO `bb_ranks` (`rank_id`, `rank_title`, `rank_image`, `rank_style`) VALUES
+(1, 'Адміністратор', 'styles/images/ranks/admin.png', 'colorAdmin');
 
 -- --------------------------------------------------------
 
