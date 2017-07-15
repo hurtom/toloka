@@ -1,46 +1,73 @@
-# Contributor Covenant Code of Conduct
+# Пакт про участь - Кодекс поведінки
 
-## Our Pledge
+## Наші зобовʼязання
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+В інтересах зміцнення відкритого і дружнього середовища, ми, як учасники та
+супроводжувачі, зобовʼязуємось прймати участь в розбудові нашого проекту та
+спільноти навколо нього, уникаючи будь-яких образ та притискань в залежності
+від віку, статури, особливих потреб, етнічної та гендерної приналежності,
+самовираження, досвіду, національності, зовнішнього вигляду, раси, сексуальної
+самоідентифікації та орієнтації.
 
-## Our Standards
+## Наші стандарти
 
-Examples of behavior that contributes to creating a positive environment include:
+Приклади поведінки, які сприяють створенню сприятливих умов:
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+* Використання доброзичливої та зрозумілої мови
+* Повага до різних точок зору та досвіду
+* Вічливе сприйняття конструктивної критики
+* Зосередження уваги на тому, що краще для спільноти
+* Демонстрація співпереживання по відношенню до інших членів спільноти
 
-Examples of unacceptable behavior by participants include:
+Приклади неприпустимої поведінки до інших учасників:
 
-* The use of sexualized language or imagery and unwelcome sexual attention or advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or electronic address, without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a professional setting
+* Використання виразів і зображень сексуального характеру, небажана увага
+сексуального характеру чи вислови
+* Тролінг, або образливі/принизливі коментарі або персональні чи політичні
+випади
+* Публічні чи приватні домагання
+* Оприлюднення приватної інформації інших осіб, наприклад поштової чи
+електронної адреси, без явної на те згоди
+* Інша поведінка, яка обґрунтовано може вважатись недоречної в професійному оточені
 
-## Our Responsibilities
+## Наші обовʼязки
 
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+Супроводжувачі проекту несуть відповідальність за розʼяснення стандартів
+прийнятної поведінки і очікують у віповідь, на належне і справедливе
+виправлення у відповідь на будь-які випадки неприйнятної поведінки.
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+Супроводжувачі проекту несуть відповідальність та мають право вилучати,
+змінювати або відхиляти коментарі, коміти, код, зміни у вікі, в проблеми, а
+також ішний вклад в проект, що невідповідає Кодексу поведінки, чи блокувати
+тимчасово або назавжди будь-якого учасника за його поведінку, якщо вони
+вважають такі дії недоцільними, загрозливими, образливими або шкідливими.
 
-## Scope
+## Сфера застосування
 
-This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
+Цей Кодекс поведінки застосовується як в середині проекту так і публічно,
+коли особа представляє проект або його спільноту. Приклади представлення
+проекту або його спільноти включають використання офіційної адреси
+електронної пошти, публікації в соцальних мережах від імені проекта, або виступи
+на оналайн чи оффлайн подіях в якості представника проекту. Способи
+представництва можуть бути уточнені супроводжувачами проекта.
 
-## Enforcement
+## Правозастосування
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at admin@torrentpier.me. The project team will review and investigate all complaints, and will respond in a way that it deems appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
+Про випадки образливого, або іншого неприпустимого поводження можна повідомити
+надіславши листа до команди проекта за адресою [АДРЕСА_Е-ПОШТИ]. Всі скарги
+будуть розглянуті та перевірені, що призведе до реакції, що вважається
+необхідною і доцільною відповідно до обставин. Команда проекту зобовʼязується
+зберігати конфеденційність позивача. Інші деталі, щодо правозастосування можуть
+оприлюднюватись окремо.
 
-Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
+Супроводжувачі проекту, які не дотримуються або порушують Кодекс поведінки
+можуть зіткнутися з тимчасовими або постійними наслідками, які визначені членами
+керівництва проекту.
 
-## Attribution
+## Посилання
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
+Цей Кодекс поведінки заснований на [Пакті про участь][homepage], версії 1.4,
+що знаходиться за адресою [http://contributor-covenant.org/version/1/4/uk/][version]
 
 [homepage]: http://contributor-covenant.org
-[version]: http://contributor-covenant.org/version/1/4/
+[version]: http://contributor-covenant.org/version/1/4/uk/
