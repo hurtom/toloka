@@ -232,7 +232,7 @@ foreach ($profile_fields as $field => $can_edit) {
                     } elseif ($new_pass != $cfm_pass) {
                         $errors[] = $lang['CHOOSE_PASS_ERR'];
                     }
-	                $db_data['user_password'] = password_hash(md5($new_pass), PASSWORD_BCRYPT, $bb_cfg['passhash_cost']);
+                    $db_data['user_password'] = password_hash(md5($new_pass), PASSWORD_BCRYPT, $bb_cfg['passhash_cost']);
                 }
 
                 if ($mode == 'register') {
