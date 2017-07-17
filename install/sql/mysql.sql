@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql
--- Час створення: Лип 17 2017 р., 00:55
+-- Час створення: Лип 17 2017 р., 16:56
 -- Версія сервера: 10.2.7-MariaDB-10.2.7+maria~jessie
 -- Версія PHP: 7.0.16
 
@@ -440,7 +440,7 @@ INSERT INTO `bb_config` (`config_name`, `config_value`) VALUES
 ('callseed', '0'),
 ('cron_check_interval', '180'),
 ('cron_enabled', '0'),
-('cron_last_check', '1500252730'),
+('cron_last_check', '1500310450'),
 ('default_dateformat', 'Y-m-d H:i'),
 ('default_lang', 'uk'),
 ('flood_interval', '15'),
@@ -471,7 +471,7 @@ INSERT INTO `bb_config` (`config_name`, `config_value`) VALUES
 ('show_latest_news', '1'),
 ('show_mod_index', '0'),
 ('show_network_news', '1'),
-('sitemap_time', '1500184801'),
+('sitemap_time', '1500271320'),
 ('sitename', 'TorrentPier - Bittorrent-tracker engine'),
 ('site_desc', 'A little text to describe your forum'),
 ('smilies_path', 'styles/images/smiles'),
@@ -513,27 +513,27 @@ CREATE TABLE `bb_cron` (
 --
 
 INSERT INTO `bb_cron` (`cron_id`, `cron_active`, `cron_title`, `cron_script`, `schedule`, `run_day`, `run_time`, `run_order`, `last_run`, `next_run`, `run_interval`, `log_enabled`, `log_file`, `log_sql_queries`, `disable_board`, `run_counter`) VALUES
-(1, 1, 'Attach maintenance', 'attach_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-16 05:00:01', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(2, 1, 'Board maintenance', 'board_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(3, 1, 'Prune forums', 'prune_forums.php', 'daily', '', '05:00:00', 50, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(4, 1, 'Prune topic moved stubs', 'prune_topic_moved.php', 'daily', '', '05:00:00', 60, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(5, 1, 'Logs cleanup', 'clean_log.php', 'daily', '', '05:00:00', 70, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(6, 1, 'Tracker maintenance', 'tr_maintenance.php', 'daily', '', '05:00:00', 90, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(7, 1, 'Clean dlstat', 'clean_dlstat.php', 'daily', '', '05:00:00', 100, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(8, 1, 'Prune inactive users', 'prune_inactive_users.php', 'daily', '', '05:00:00', 110, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
-(9, 1, 'Sessions cleanup', 'sessions_cleanup.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:52:01', '2017-07-17 00:55:01', '00:03:00', 0, '', 0, 0, 5556),
-(10, 1, 'DS update cat_forums', 'ds_update_cat_forums.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 00:53:02', '00:05:00', 0, '', 0, 0, 2797),
-(11, 1, 'DS update stats', 'ds_update_stats.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
-(12, 1, 'Flash topic view', 'flash_topic_view.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
-(13, 1, 'Clean search results', 'clean_search_results.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
-(14, 1, 'Tracker cleanup and dlstat', 'tr_cleanup_and_dlstat.php', 'interval', '', '00:00:00', 20, '2017-07-17 00:48:01', '2017-07-17 01:03:01', '00:15:00', 0, '', 0, 0, 1405),
-(15, 1, 'Accrual seedbonus', 'tr_seed_bonus.php', 'interval', '', '00:00:00', 25, '2017-07-17 00:48:01', '2017-07-17 01:03:01', '00:15:00', 0, '', 0, 0, 1405),
-(16, 1, 'Make tracker snapshot', 'tr_make_snapshot.php', 'interval', '', '00:00:00', 10, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
-(17, 1, 'Seeder last seen', 'tr_update_seeder_last_seen.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 01:48:02', '01:00:00', 0, '', 0, 0, 372),
-(18, 1, 'Tracker dl-complete count', 'tr_complete_count.php', 'interval', '', '00:00:00', 255, '2017-07-16 23:44:05', '2017-07-17 05:44:05', '06:00:00', 0, '', 0, 0, 75),
-(19, 1, 'Cache garbage collector', 'cache_gc.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 00:53:02', '00:05:00', 0, '', 0, 0, 2797),
-(20, 1, 'Sitemap update', 'sitemap.php', 'daily', '', '06:00:00', 30, '2017-07-16 06:00:08', '2017-07-17 06:00:00', '00:00:00', 0, '', 0, 0, 28),
-(21, 1, 'Update forums atom', 'update_forums_atom.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 01:03:02', '00:15:00', 0, '', 0, 0, 1405);
+(1, 1, 'Attach maintenance', 'attach_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-17 05:02:00', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(2, 1, 'Board maintenance', 'board_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(3, 1, 'Prune forums', 'prune_forums.php', 'daily', '', '05:00:00', 50, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(4, 1, 'Prune topic moved stubs', 'prune_topic_moved.php', 'daily', '', '05:00:00', 60, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(5, 1, 'Logs cleanup', 'clean_log.php', 'daily', '', '05:00:00', 70, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(6, 1, 'Tracker maintenance', 'tr_maintenance.php', 'daily', '', '05:00:00', 90, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(7, 1, 'Clean dlstat', 'clean_dlstat.php', 'daily', '', '05:00:00', 100, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(8, 1, 'Prune inactive users', 'prune_inactive_users.php', 'daily', '', '05:00:00', 110, '2017-07-17 05:02:10', '2017-07-18 05:00:00', '00:00:00', 1, '', 0, 1, 29),
+(9, 1, 'Sessions cleanup', 'sessions_cleanup.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:54:02', '2017-07-17 16:57:02', '00:03:00', 0, '', 0, 0, 5762),
+(10, 1, 'DS update cat_forums', 'ds_update_cat_forums.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:54:02', '2017-07-17 16:59:02', '00:05:00', 0, '', 0, 0, 2901),
+(11, 1, 'DS update stats', 'ds_update_stats.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:50:02', '2017-07-17 17:00:02', '00:10:00', 0, '', 0, 0, 1938),
+(12, 1, 'Flash topic view', 'flash_topic_view.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:50:02', '2017-07-17 17:00:02', '00:10:00', 0, '', 0, 0, 1938),
+(13, 1, 'Clean search results', 'clean_search_results.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:50:02', '2017-07-17 17:00:02', '00:10:00', 0, '', 0, 0, 1938),
+(14, 1, 'Tracker cleanup and dlstat', 'tr_cleanup_and_dlstat.php', 'interval', '', '00:00:00', 20, '2017-07-17 16:54:02', '2017-07-17 17:09:02', '00:15:00', 0, '', 0, 0, 1457),
+(15, 1, 'Accrual seedbonus', 'tr_seed_bonus.php', 'interval', '', '00:00:00', 25, '2017-07-17 16:54:02', '2017-07-17 17:09:02', '00:15:00', 0, '', 0, 0, 1457),
+(16, 1, 'Make tracker snapshot', 'tr_make_snapshot.php', 'interval', '', '00:00:00', 10, '2017-07-17 16:50:02', '2017-07-17 17:00:02', '00:10:00', 0, '', 0, 0, 1938),
+(17, 1, 'Seeder last seen', 'tr_update_seeder_last_seen.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:38:10', '2017-07-17 17:38:10', '01:00:00', 0, '', 0, 0, 385),
+(18, 1, 'Tracker dl-complete count', 'tr_complete_count.php', 'interval', '', '00:00:00', 255, '2017-07-17 11:50:01', '2017-07-17 17:50:01', '06:00:00', 0, '', 0, 0, 77),
+(19, 1, 'Cache garbage collector', 'cache_gc.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:54:02', '2017-07-17 16:59:02', '00:05:00', 0, '', 0, 0, 2901),
+(20, 1, 'Sitemap update', 'sitemap.php', 'daily', '', '06:00:00', 30, '2017-07-17 06:02:20', '2017-07-18 06:00:00', '00:00:00', 0, '', 0, 0, 29),
+(21, 1, 'Update forums atom', 'update_forums_atom.php', 'interval', '', '00:00:00', 255, '2017-07-17 16:54:02', '2017-07-17 17:09:02', '00:15:00', 0, '', 0, 0, 1457);
 
 -- --------------------------------------------------------
 
@@ -1228,13 +1228,6 @@ CREATE TABLE `bb_sessions` (
   `session_admin` tinyint(2) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп даних таблиці `bb_sessions`
---
-
-INSERT INTO `bb_sessions` (`session_id`, `session_user_id`, `session_start`, `session_time`, `session_ip`, `session_logged_in`, `session_admin`) VALUES
-('tAC9u4ZsgQoQO1ayb0RO', 2, 1500251265, 1500251265, '2886860801', 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1362,7 +1355,7 @@ INSERT INTO `bb_topics` (`topic_id`, `forum_id`, `topic_title`, `topic_poster`, 
 (2, 1, 'Модернізація толоки (тема оновлюється)', 2, 1497868665, 11, 0, 0, 0, 0, 3, 3, 0, 0, 0, 1497868665, 1),
 (3, 3, 'Правила розділу &quot;Анонси релізів&quot;', 2, 1499088533, 2, 1, 0, 0, 2, 4, 5, 0, 0, 0, 1499088554, 0),
 (4, 3, 'Красиво піти / Going in Style (2017) WEB-DL 720p Ukr/Eng | Sub Eng', 2, 1499089675, 3, 1, 0, 0, 0, 6, 7, 0, 0, 0, 1499089689, 0),
-(5, 2, 'Навіщо потрібен рейтинг на торрент-трекері? (пояснення для новачків)', 2, 1499090454, 2, 0, 0, 0, 1, 8, 8, 0, 0, 0, 1499090454, 0),
+(5, 2, 'Навіщо потрібен рейтинг на торрент-трекері? (пояснення для новачків)', 2, 1499090454, 3, 0, 0, 0, 1, 8, 8, 0, 0, 0, 1499090454, 0),
 (6, 32, 'Хочеш кіно українською? Замовляй! Чотирнадцятий тур! Голосування за документальні фільми', 2, 1499153976, 6, 0, 0, 1, 0, 9, 9, 0, 0, 0, 1499153976, 0),
 (7, 4, 'Недобросовісні переклади книжок з російської та інших мов', 2, 1499156274, 0, 0, 0, 0, 0, 10, 10, 0, 0, 0, 1499156274, 0),
 (8, 5, 'Футболки з символікою Гуртом', 2, 1499156519, 2, 0, 0, 0, 0, 11, 11, 0, 0, 0, 1499156519, 0),
@@ -1488,7 +1481,7 @@ CREATE TABLE `bb_users` (
 INSERT INTO `bb_users` (`user_id`, `user_active`, `username`, `user_password`, `user_session_time`, `user_lastvisit`, `user_last_ip`, `user_regdate`, `user_reg_ip`, `user_level`, `user_posts`, `user_timezone`, `user_lang`, `user_new_privmsg`, `user_unread_privmsg`, `user_last_privmsg`, `user_opt`, `user_rank`, `avatar_ext_id`, `user_gender`, `user_birthday`, `user_email`, `user_skype`, `user_twitter`, `user_icq`, `user_website`, `user_from`, `user_sig`, `user_occ`, `user_interests`, `user_actkey`, `user_newpasswd`, `autologin_id`, `user_newest_pm_id`, `user_points`, `tpl_name`) VALUES
 (-746, 0, 'bot', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 144, 0, 0, 0, '0000-00-00', 'bot@torrentpier.me', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
 (-1, 0, 'Guest', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
-(2, 1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', 1500251265, 1500104513, '2886860801', 0, '0', 1, 25, 3.00, '', 0, 0, 1499086198, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'vHxP0quS2Yfu', 0, 0.00, 'default'),
+(2, 1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', 1500254447, 1500104513, '2886860801', 0, '0', 1, 25, 3.00, '', 0, 0, 1499086198, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'vHxP0quS2Yfu', 0, 0.00, 'default'),
 (3, 1, 'BOHD@N', '216a7d506c7ba400586661406d343eda', 1497868779, 1497868779, '2886860801', 1497868751, '2886860801', 0, 0, 3.00, 'uk', 0, 0, 0, 33376, 0, 0, 0, '0000-00-00', 'bohdan009@gmail.com', '', '', '', '', '', '', '', '', '', '', 'yyy0CKX8NlVM', 0, 0.00, 'default');
 
 -- --------------------------------------------------------
