@@ -1,0 +1,42 @@
+Database\Entities\BbRanks:
+    type: entity
+    table: bb_ranks
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        rankId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: rank_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        rankTitle:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+                default: ''
+            column: rank_title
+        rankImage:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: rank_image
+        rankStyle:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: rank_style
+    lifecycleCallbacks: {  }

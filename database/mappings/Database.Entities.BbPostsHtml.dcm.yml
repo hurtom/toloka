@@ -1,0 +1,32 @@
+Database\Entities\BbPostsHtml:
+    type: entity
+    table: bb_posts_html
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            column: post_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        postHtmlTime:
+            type: datetime
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: post_html_time
+        postHtml:
+            type: text
+            nullable: false
+            length: 16777215
+            options:
+                fixed: false
+            column: post_html
+    lifecycleCallbacks: {  }

@@ -1,0 +1,46 @@
+Database\Entities\BbBanlist:
+    type: entity
+    table: bb_banlist
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        ban_ip_user_id:
+            columns:
+                - ban_ip
+                - ban_userid
+    id:
+        banId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: ban_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        banUserid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: ban_userid
+        banIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+            column: ban_ip
+        banEmail:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: ban_email
+    lifecycleCallbacks: {  }

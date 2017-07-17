@@ -1,0 +1,45 @@
+Database\Entities\BbBtTrackerSnap:
+    type: entity
+    table: bb_bt_tracker_snap
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: topic_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        seeders:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        leechers:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+        speedUp:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: speed_up
+        speedDown:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: speed_down
+    lifecycleCallbacks: {  }

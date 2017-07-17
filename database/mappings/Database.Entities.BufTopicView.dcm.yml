@@ -1,0 +1,26 @@
+Database\Entities\BufTopicView:
+    type: entity
+    table: buf_topic_view
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: topic_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        topicViews:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: topic_views
+    lifecycleCallbacks: {  }

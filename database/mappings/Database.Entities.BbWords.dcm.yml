@@ -1,0 +1,32 @@
+Database\Entities\BbWords:
+    type: entity
+    table: bb_words
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        wordId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: word_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        word:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: true
+                default: ''
+        replacement:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: true
+                default: ''
+    lifecycleCallbacks: {  }

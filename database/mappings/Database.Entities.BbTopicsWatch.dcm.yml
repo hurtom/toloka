@@ -1,0 +1,38 @@
+Database\Entities\BbTopicsWatch:
+    type: entity
+    table: bb_topics_watch
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        user_id:
+            columns:
+                - user_id
+        notify_status:
+            columns:
+                - notify_status
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: topic_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: user_id
+    fields:
+        notifyStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: notify_status
+    lifecycleCallbacks: {  }

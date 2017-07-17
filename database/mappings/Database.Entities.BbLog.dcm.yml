@@ -1,0 +1,102 @@
+Database\Entities\BbLog:
+    type: entity
+    table: bb_log
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        log_time:
+            columns:
+                - log_time
+        log_topic_title:
+            columns:
+                - log_topic_title
+    id:
+        logTypeId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: log_type_id
+        logUserId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            column: log_user_id
+        logForumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: log_forum_id
+        logTopicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: log_topic_id
+        logTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            column: log_time
+    fields:
+        logUserIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: log_user_ip
+        logForumIdNew:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: log_forum_id_new
+        logTopicIdNew:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: log_topic_id_new
+        logTopicTitle:
+            type: string
+            nullable: false
+            length: 250
+            options:
+                fixed: false
+                default: ''
+            column: log_topic_title
+        logTopicTitleNew:
+            type: string
+            nullable: false
+            length: 250
+            options:
+                fixed: false
+                default: ''
+            column: log_topic_title_new
+        logMsg:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: log_msg
+    lifecycleCallbacks: {  }

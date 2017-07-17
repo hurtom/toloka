@@ -1,0 +1,30 @@
+Database\Entities\BbPostsSearch:
+    type: entity
+    table: bb_posts_search
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        search_words:
+            columns:
+                - search_words
+    id:
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: post_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        searchWords:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: search_words
+    lifecycleCallbacks: {  }

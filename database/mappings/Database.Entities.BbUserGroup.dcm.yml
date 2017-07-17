@@ -1,0 +1,42 @@
+Database\Entities\BbUserGroup:
+    type: entity
+    table: bb_user_group
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        user_id:
+            columns:
+                - user_id
+    id:
+        groupId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            column: group_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: user_id
+    fields:
+        userPending:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_pending
+        userTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: user_time
+    lifecycleCallbacks: {  }

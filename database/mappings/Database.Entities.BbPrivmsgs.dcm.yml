@@ -1,0 +1,69 @@
+Database\Entities\BbPrivmsgs:
+    type: entity
+    table: bb_privmsgs
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        privmsgs_from_userid:
+            columns:
+                - privmsgs_from_userid
+        privmsgs_to_userid:
+            columns:
+                - privmsgs_to_userid
+    id:
+        privmsgsId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: privmsgs_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        privmsgsType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: privmsgs_type
+        privmsgsSubject:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: '0'
+            column: privmsgs_subject
+        privmsgsFromUserid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: privmsgs_from_userid
+        privmsgsToUserid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: privmsgs_to_userid
+        privmsgsDate:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: privmsgs_date
+        privmsgsIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: privmsgs_ip
+    lifecycleCallbacks: {  }
