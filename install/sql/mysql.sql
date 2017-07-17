@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: mysql
--- Час створення: Лип 15 2017 р., 07:38
+-- Час створення: Лип 17 2017 р., 00:55
 -- Версія сервера: 10.2.7-MariaDB-10.2.7+maria~jessie
 -- Версія PHP: 7.0.16
 
@@ -21,6 +21,21 @@ SET time_zone = "+00:00";
 --
 -- База даних: `toloka`
 --
+CREATE DATABASE IF NOT EXISTS `toloka` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `toloka`;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `bb_attach_quota`
+--
+
+CREATE TABLE `bb_attach_quota` (
+  `user_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `quota_type` smallint(2) NOT NULL DEFAULT 0,
+  `quota_limit_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -94,19 +109,6 @@ CREATE TABLE `bb_attachments_desc` (
   `filetime` int(11) NOT NULL DEFAULT 0,
   `thumbnail` tinyint(1) NOT NULL DEFAULT 0,
   `tracker_status` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблиці `bb_attach_quota`
---
-
-CREATE TABLE `bb_attach_quota` (
-  `user_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
-  `group_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
-  `quota_type` smallint(2) NOT NULL DEFAULT 0,
-  `quota_limit_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -208,6 +210,21 @@ CREATE TABLE `bb_bt_last_userstat` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблиці `bb_bt_tor_dl_stat`
+--
+
+CREATE TABLE `bb_bt_tor_dl_stat` (
+  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` mediumint(9) NOT NULL DEFAULT 0,
+  `attach_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  `t_up_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `t_down_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `t_bonus_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблиці `bb_bt_torhelp`
 --
 
@@ -258,21 +275,6 @@ CREATE TABLE `bb_bt_torstat` (
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `bb_bt_tor_dl_stat`
---
-
-CREATE TABLE `bb_bt_tor_dl_stat` (
-  `topic_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
-  `user_id` mediumint(9) NOT NULL DEFAULT 0,
-  `attach_id` mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
-  `t_up_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `t_down_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `t_bonus_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Структура таблиці `bb_bt_tracker`
 --
 
@@ -317,6 +319,18 @@ CREATE TABLE `bb_bt_tracker_snap` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблиці `bb_bt_user_settings`
+--
+
+CREATE TABLE `bb_bt_user_settings` (
+  `user_id` mediumint(9) NOT NULL DEFAULT 0,
+  `tor_search_set` text NOT NULL,
+  `last_modified` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблиці `bb_bt_users`
 --
 
@@ -337,18 +351,6 @@ CREATE TABLE `bb_bt_users` (
   `up_release_yesterday` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `up_bonus_yesterday` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `points_yesterday` float(16,2) UNSIGNED NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблиці `bb_bt_user_settings`
---
-
-CREATE TABLE `bb_bt_user_settings` (
-  `user_id` mediumint(9) NOT NULL DEFAULT 0,
-  `tor_search_set` text NOT NULL,
-  `last_modified` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -438,7 +440,7 @@ INSERT INTO `bb_config` (`config_name`, `config_value`) VALUES
 ('callseed', '0'),
 ('cron_check_interval', '180'),
 ('cron_enabled', '0'),
-('cron_last_check', '1500104110'),
+('cron_last_check', '1500252730'),
 ('default_dateformat', 'Y-m-d H:i'),
 ('default_lang', 'uk'),
 ('flood_interval', '15'),
@@ -469,7 +471,7 @@ INSERT INTO `bb_config` (`config_name`, `config_value`) VALUES
 ('show_latest_news', '1'),
 ('show_mod_index', '0'),
 ('show_network_news', '1'),
-('sitemap_time', '1500099060'),
+('sitemap_time', '1500184801'),
 ('sitename', 'TorrentPier - Bittorrent-tracker engine'),
 ('site_desc', 'A little text to describe your forum'),
 ('smilies_path', 'styles/images/smiles'),
@@ -511,27 +513,27 @@ CREATE TABLE `bb_cron` (
 --
 
 INSERT INTO `bb_cron` (`cron_id`, `cron_active`, `cron_title`, `cron_script`, `schedule`, `run_day`, `run_time`, `run_order`, `last_run`, `next_run`, `run_interval`, `log_enabled`, `log_file`, `log_sql_queries`, `disable_board`, `run_counter`) VALUES
-(1, 1, 'Attach maintenance', 'attach_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-15 06:11:24', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(2, 1, 'Board maintenance', 'board_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(3, 1, 'Prune forums', 'prune_forums.php', 'daily', '', '05:00:00', 50, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(4, 1, 'Prune topic moved stubs', 'prune_topic_moved.php', 'daily', '', '05:00:00', 60, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(5, 1, 'Logs cleanup', 'clean_log.php', 'daily', '', '05:00:00', 70, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(6, 1, 'Tracker maintenance', 'tr_maintenance.php', 'daily', '', '05:00:00', 90, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(7, 1, 'Clean dlstat', 'clean_dlstat.php', 'daily', '', '05:00:00', 100, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(8, 1, 'Prune inactive users', 'prune_inactive_users.php', 'daily', '', '05:00:00', 110, '2017-07-15 06:11:34', '2017-07-16 05:00:00', '00:00:00', 1, '', 0, 1, 27),
-(9, 1, 'Sessions cleanup', 'sessions_cleanup.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:35:02', '2017-07-15 07:38:02', '00:03:00', 0, '', 0, 0, 5202),
-(10, 1, 'DS update cat_forums', 'ds_update_cat_forums.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:31:02', '2017-07-15 07:36:02', '00:05:00', 0, '', 0, 0, 2617),
-(11, 1, 'DS update stats', 'ds_update_stats.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:35:02', '2017-07-15 07:45:02', '00:10:00', 0, '', 0, 0, 1750),
-(12, 1, 'Flash topic view', 'flash_topic_view.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:35:02', '2017-07-15 07:45:02', '00:10:00', 0, '', 0, 0, 1750),
-(13, 1, 'Clean search results', 'clean_search_results.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:35:02', '2017-07-15 07:45:02', '00:10:00', 0, '', 0, 0, 1750),
-(14, 1, 'Tracker cleanup and dlstat', 'tr_cleanup_and_dlstat.php', 'interval', '', '00:00:00', 20, '2017-07-15 07:31:02', '2017-07-15 07:46:02', '00:15:00', 0, '', 0, 0, 1314),
-(15, 1, 'Accrual seedbonus', 'tr_seed_bonus.php', 'interval', '', '00:00:00', 25, '2017-07-15 07:31:02', '2017-07-15 07:46:02', '00:15:00', 0, '', 0, 0, 1314),
-(16, 1, 'Make tracker snapshot', 'tr_make_snapshot.php', 'interval', '', '00:00:00', 10, '2017-07-15 07:35:02', '2017-07-15 07:45:02', '00:10:00', 0, '', 0, 0, 1750),
-(17, 1, 'Seeder last seen', 'tr_update_seeder_last_seen.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:15:02', '2017-07-15 08:15:02', '01:00:00', 0, '', 0, 0, 347),
-(18, 1, 'Tracker dl-complete count', 'tr_complete_count.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:03:00', '2017-07-15 13:03:00', '06:00:00', 0, '', 0, 0, 70),
-(19, 1, 'Cache garbage collector', 'cache_gc.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:31:02', '2017-07-15 07:36:02', '00:05:00', 0, '', 0, 0, 2617),
-(20, 1, 'Sitemap update', 'sitemap.php', 'daily', '', '06:00:00', 30, '2017-07-15 06:11:24', '2017-07-16 06:00:00', '00:00:00', 0, '', 0, 0, 27),
-(21, 1, 'Update forums atom', 'update_forums_atom.php', 'interval', '', '00:00:00', 255, '2017-07-15 07:31:02', '2017-07-15 07:46:02', '00:15:00', 0, '', 0, 0, 1314);
+(1, 1, 'Attach maintenance', 'attach_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-16 05:00:01', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(2, 1, 'Board maintenance', 'board_maintenance.php', 'daily', '', '05:00:00', 40, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(3, 1, 'Prune forums', 'prune_forums.php', 'daily', '', '05:00:00', 50, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(4, 1, 'Prune topic moved stubs', 'prune_topic_moved.php', 'daily', '', '05:00:00', 60, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(5, 1, 'Logs cleanup', 'clean_log.php', 'daily', '', '05:00:00', 70, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(6, 1, 'Tracker maintenance', 'tr_maintenance.php', 'daily', '', '05:00:00', 90, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(7, 1, 'Clean dlstat', 'clean_dlstat.php', 'daily', '', '05:00:00', 100, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(8, 1, 'Prune inactive users', 'prune_inactive_users.php', 'daily', '', '05:00:00', 110, '2017-07-16 05:00:10', '2017-07-17 05:00:00', '00:00:00', 1, '', 0, 1, 28),
+(9, 1, 'Sessions cleanup', 'sessions_cleanup.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:52:01', '2017-07-17 00:55:01', '00:03:00', 0, '', 0, 0, 5556),
+(10, 1, 'DS update cat_forums', 'ds_update_cat_forums.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 00:53:02', '00:05:00', 0, '', 0, 0, 2797),
+(11, 1, 'DS update stats', 'ds_update_stats.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
+(12, 1, 'Flash topic view', 'flash_topic_view.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
+(13, 1, 'Clean search results', 'clean_search_results.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
+(14, 1, 'Tracker cleanup and dlstat', 'tr_cleanup_and_dlstat.php', 'interval', '', '00:00:00', 20, '2017-07-17 00:48:01', '2017-07-17 01:03:01', '00:15:00', 0, '', 0, 0, 1405),
+(15, 1, 'Accrual seedbonus', 'tr_seed_bonus.php', 'interval', '', '00:00:00', 25, '2017-07-17 00:48:01', '2017-07-17 01:03:01', '00:15:00', 0, '', 0, 0, 1405),
+(16, 1, 'Make tracker snapshot', 'tr_make_snapshot.php', 'interval', '', '00:00:00', 10, '2017-07-17 00:44:02', '2017-07-17 00:54:02', '00:10:00', 0, '', 0, 0, 1869),
+(17, 1, 'Seeder last seen', 'tr_update_seeder_last_seen.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 01:48:02', '01:00:00', 0, '', 0, 0, 372),
+(18, 1, 'Tracker dl-complete count', 'tr_complete_count.php', 'interval', '', '00:00:00', 255, '2017-07-16 23:44:05', '2017-07-17 05:44:05', '06:00:00', 0, '', 0, 0, 75),
+(19, 1, 'Cache garbage collector', 'cache_gc.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 00:53:02', '00:05:00', 0, '', 0, 0, 2797),
+(20, 1, 'Sitemap update', 'sitemap.php', 'daily', '', '06:00:00', 30, '2017-07-16 06:00:08', '2017-07-17 06:00:00', '00:00:00', 0, '', 0, 0, 28),
+(21, 1, 'Update forums atom', 'update_forums_atom.php', 'interval', '', '00:00:00', 255, '2017-07-17 00:48:02', '2017-07-17 01:03:02', '00:15:00', 0, '', 0, 0, 1405);
 
 -- --------------------------------------------------------
 
@@ -543,6 +545,35 @@ CREATE TABLE `bb_disallow` (
   `disallow_id` mediumint(8) UNSIGNED NOT NULL,
   `disallow_username` varchar(25) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `bb_extension_groups`
+--
+
+CREATE TABLE `bb_extension_groups` (
+  `group_id` mediumint(8) NOT NULL,
+  `group_name` varchar(20) NOT NULL DEFAULT '',
+  `cat_id` tinyint(2) NOT NULL DEFAULT 0,
+  `allow_group` tinyint(1) NOT NULL DEFAULT 0,
+  `download_mode` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
+  `upload_icon` varchar(100) NOT NULL DEFAULT '',
+  `max_filesize` int(20) NOT NULL DEFAULT 0,
+  `forum_permissions` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп даних таблиці `bb_extension_groups`
+--
+
+INSERT INTO `bb_extension_groups` (`group_id`, `group_name`, `cat_id`, `allow_group`, `download_mode`, `upload_icon`, `max_filesize`, `forum_permissions`) VALUES
+(1, 'Images', 1, 1, 1, '', 262144, ''),
+(2, 'Archives', 0, 1, 1, '', 262144, ''),
+(3, 'Plain text', 0, 0, 1, '', 262144, ''),
+(4, 'Documents', 0, 0, 1, '', 262144, ''),
+(5, 'Real media', 0, 0, 2, '', 262144, ''),
+(6, 'Torrent', 0, 1, 1, '', 122880, '');
 
 -- --------------------------------------------------------
 
@@ -589,35 +620,6 @@ INSERT INTO `bb_extensions` (`ext_id`, `group_id`, `extension`, `comment`) VALUE
 (25, 4, 'ppt', ''),
 (26, 5, 'rm', ''),
 (27, 6, 'torrent', '');
-
--- --------------------------------------------------------
-
---
--- Структура таблиці `bb_extension_groups`
---
-
-CREATE TABLE `bb_extension_groups` (
-  `group_id` mediumint(8) NOT NULL,
-  `group_name` varchar(20) NOT NULL DEFAULT '',
-  `cat_id` tinyint(2) NOT NULL DEFAULT 0,
-  `allow_group` tinyint(1) NOT NULL DEFAULT 0,
-  `download_mode` tinyint(1) UNSIGNED NOT NULL DEFAULT 1,
-  `upload_icon` varchar(100) NOT NULL DEFAULT '',
-  `max_filesize` int(20) NOT NULL DEFAULT 0,
-  `forum_permissions` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп даних таблиці `bb_extension_groups`
---
-
-INSERT INTO `bb_extension_groups` (`group_id`, `group_name`, `cat_id`, `allow_group`, `download_mode`, `upload_icon`, `max_filesize`, `forum_permissions`) VALUES
-(1, 'Images', 1, 1, 1, '', 262144, ''),
-(2, 'Archives', 0, 1, 1, '', 262144, ''),
-(3, 'Plain text', 0, 0, 1, '', 262144, ''),
-(4, 'Documents', 0, 0, 1, '', 262144, ''),
-(5, 'Real media', 0, 0, 2, '', 262144, ''),
-(6, 'Torrent', 0, 1, 1, '', 122880, '');
 
 -- --------------------------------------------------------
 
@@ -1000,6 +1002,7 @@ INSERT INTO `bb_posts_html` (`post_id`, `post_html_time`, `post_html`) VALUES
 (5, '2017-07-03 13:29:15', 'Правила оновлено.'),
 (6, '2017-07-03 13:48:02', '<span style=\"font-size: 18px; line-height: normal;\"><span class=\"post-b\"><span style=\"color: red;\"><span class=\"post-align\" style=\"text-align: center;\">12 липня<br />Elektroz 1080</span></span></span></span><span class=\"post-br\"><br /></span><span style=\"font-family: Georgia;\"><span class=\"post-align\" style=\"text-align: center;\"><span style=\"color: blue;\"><span class=\"post-i\"><span style=\"font-size: 26px; line-height: normal;\"><span class=\"post-b\">Красиво піти / Going in Style (2017) WEB-DL 720p Ukr/Eng | Sub Eng</span></span></span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://toloka.to/photos/170702114004124631_f0_0.jpg\">&#10;</var></span><span style=\"color: blue;\"><span class=\"post-b\">Жанр:</span></span> комедія, кримінальний<br /><span style=\"color: blue;\"><span class=\"post-b\">Країна: </span></span>США<span class=\"post-br\"><br /></span><span style=\"color: darkblue;\"><span class=\"post-b\">Кінокомпанія: </span></span>Metro-Goldwyn-Mayer (MGM), New Line Cinema, Warner Bros. Pictures<br /><span style=\"color: blue;\"><span class=\"post-b\">Режисер:</span></span> Зак Брафф<br /><span class=\"post-b\"><span style=\"color: blue;\">Актори: </span></span>Морган Фрімен, Джої Кінг, Енн-Маргрет, Крістофер Ллойд, Майкл Кейн, Пітер Серафіновіч, Метт Діллон<span class=\"post-br\"><br /></span><span class=\"post-b\"><span style=\"color: blue;\">Сюжет:</span></span><br />Їх невеселе життя складається в основному з сидіння на лавці в парку, критики нинішньої молоді та годування голубів. Втомившись від буденності, трійця пенсіонерів вирішує хоча б піти з цього життя красиво. Ідея дідусів полягає в тому, що їм всього лише потрібно... пограбувати банк і метнутися в Вегас!<span class=\"post-br\"><br /></span><span class=\"post-b\"><span style=\"color: blue;\">Тривалість:</span></span> 01:00:сс<br /><span class=\"post-b\"><span style=\"color: blue;\">Якість: </span></span>WEB-DL 720p<span class=\"post-br\"><br /></span><span class=\"post-b\"><span style=\"color: blue;\">Відео: </span></span><br /><span class=\"post-i\"><span style=\"color: green;\">кодек: </span></span>H.264<br /><span class=\"post-i\"><span style=\"color: green;\">розмір кадру:</span></span> ширина х висота<br /><span class=\"post-i\"><span style=\"color: green;\">бітрейт: </span></span>кб/с<span class=\"post-br\"><br /></span><span class=\"post-b\"><span style=\"color: blue;\">Аудіо # 1:</span></span><br /><span class=\"post-i\"><span style=\"color: green;\">мова:</span></span> українська  <var class=\"postImg\" title=\"https://img.hurtom.com/i/2016/07/ukraine-flag-animation_25x17.gif\">&#10;</var><br /><span class=\"post-i\"><span style=\"color: green;\">переклад: </span></span>професійний дубльований  <var class=\"postImg\" title=\"https://img.hurtom.com/i/2014/08/logok18O5.png\">&#10;</var><br /><span class=\"post-i\"><span style=\"color: green;\">кодек: </span></span>AC3 2.0<br /><span class=\"post-i\"><span style=\"color: green;\">бітрейт:</span></span> 192 кб/с<span class=\"post-br\"><br /></span><span class=\"post-b\"><span style=\"color: blue;\">Аудіо # 2: </span></span><br /><span class=\"post-i\"><span style=\"color: green;\">мова:</span></span> англійська  <var class=\"postImg\" title=\"https://thumb.hurtom.com/image/i41.tinypic.com/fa7vo0.gif\">&#10;</var><br /><span class=\"post-i\"><span style=\"color: green;\">переклад: </span></span>оригінал<br /><span class=\"post-i\"><span style=\"color: green;\">кодек: </span></span>AC3 5.1<br /><span class=\"post-i\"><span style=\"color: green;\">бітрейт: </span></span>384 кб/с<span class=\"post-br\"><br /></span><span class=\"post-b\"><span style=\"color: blue;\">Субтитри: </span></span><br /><span class=\"post-i\"><span style=\"color: green;\">мова: </span></span>англійська  <var class=\"postImg\" title=\"https://thumb.hurtom.com/image/i41.tinypic.com/fa7vo0.gif\">&#10;</var><br /><span class=\"post-i\"><span style=\"color: green;\">тип:</span></span> програмні (м\'які)<br /><span class=\"post-i\"><span style=\"color: green;\">формат: </span></span>*.srt<div class=\"sp-wrap\"><div class=\"sp-body\" title=\"MediaInfo\"><h3 class=\"sp-title\">MediaInfo</h3>[cove][/code]</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Скріншоти\"><h3 class=\"sp-title\">Скріншоти</h3>2</div></div><span class=\"post-b\"><span style=\"color: blue;\">Джерело: </span></span> <var class=\"postImg\" title=\"https://toloka.to/img/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82_%D0%92%D1%96%D0%B4%D0%B5%D0%BE_%D0%93%D1%83%D1%80%D1%82%D0%BE%D0%BC.gif\">&#10;</var> &amp;  <var class=\"postImg\" title=\"https://toloka.to/img/HDclub.com.ua.gif\">&#10;</var><br /><span class=\"post-b\"><span style=\"color: blue;\">Особиста оцінка:</span></span> 0 - не дивився'),
 (7, '2017-07-03 13:48:10', 'Питання: фільм буде без корейських сабів чи з ними? ДЯкую!'),
+(8, '2017-07-17 00:27:55', '<span class=\"post-b\"><span style=\"font-size: 22px; line-height: normal;\"><span style=\"color: green;\"><span class=\"post-align\" style=\"text-align: center;\">Навіщо потрібен рейтинг на торрент-трекері?</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://thumb.hurtom.com/image/s2.share.te.ua/b485323/gszsny9qek.png\">&#10;</var></span>Існує багато різних сайтів, що дають можливість завантажувати файли.<br />Завантаження файлів за допомогою торрентів відбувається по-іншому, ніж з файлосховища. У файлосховищах типу ex.ua Ви тиснете на кнопку “завантажити” і зберігаєте в себе файл, розташований на сервері — потужному, швидкому комп\'ютерові з хорошим виходом в інтернет. Такий спосіб можуть собі дозволити багаті організації, бо він потребує значних коштів.<span class=\"post-br\"><br /></span>Натомість існує інший спосіб, коли сервер не зберігає в себе файли, і відповідно не повинен бути дуже сильним. Такий сервер всього-навсього знає, де лежать потрібні файли. Вони лежать на комп\'ютерах користувачів, — звичайних людей, що колись завантажили ті файли один в одного, і тепер зберігають їх на своїх домашніх ПК чи ноутах.<br />Цей сервер називається “торрент-трекер”. <span class=\"post-b\">Коли з\'являється новий користувач, і хоче завантажити потрібні файли, сервер просто підказує йому адреси, де вони лежать. </span>Таким чином, <span class=\"post-b\">сервер є тільки посередником між комп\'ютерами користувачів,</span> знайомить їх між собою. Після цього знайомства завантаження файлів відбувається прямо з комп\'ютера іншого користувача.<span class=\"post-br\"><br /></span>Якщо Ви вже маєте досвід користування торрентами, можете заперечити, що нічого подібного не відбувається: ні за якими посиланнями Ви не переходите, і ні з ким там не знайомитесь. Насправді все це відбувається на рівні комп\'ютерних програм, — вони виконують за Вас всю цю роботу. Програми, так звані “торрент-клієнти”, сконструйовані саме так, щоб шукати і допомагати завантажити файли один в одного. Найпопулярніші серед них, — uTorrent, BitTorrent, Vuze, Transmission. По великому рахунку, всі ці програми створені так, що можуть обійтись без додаткових налаштувань, — достатньо просто віддати їм торрент-файл (файл з розширенням *.torrent), а далі вони вже самі розберуться, звідки завантажити потрібний Вам файл, і кому його потім роздати. Файл з розширенням *.torrent і є тим самим “посиланням” на комп\'ютери, де зберігається потрібний Вам файл.<span class=\"post-br\"><br /></span>Отже, ми з\'ясували, що <span class=\"post-b\">завантаження файлу відбувається з комп\'ютерів звичайних відвідувачів інтернету, </span>таких, як Ви. Тепер запитання: що треба зробити, щоб це завантаження було легким і якісним? Потрібна хороша швидкість. А досягти її можна тільки тоді, коли файл буде знаходитись у якомога більшої кількості людей. Тоді кожен з них віддаватиме його з невеликою швидкістю, а всі разом вони забезпечать Вам хороше, швидке завантаження. <span class=\"post-b\">Чим більше людей роздає файл, тим більшою буде швидкість Вашого завантаження. </span><span class=\"post-br\"><br /></span>Нарешті файл був Вами завантажений, і тепер торрент-клієнт автоматично починає його роздавати. (Тільки не треба йому в цьому заважати, наприклад вимикати торрент-клієнт чи видаляти з нього торрент-файл! Або видаляти файл, що був завантажений.) Зараз пора подумати про інших людей, наступних відвідувачів, котрі прийшли після Вас і теж вирішили завантажити цей файл. Вони також будуть вантажити його з комп\'ютерів користувачів, в тому числі й з Вашого комп\'ютера. А для того, щоб їхнє завантаження було не менш комфортним ніж Ваше, <span class=\"post-b\">потрібно, щоб Ваш торрент-клієнт працював \"на роздачу\" багато часу. </span>Тобто <span class=\"post-b\">Ваша задача — роздавати цей файл якнайдовше.</span> Для цього, як було сказано вище, просто потрібно не заважати торрент-програмі. Тільки в такий спосіб наступні відвідувачі зможуть завантажити файли.<span class=\"post-br\"><br /></span>А що відбудеться, <span class=\"post-b\">якщо у Вас немає бажання роздавати файл?</span> Тоді ті, хто прийде після Вас, завантажать його з поганою швидкістю. Або взагалі не завантажать, якщо ніхто не захоче його роздавати. І дуже скоро <span class=\"post-b\">настане момент, коли Ви забажаєте завантажити якийсь інший файл, а завантаження зовсім не буде, — бо інші теж роздавати не хочуть!</span> Так і залишитесь без потрібного Вам файлу, бо хтось вирішив, що не має бажання роздавати. Так все й зупиниться, — файли є, роздати нікому.<span class=\"post-br\"><br /></span>Звичайно, торрент-трекер найбільше зацікавлений, щоб роздача відбувалась якнайкраще, бо від цього залежить ефективність сервера. Для цього підраховується сукупний розмір файлів, що були Вами завантажені і роздані. Така собі <span class=\"post-b\">бухгалтерія, щоб знати, чи повернули Ви наданий кредит в повному обсязі. Цей облік постійно проводиться для кожного відвідувача сайту. </span>Підрахунок називається “рейтинг”, і є співвідношенням відданого до завантаженого. Якщо ви завантажили файл розміром 1 Гігабайт, а роздали його двом людям, тобто віддали 2 Гігабайта, — Ваш рейтинг буде дорівнювати “2” (2 розділити на 1 дорівнює 2). І навпаки, якщо, не віддали нічого, нуль, то й рейтинг Ваш буде “0” (бо 0 розділити на 1 дорівнює 0). <span class=\"post-b\">З нульовим рейтингом (0.15 і нижче) завантажувати нові файли не можна. Це зроблено, щоб заохотити Вас до роздачі завантажених файлів. </span><br /><a href=\"https://toloka.to/t35477\" class=\"postLink\" rel=\"nofollow\">Детальніше, що робити, якщо рейтинг опустився до нуля, можна в темі “Розширені ЧаПи”.</a><span class=\"post-br\"><br /></span>У Вас може виникнути запитання <span class=\"post-b\">“Невже не можна обійтись без цих рейтингів, обмежень? Хіба не можна просто завантажувати файли?!” </span>Власне, цю тему й було написано як відповідь на подібні запитання. Відповідь така: <span class=\"post-b\">якщо всі перестануть роздавати, то нікому не вдастся нічого завантажити. </span><br />Торрент-трекер “Толока” періодично влаштовує дні, коли рейтинг не враховується, і вантажити можна донесхочу. Цей період називається “фріліч”, і відбувається переважно на Різдво та Великдень. Також існують бонусні файли, так звані “золоті, срібні, бронзові роздачі”. В інші дні рейтинг нараховується в повному обсязі. Детальніше про них і про фріліч прочитати можна в темі “Розширені ЧаПи”.<span class=\"post-br\"><br /></span>Так, в світі існують торрент-трекери, де рейтингу немає взагалі. Але переважно в них важко щось завантажити, з тієї-таки причини: нікому роздавати, а завантажити хочуть всі. Працюють такі рейтинги виключно за рахунок надлишкової чисельності, - якщо багато людей роздасть по-трошки, то буде завантаження. Такий метод — вибір трекерів, що відвідують дуже багато користувачів, вони можуть собі це дозволити. <span class=\"post-b\">Гуртом, на жаль, не має зайвих роздавальників, щоб запровадити безрейтингову систему на щодень. </span>В Україні, станом на сьогоднішній день, практично немає безрейтингових трекерів з солідною роздачею.<span class=\"post-br\"><br /></span><span class=\"post-b\">Тому рейтингова система може бути несприятливою для одної людини в певний час, але загалом, для цілого сайту, — вона сприяє хорошій роздачі. Роздача файлів — це інвестиція у Ваші майбутні завантаження, і в майбутнє торрент-трекеру.</span>'),
 (9, '2017-07-04 07:42:29', 'Шановні Гуртомівці!<span class=\"post-br\"><br /></span>Цього разу буде обрано 5 нових, 5 класичних та 2 документальні фільми.<span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/4-1000.jpg\">&#10;</var></span>Голосування поділяється на 3 теми:<br />1. Новинки<br />2. Класика<br />3. Документальні<div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Бухта / The Cove (2009&amp;#41;\"><h3 class=\"sp-title\">Бухта / The Cove (2009&amp;#41;</h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Бухта / The Cove (2009)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/cove.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span>документальний<br /><span class=\"post-b\">Країна:</span> США<span class=\"post-br\"><br /></span><span class=\"post-b\">Кіностудія / кінокомпанія: </span>Diamond Docs, Fish Films, Oceanic Preservation Society, Quickfire Films<br /><span class=\"post-b\">Режисер:</span> Луі Псіхойос<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />У фільмі «Бухта» мова йде про щорічне полювання на дельфінів, яке влаштовують жителі міста Таїджі. Рибалки заганяють ссавців у вузьку бухту, частину з них відловлюють для продажу в океанаріум, але більшу частину вбивають, щоб продати м\'ясо на ринках. Щороку в прибережних водах Таїджі гине до 23000 дельфінів.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Вірунга / Virunga (2014&amp;#41;\"><h3 class=\"sp-title\">Вірунга / Virunga (2014&amp;#41;</h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Вірунга / Virunga (2014)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/viruga.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span>документальний, військовий<br /><span class=\"post-b\">Країна:</span> Великобританія, Конго<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Орландо фон Айнсідель<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Група сміливців ризикує власним життям, щоб врятувати останнього в світі представника виду гірських горил, в розпал нової громадянської війни і боротьби за природні ресурси Конго.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Земляни / Earthlings (2005&amp;#41; \"><h3 class=\"sp-title\">Земляни / Earthlings (2005&amp;#41; </h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Земляни / Earthlings (2005)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/earthlings.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span>документальний<br /><span class=\"post-b\">Країна:</span> США<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Шон Монсон<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Фільм про проблему експлуатації тварин людьми для одомашнювання, розваг, наукових досліджень або ж для виробництва одягу і їжі.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Земля картелів / Cartel Land (2015&amp;#41; \"><h3 class=\"sp-title\">Земля картелів / Cartel Land (2015&amp;#41; </h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Земля картелів / Cartel Land (2015)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/land.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span>документальний<br /><span class=\"post-b\">Країна:</span> США<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Метт Хейнеман<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Фільм про боротьбу з мексиканськими наркокартелями з обох боків кордону із США.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Людина на канаті / Man on Wire (2008&amp;#41; \"><h3 class=\"sp-title\">Людина на канаті / Man on Wire (2008&amp;#41; </h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Людина на канаті / Man on Wire (2008)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/AManonWire.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span>документальний<br /><span class=\"post-b\">Країна:</span> Великобританія, США<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Джеймс Марш<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Оскароносний фільм про Філіпа Петі і його проходження по канаті між будівлями Всесвітнього торгового центру в 1974 році. Цей вчинок був протизаконним, але отримав славу \"мистецького злочину століття\".</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Погляд тиші / The Look of Silence (2014&amp;#41;\"><h3 class=\"sp-title\">Погляд тиші / The Look of Silence (2014&amp;#41;</h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Погляд тиші / The Look of Silence (2014)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/look.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span>документальний<br /><span class=\"post-b\">Країна:</span> Данія, Індонезія, Фінляндія, Норвегія, Великобританія, Ізраїль, Франція, США, Німеччина, Нідерланди<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Джошуа Оппенхаймер<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Фільм розповідає про геноцид в Індонезії в період 1965-1966 років. Історія зосереджується навколо сім\'ї, яка вижила в ті страшні часи і намагається знайти відповідальних за смерть декількох своїх членів.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Сіль землі / The Salt of the Earth (2014&amp;#41; \"><h3 class=\"sp-title\">Сіль землі / The Salt of the Earth (2014&amp;#41; </h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Сіль землі / The Salt of the Earth (2014)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/salt.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span> документальний, біографія, історія<br /><span class=\"post-b\">Країна:</span> Франція, Бразилія, Італія<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Джуліано Рібейру Сальгадо, Вім Вендерс<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Себастьян Сальгадо - видатний фотограф сучасності. Жодна подія не сховалося від його об\'єктива. Погляньте на світ іншими очима! Відкрийте для себе чарівну історію життя, що проникає прямо в серце.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Туман війни / The Fog of War&amp;#58; Eleven Lessons from the Life of Robert S. McNamara (2003&amp;#41;\"><h3 class=\"sp-title\">Туман війни / The Fog of War&amp;#58; Eleven Lessons from the Life of Robert S. McNamara (2003&amp;#41;</h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Туман війни / The Fog of War: Eleven Lessons from the Life of Robert S. McNamara (2003)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/fog.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span> документальний, військовий, біографія, історія<br /><span class=\"post-b\">Країна:</span> США<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Еррол Морріс<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Фільм є розповіддю про історію воєн 20-го століття з вуст одного з найбільш контроверсійних і впливових персонажів світової політики, колишнього міністра оборони США Роберта С. Макнамари. Чому минуле століття було настільки насичене всякого роду війнами і катастрофами? Чи справді людство приречене на вчинення одних і тих же непоправних помилок? Починаючи з бомбардування 100 тисяч мирних жителів Токіо в 1945 році і закінчуючи жахливими наслідками в\'єтнамської війни, «Туман війни» намагається проаналізувати хід думок глав провідних світових держав, що посилають своїх людей на війну.</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Фільм ще не має рейтингу / Фільм ще не оцінено / This Film Is Not Yet Rated (2006&amp;#41; \"><h3 class=\"sp-title\">Фільм ще не має рейтингу / Фільм ще не оцінено / This Film Is Not Yet Rated (2006&amp;#41; </h3><span style=\"font-size: 20px; line-height: normal;\"><span style=\"color: red;\"><span class=\"post-b\"><span class=\"post-align\" style=\"text-align: center;\">Фільм ще не має рейтингу / Фільм ще не оцінено / This Film Is Not Yet Rated (2006)</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://img.hurtom.com/i/2017/01/film.md.jpg\">&#10;</var></span><span class=\"post-b\">Жанр: </span> документальний<br /><span class=\"post-b\">Країна:</span> США<span class=\"post-br\"><br /></span><span class=\"post-b\">Режисер:</span> Кірбі Дік<span class=\"post-br\"><br /></span><span class=\"post-b\">Сюжет:</span><br />Фільм про асоціацію MPAA і критерії присудження рейтингів тим чи іншим фільмам.</div></div><span class=\"post-b\">Щиро вдячні вам за участь у замовленні фільмів і підтримці українського озвучення!</span><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Як це робиться?\"><h3 class=\"sp-title\">Як це робиться?</h3>1) Обираємо фільм, який варто озвучити<br />2) Перевіряємо, чи не було і не буде показу<br />3) Проводимо публічне голосування<br />4) Домовляємося про ціну зі студіями<br />5) Замовляємо озвучення<br />6) Чекаємо<br />7) Завантажуємо реліз</div></div><div class=\"sp-wrap\"><div class=\"sp-body\" title=\"FAQ\"><h3 class=\"sp-title\">FAQ</h3>Хто вибрав \"кандидатів\" на озвучення?<br />Список складений адміністрацією Гуртом з врахуванням пропозицій користувачів.<br />Базові критерії:<br />- не було і не буде показу<br />- наявність Blu-Ray<span class=\"post-br\"><br /></span>Куди відправляти гроші?<br />Рахунок буде опубліковано пізніше.<span class=\"post-br\"><br /></span>Хто збиратиме гроші?<br />Цим займатиметься адміністрація Гуртом.<span class=\"post-br\"><br /></span>Де можна побачити список фільмів, які вже озвучено?<br /><a href=\"http://t.hurtom.com/10films\" class=\"postLink\" rel=\"nofollow\">http://t.hurtom.com/10films</a><br /><a href=\"https://toloka.to/t44797\" class=\"postLink\" rel=\"nofollow\">https://toloka.to/t44797</a></div></div>'),
 (11, '2017-07-04 08:22:49', 'Любі Гуртомівці!<br />Прошу приєднуватися до ініціативи і робити собі футболки з символікою Гуртом!<div class=\"sp-wrap\"><div class=\"sp-body\" title=\"Лого\"><h3 class=\"sp-title\">Лого</h3><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"https://toloka.to/files/gurtom3.2_945.png\">&#10;</var></span></div></div>Для того, щоб було легше обрати поліграфію, у якій друкуватимете, трохи розкажу про технологію. При цьому зупинюся лише на друці повно кольорового зображення. Адже таке воно у нас і є.<br />Існує кілька технологій повно кольорового друку: безпосереднє нанесення чорнил на футболку, термопереніс та сублімація.<span class=\"post-br\"><br /></span><span class=\"post-b\">1.Цифровий друк. </span><br />Саме так досягається найкраща стійкість зображення. Але у нашому випадку – 1 екземпляр – зазвичай ціна надто висока: називають від 20 до 50 грн., і скоріше 50.<br />І тут є ще один підводний камінь – чорнила. Якщо використовуються сольвентні – то це дуже шкідливо по-перше, і по-друге, футболка матиме неприємний запах.<br />Є також варіант УФ-затверджуваних чорнил – вони не мають запаху, і досить екологічні. Саме цей варіант я обрала як оптимальний. Хоча, нажаль скористатися ним не вийшло – мені треба було встигнути до відпустки, а єдина фірма у місті, яка використовує ці чорнила вичерпала їх запас, і чекала нової поставки.<br />14.04.2010 - зараз вони відмовляються працювати з малими партіями.<span class=\"post-br\"><br /></span><span class=\"post-b\">2. Термопереніс. </span><br />Саме результат термопереносу ви бачите на фотографії.<br />Варіант найдешевший та найдоступніший для одиничного замовлення. Але має цілий ряд недоліків, які виходять з технології.<br />Технологія полягає у тому, що зображення у дзеркальному відображенні друкується на звичайному струменевому принтері, але на спеціальному папері. Отримане зображення переноситься на футболку за допомогою термопресу при відповідній температурі. Футболка, звичайно, має бути 100% бавовняна, синтетика не витримає температури.<br />Готовий виріб витримує максимум 20 разів ручного прання без застосування сушки та відбілювачів.<br />Варто відмітити, що саме цим способом друкує більшість інтернет-магазинів.<br /><span class=\"post-b\"><br />3. Сублімація. </span><br />Технологія дуже схожа на попередню, але використовується виключно синтетична тканина, і при переносі чорнила вступають з нею у реакцію, і залишаються на тканині надовго.<br />Цей спосіб також дуже популярний серед інтернет-магазинів, але в моєму місті його пропонує лише одна фірма. І мене не влаштував варіант синтетичного виробу.<span class=\"post-br\"><br /></span><span class=\"post-b\">4. Нанесення спеціальних фарб через трафарет, або малювання по тканині. </span><br />Технологія досить проста, найекологічніша. У випадку використання трафарету потребує створення макету у векторі і вирізання трафарету на плоттері. хоча у крайньому випадку можна і руками.<br />Ось і все, що я хотіла розповісти про технології.<span class=\"post-br\"><br /></span><span class=\"post-i\"><span style=\"color: green;\">Величезна подяка пану hodek\'у за картинку!</span></span>'),
 (12, '2017-07-04 08:25:30', '<span class=\"post-align\" style=\"text-align: center;\"><span style=\"font-size: 24px; line-height: normal;\"><span style=\"color: Red;\"><span class=\"post-b\">На</span></span><span style=\"color: Green;\"> <span class=\"post-b\">Толоці</span></span> <span style=\"color: Red;\"><span class=\"post-b\">критична нестача інструкцій для \"чайників\"</span></span></span></span><span class=\"post-align\" style=\"text-align: center;\"><var class=\"postImg\" title=\"http://img.hurtom.com/i/2016/10/1473765264_manualtic42544.jpg\">&#10;</var></span>Якщо Ви володієте такими уміннями та навичками як:<ul><li>Синхронізація аудіо доріжок з відео (сирих аудіо доріжок)<br /><li>Субтитрування відеоконтенту<br /><li>Запис з ТБ звукових доріжок<br /><li>Підтримкою та поширенням релізів</ul>Ви можете створити мануал/інструкцію з детальним алгоритмом дій для новачків, що захочуть продовжити Ваші починання заради загальновідомої мети - поширення українського в мережі, що відіграє важливу роль в теперішні часи інформаційних воєн.<span class=\"post-br\"><br /></span><span class=\"post-b\">P.S.</span> Відеоуроки <var class=\"postImg\" title=\"http://img.hurtom.com/i/2016/10/15.png\">&#10;</var>  вітаються! :)');
@@ -1230,7 +1233,7 @@ CREATE TABLE `bb_sessions` (
 --
 
 INSERT INTO `bb_sessions` (`session_id`, `session_user_id`, `session_start`, `session_time`, `session_ip`, `session_logged_in`, `session_admin`) VALUES
-('NgPISgCdsbZfdXOm8KjM', 2, 1500104191, 1500104191, '2886860801', 1, 1);
+('tAC9u4ZsgQoQO1ayb0RO', 2, 1500251265, 1500251265, '2886860801', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1309,6 +1312,24 @@ INSERT INTO `bb_smilies` (`smilies_id`, `code`, `smile_url`, `emoticon`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблиці `bb_topic_tpl`
+--
+
+CREATE TABLE `bb_topic_tpl` (
+  `tpl_id` smallint(6) NOT NULL,
+  `tpl_name` varchar(60) NOT NULL DEFAULT '',
+  `tpl_src_form` text NOT NULL,
+  `tpl_src_title` text NOT NULL,
+  `tpl_src_msg` text NOT NULL,
+  `tpl_comment` text NOT NULL,
+  `tpl_rules_post_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `tpl_last_edit_tm` int(11) NOT NULL DEFAULT 0,
+  `tpl_last_edit_by` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблиці `bb_topics`
 --
 
@@ -1341,7 +1362,7 @@ INSERT INTO `bb_topics` (`topic_id`, `forum_id`, `topic_title`, `topic_poster`, 
 (2, 1, 'Модернізація толоки (тема оновлюється)', 2, 1497868665, 11, 0, 0, 0, 0, 3, 3, 0, 0, 0, 1497868665, 1),
 (3, 3, 'Правила розділу &quot;Анонси релізів&quot;', 2, 1499088533, 2, 1, 0, 0, 2, 4, 5, 0, 0, 0, 1499088554, 0),
 (4, 3, 'Красиво піти / Going in Style (2017) WEB-DL 720p Ukr/Eng | Sub Eng', 2, 1499089675, 3, 1, 0, 0, 0, 6, 7, 0, 0, 0, 1499089689, 0),
-(5, 2, 'Навіщо потрібен рейтинг на торрент-трекері? (пояснення для новачків)', 2, 1499090454, 1, 0, 0, 0, 1, 8, 8, 0, 0, 0, 1499090454, 0),
+(5, 2, 'Навіщо потрібен рейтинг на торрент-трекері? (пояснення для новачків)', 2, 1499090454, 2, 0, 0, 0, 1, 8, 8, 0, 0, 0, 1499090454, 0),
 (6, 32, 'Хочеш кіно українською? Замовляй! Чотирнадцятий тур! Голосування за документальні фільми', 2, 1499153976, 6, 0, 0, 1, 0, 9, 9, 0, 0, 0, 1499153976, 0),
 (7, 4, 'Недобросовісні переклади книжок з російської та інших мов', 2, 1499156274, 0, 0, 0, 0, 0, 10, 10, 0, 0, 0, 1499156274, 0),
 (8, 5, 'Футболки з символікою Гуртом', 2, 1499156519, 2, 0, 0, 0, 0, 11, 11, 0, 0, 0, 1499156519, 0),
@@ -1405,19 +1426,14 @@ INSERT INTO `bb_topics_watch` (`topic_id`, `user_id`, `notify_status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `bb_topic_tpl`
+-- Структура таблиці `bb_user_group`
 --
 
-CREATE TABLE `bb_topic_tpl` (
-  `tpl_id` smallint(6) NOT NULL,
-  `tpl_name` varchar(60) NOT NULL DEFAULT '',
-  `tpl_src_form` text NOT NULL,
-  `tpl_src_title` text NOT NULL,
-  `tpl_src_msg` text NOT NULL,
-  `tpl_comment` text NOT NULL,
-  `tpl_rules_post_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `tpl_last_edit_tm` int(11) NOT NULL DEFAULT 0,
-  `tpl_last_edit_by` int(11) NOT NULL DEFAULT 0
+CREATE TABLE `bb_user_group` (
+  `group_id` mediumint(8) NOT NULL DEFAULT 0,
+  `user_id` mediumint(8) NOT NULL DEFAULT 0,
+  `user_pending` tinyint(1) NOT NULL DEFAULT 0,
+  `user_time` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1472,21 +1488,8 @@ CREATE TABLE `bb_users` (
 INSERT INTO `bb_users` (`user_id`, `user_active`, `username`, `user_password`, `user_session_time`, `user_lastvisit`, `user_last_ip`, `user_regdate`, `user_reg_ip`, `user_level`, `user_posts`, `user_timezone`, `user_lang`, `user_new_privmsg`, `user_unread_privmsg`, `user_last_privmsg`, `user_opt`, `user_rank`, `avatar_ext_id`, `user_gender`, `user_birthday`, `user_email`, `user_skype`, `user_twitter`, `user_icq`, `user_website`, `user_from`, `user_sig`, `user_occ`, `user_interests`, `user_actkey`, `user_newpasswd`, `autologin_id`, `user_newest_pm_id`, `user_points`, `tpl_name`) VALUES
 (-746, 0, 'bot', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 144, 0, 0, 0, '0000-00-00', 'bot@torrentpier.me', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
 (-1, 0, 'Guest', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
-(2, 1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', 1500104191, 1499351952, '2886860801', 0, '0', 1, 25, 3.00, '', 0, 0, 1499086198, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'vHxP0quS2Yfu', 0, 0.00, 'default'),
+(2, 1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', 1500251265, 1500104513, '2886860801', 0, '0', 1, 25, 3.00, '', 0, 0, 1499086198, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'vHxP0quS2Yfu', 0, 0.00, 'default'),
 (3, 1, 'BOHD@N', '216a7d506c7ba400586661406d343eda', 1497868779, 1497868779, '2886860801', 1497868751, '2886860801', 0, 0, 3.00, 'uk', 0, 0, 0, 33376, 0, 0, 0, '0000-00-00', 'bohdan009@gmail.com', '', '', '', '', '', '', '', '', '', '', 'yyy0CKX8NlVM', 0, 0.00, 'default');
-
--- --------------------------------------------------------
-
---
--- Структура таблиці `bb_user_group`
---
-
-CREATE TABLE `bb_user_group` (
-  `group_id` mediumint(8) NOT NULL DEFAULT 0,
-  `user_id` mediumint(8) NOT NULL DEFAULT 0,
-  `user_pending` tinyint(1) NOT NULL DEFAULT 0,
-  `user_time` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1527,6 +1530,12 @@ CREATE TABLE `buf_topic_view` (
 --
 
 --
+-- Індекси таблиці `bb_attach_quota`
+--
+ALTER TABLE `bb_attach_quota`
+  ADD KEY `quota_type` (`quota_type`);
+
+--
 -- Індекси таблиці `bb_attachments`
 --
 ALTER TABLE `bb_attachments`
@@ -1546,12 +1555,6 @@ ALTER TABLE `bb_attachments_desc`
   ADD KEY `filetime` (`filetime`),
   ADD KEY `filesize` (`filesize`),
   ADD KEY `physical_filename` (`physical_filename`(10));
-
---
--- Індекси таблиці `bb_attach_quota`
---
-ALTER TABLE `bb_attach_quota`
-  ADD KEY `quota_type` (`quota_type`);
 
 --
 -- Індекси таблиці `bb_auth_access`
@@ -1599,6 +1602,12 @@ ALTER TABLE `bb_bt_last_userstat`
   ADD PRIMARY KEY (`user_id`);
 
 --
+-- Індекси таблиці `bb_bt_tor_dl_stat`
+--
+ALTER TABLE `bb_bt_tor_dl_stat`
+  ADD PRIMARY KEY (`topic_id`,`user_id`);
+
+--
 -- Індекси таблиці `bb_bt_torhelp`
 --
 ALTER TABLE `bb_bt_torhelp`
@@ -1623,12 +1632,6 @@ ALTER TABLE `bb_bt_torstat`
   ADD PRIMARY KEY (`topic_id`,`user_id`);
 
 --
--- Індекси таблиці `bb_bt_tor_dl_stat`
---
-ALTER TABLE `bb_bt_tor_dl_stat`
-  ADD PRIMARY KEY (`topic_id`,`user_id`);
-
---
 -- Індекси таблиці `bb_bt_tracker`
 --
 ALTER TABLE `bb_bt_tracker`
@@ -1643,17 +1646,17 @@ ALTER TABLE `bb_bt_tracker_snap`
   ADD PRIMARY KEY (`topic_id`);
 
 --
+-- Індекси таблиці `bb_bt_user_settings`
+--
+ALTER TABLE `bb_bt_user_settings`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- Індекси таблиці `bb_bt_users`
 --
 ALTER TABLE `bb_bt_users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `auth_key` (`auth_key`);
-
---
--- Індекси таблиці `bb_bt_user_settings`
---
-ALTER TABLE `bb_bt_user_settings`
-  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Індекси таблиці `bb_categories`
@@ -1683,16 +1686,16 @@ ALTER TABLE `bb_disallow`
   ADD PRIMARY KEY (`disallow_id`);
 
 --
--- Індекси таблиці `bb_extensions`
---
-ALTER TABLE `bb_extensions`
-  ADD PRIMARY KEY (`ext_id`);
-
---
 -- Індекси таблиці `bb_extension_groups`
 --
 ALTER TABLE `bb_extension_groups`
   ADD PRIMARY KEY (`group_id`);
+
+--
+-- Індекси таблиці `bb_extensions`
+--
+ALTER TABLE `bb_extensions`
+  ADD PRIMARY KEY (`ext_id`);
 
 --
 -- Індекси таблиці `bb_forums`
@@ -1810,6 +1813,13 @@ ALTER TABLE `bb_smilies`
   ADD PRIMARY KEY (`smilies_id`);
 
 --
+-- Індекси таблиці `bb_topic_tpl`
+--
+ALTER TABLE `bb_topic_tpl`
+  ADD PRIMARY KEY (`tpl_id`),
+  ADD UNIQUE KEY `tpl_name` (`tpl_name`);
+
+--
 -- Індекси таблиці `bb_topics`
 --
 ALTER TABLE `bb_topics`
@@ -1828,11 +1838,11 @@ ALTER TABLE `bb_topics_watch`
   ADD KEY `notify_status` (`notify_status`);
 
 --
--- Індекси таблиці `bb_topic_tpl`
+-- Індекси таблиці `bb_user_group`
 --
-ALTER TABLE `bb_topic_tpl`
-  ADD PRIMARY KEY (`tpl_id`),
-  ADD UNIQUE KEY `tpl_name` (`tpl_name`);
+ALTER TABLE `bb_user_group`
+  ADD PRIMARY KEY (`group_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Індекси таблиці `bb_users`
@@ -1842,13 +1852,6 @@ ALTER TABLE `bb_users`
   ADD KEY `username` (`username`(10)),
   ADD KEY `user_email` (`user_email`(10)),
   ADD KEY `user_level` (`user_level`);
-
---
--- Індекси таблиці `bb_user_group`
---
-ALTER TABLE `bb_user_group`
-  ADD PRIMARY KEY (`group_id`,`user_id`),
-  ADD KEY `user_id` (`user_id`);
 
 --
 -- Індекси таблиці `bb_words`
@@ -1898,15 +1901,15 @@ ALTER TABLE `bb_cron`
 ALTER TABLE `bb_disallow`
   MODIFY `disallow_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблиці `bb_extensions`
---
-ALTER TABLE `bb_extensions`
-  MODIFY `ext_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
---
 -- AUTO_INCREMENT для таблиці `bb_extension_groups`
 --
 ALTER TABLE `bb_extension_groups`
   MODIFY `group_id` mediumint(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT для таблиці `bb_extensions`
+--
+ALTER TABLE `bb_extensions`
+  MODIFY `ext_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT для таблиці `bb_forums`
 --
@@ -1948,15 +1951,15 @@ ALTER TABLE `bb_search_rebuild`
 ALTER TABLE `bb_smilies`
   MODIFY `smilies_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 --
--- AUTO_INCREMENT для таблиці `bb_topics`
---
-ALTER TABLE `bb_topics`
-  MODIFY `topic_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
---
 -- AUTO_INCREMENT для таблиці `bb_topic_tpl`
 --
 ALTER TABLE `bb_topic_tpl`
   MODIFY `tpl_id` smallint(6) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблиці `bb_topics`
+--
+ALTER TABLE `bb_topics`
+  MODIFY `topic_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT для таблиці `bb_users`
 --
