@@ -1114,7 +1114,18 @@ CREATE TABLE `bb_users` (
 INSERT INTO `bb_users` (`user_id`, `user_active`, `username`, `user_password`, `user_session_time`, `user_lastvisit`, `user_last_ip`, `user_regdate`, `user_reg_ip`, `user_level`, `user_posts`, `user_timezone`, `user_lang`, `user_new_privmsg`, `user_unread_privmsg`, `user_last_privmsg`, `user_opt`, `user_rank`, `avatar_ext_id`, `user_gender`, `user_birthday`, `user_email`, `user_skype`, `user_twitter`, `user_icq`, `user_website`, `user_from`, `user_sig`, `user_occ`, `user_interests`, `user_actkey`, `user_newpasswd`, `autologin_id`, `user_newest_pm_id`, `user_points`, `tpl_name`) VALUES
 (-746, 0, 'bot', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 144, 0, 0, 0, '0000-00-00', 'bot@torrentpier.me', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
 (-1, 0, 'Guest', 'd41d8cd98f00b204e9800998ecf8427e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
-(2, 1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', 0, 0, 'c0a86301', 0, '0', 1, 1, 2.00, '', 0, 0, 0, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'XCbkm1SmP1GB', 0, 0.00, 'default');
+(2, 1, 'admin', 'c3284d0f94606de1fd2af172aba15bf3', 0, 0, 'c0a86301', 0, '0', 1, 1, 2.00, '', 0, 0, 0, 304, 1, 0, 0, '0000-00-00', 'admin@torrentpier.me', '', '', '', '', '', '', '', '', '', '', 'XCbkm1SmP1GB', 0, 0.00, 'default'),
+(NULL, 0, 'User01', '$2a$12$QHSgl5BDymtAVqNucI2wJ.enbT3P.F/rTnMKvXAo2t10WWn70in8O', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User02', '$2a$12$CqzRldiX1daywy0/Jra2sew1RqGTVx741yBGZoJB0oEMYnnt649EG', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User03', '$2a$12$.w7g8HqsVRBZGpt59ftYGO7QQPlM7YF8PM5lbTAUjC6MjyqHcoMn.', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User04', '$2a$12$x778X33Y2yizpWkObJ6bH.EYbA1Xlwn6ZdorecCW7vtu3WIwiyCOa', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User05', '$2a$12$ZcZ9Usi9YqnlcnmK7QKfzOjkuG6LGEOENa.mLT6xcnDgKpaPPhhbu', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User06', '$2a$12$8GEi2RmB/nUxKZi06iXOduT5Jtfz1PxVf/cEvS6jKcKvf.lFSVe4e', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User07', '$2a$12$WX5w2zXz/yV8I8MGI4I.gOz0AKF5Y28zb6OjrU6K9MVGHgX2.Vk7u', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User08', '$2a$12$rQ/C0XGIgwy49K/N9WObb.jBGoelhZz.6czojklb64LTfD.qA9Efe', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User09', '$2a$12$8.Qsqmzek/yqEcyKr9DwNO91YopFjn0NA0E4QZJwkSmmU/vek1KYS', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User10', '$2a$12$3/.CA3rVEj9UGTOg52pP1uctz5XQpzBX4STqhvA6oShtyuAqeAPnK', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default'),
+(NULL, 0, 'User11', '$2a$12$iV4e5r5Pwg4RVW5vV6vb4.eJS7e8mQe.Fx8xBFzB52iSDLUnKSTee', 0, 0, '0', 0, '0', 0, 0, 0.00, '', 0, 0, 0, 0, 0, 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0.00, 'default');
 
 -- --------------------------------------------------------
 
