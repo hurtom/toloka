@@ -50,7 +50,7 @@ $bb_cfg['db'] = [
         env('DB_DATABASE'),
         env('DB_USERNAME'),
         env('DB_PASSWORD'),
-        'utf8',
+        'utf8mb4',
         false
     ],
 ];

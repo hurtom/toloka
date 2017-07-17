@@ -1,0 +1,89 @@
+#!/usr/bin/env php
+<?php
+define('BB_SCRIPT', 'dbconsole');
+define('BB_ROOT', __DIR__.'/../../');
+define('DB_ROOT', __DIR__.'/../');
+
+require BB_ROOT.'vendor/autoload.php';
+
+use Doctrine\Common\Cache\ApcuCache;
+use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\DBAL\Types\Type;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use TorrentPier\Toloka\Database\Types\EnumRunDayType;
+use TorrentPier\Toloka\Database\Types\EnumScheduleType;
+
+Type::addType('enumcronrunday', 'TorrentPier\Toloka\Database\Types\EnumRunDayType');
+Type::addType('enumcronschedule', 'TorrentPier\Toloka\Database\Types\EnumScheduleType');
+
+// Get initial config
+if (!getenv('DB_DATABASE') && file_exists(BB_ROOT.'.env')) {
+    (new Symfony\Component\Dotenv\Dotenv())->load(BB_ROOT.'.env');
+}
+
+$databaseUrl = sprintf('mysql://%s:%s@%s:%d/%s?charset=utf8mb4&collate=utf8mb4_unicode_ci',
+    getenv('DB_USERNAME'),
+    getenv('DB_PASSWORD'),
+    getenv('DB_HOST'),
+    getenv('DB_PORT') ? getenv('DB_PORT') : 3306,
+    getenv('DB_DATABASE')
+);
+
+$connectionParams = array(
+    'url' => $databaseUrl,
+    'defaultTableOptions' => [
+        'charset' => 'utf8mb4',
+        'collate' => 'utf8mb4_unicode_ci'
+    ],
+);
+
+$isDevMode = true;
+$paths = array(DB_ROOT.'entities');
+$proxyDir = null;
+$cache = new ApcuCache();
+// $cache = null;
+$useSimpleAnnotationReader = false;
+// $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration($paths, $isDevMode);
+$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
+
+$em = \Doctrine\ORM\EntityManager::create($connectionParams, $config);
+$db = $em->getConnection();
+// This is a workaround to make migrations:diff work, maybe should find a proper solution
+$db->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
+$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($db),
+    'dialog' => new \Symfony\Component\Console\Helper\QuestionHelper(),
+    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
+));
+
+$cli = new Application('toloka database console', '0.1.0');
+$cli->setCatchExceptions(true);
+$cli->setHelperSet($helperSet);
+$cli->addCommands(array(
+    // Migrations Commands
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\LatestCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\UpToDateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand(),
+
+    // ORM Commands
+    new Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
+    new Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand(),
+    new Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand(),
+    new Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
+    new Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand(),
+    new Doctrine\ORM\Tools\Console\Command\InfoCommand(),
+    new Doctrine\ORM\Tools\Console\Command\MappingDescribeCommand(),
+    new Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
+    new Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand()
+));
+$cli->run();

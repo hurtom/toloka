@@ -54,5 +54,12 @@
     }
   },
   "minimum-stability": "stable",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "require-dev": {
+    "doctrine/migrations": "^1.5",
+    "doctrine/orm": "^2.5",
+    "doctrine/annotations": "^1.4",
+    "doctrine/cache": "^1.6",
+    "jdorn/sql-formatter": "^1.2"
+  }
 }
