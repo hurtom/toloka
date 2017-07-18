@@ -30,6 +30,8 @@ if (isset($_REQUEST['GLOBALS'])) {
 define('TIMESTART', utime());
 define('TIMENOW', time());
 
+@include __DIR__.'/c3.php';
+
 if (empty($_SERVER['REMOTE_ADDR'])) {
     $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 }

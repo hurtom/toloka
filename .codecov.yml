@@ -1,0 +1,10 @@
+coverage:
+  notify:
+    gitter:
+      default:
+        url: https://webhooks.gitter.im/e/280b28d324053a897991
+        threshold: 1%
+        only_pulls: false
+        branches: null
+        flags: null
+        paths: null
