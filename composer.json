@@ -48,11 +48,44 @@
     "symfony/dotenv": "^3.3",
     "symfony/var-dumper": "^3.3"
   },
+  "require-dev": {
+    "codacy/coverage": "dev-master",
+    "codeclimate/php-test-reporter": "dev-master",
+    "phpunit/phpunit": "^5.0",
+    "satooshi/php-coveralls" : "^1.0",
+    "sebastian/phpcpd": "^2.0",
+    "scrutinizer/ocular": "^1.3",
+    "squizlabs/php_codesniffer": "^2.7|^3.0",
+    "codeception/codeception": "^2.3",
+    "codeception/c3": "^2.0"
+  },
   "autoload": {
     "psr-4": {
       "TorrentPier\\": "src/"
     }
   },
   "minimum-stability": "stable",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "test": [
+      "echo 'NOTE: Instead of running <composer test:lint> linting should be done with StyleCI'",
+      "composer test:unit",
+      "composer test:cpd"
+    ],
+    "test:lint": [
+      "vendor/bin/phpcs --colors --report-full --standard=PSR2 src tests"
+    ],
+    "test:unit": [
+      "vendor/bin/codecept run --steps --coverage --coverage-text"
+    ],
+    "test:unit:html": [
+      "vendor/bin/codecept run --steps --coverage --coverage-html"
+    ],
+    "test:unit:clover": [
+      "vendor/bin/codecept run --steps --coverage --coverage-xml=clover.xml"
+    ],
+    "test:cpd": [
+      "vendor/bin/phpcpd --exclude=vendor --exclude=internal_data ."
+    ]
+  }
 }
