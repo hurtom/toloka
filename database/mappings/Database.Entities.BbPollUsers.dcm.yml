@@ -16,7 +16,7 @@ Database\Entities\BbPollUsers:
             type: integer
             nullable: false
             options:
-                unsigned: true
+                unsigned: false
             id: true
             column: user_id
     fields:

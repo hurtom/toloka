@@ -13,16 +13,16 @@ Database\Entities\BbUserGroup:
             type: integer
             nullable: false
             options:
-                unsigned: false
-                default: '0'
+                unsigned: true
+                #default: '0'
             id: true
             column: group_id
         userId:
             type: integer
             nullable: false
             options:
-                unsigned: true
-                default: '0'
+                unsigned: false
+                #default: '0'
             id: true
             column: user_id
     fields:

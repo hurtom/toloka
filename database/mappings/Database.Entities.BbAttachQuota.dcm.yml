@@ -14,7 +14,7 @@ Database\Entities\BbAttachQuota:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                #default: '0'
             id: true
             column: quota_limit_id
             generator:
@@ -24,7 +24,7 @@ Database\Entities\BbAttachQuota:
             type: integer
             nullable: false
             options:
-                unsigned: true
+                unsigned: false
                 default: '0'
             column: user_id
         groupId:

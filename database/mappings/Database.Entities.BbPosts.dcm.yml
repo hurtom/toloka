@@ -47,7 +47,7 @@ Database\Entities\BbPosts:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
             column: poster_id
         postTime:

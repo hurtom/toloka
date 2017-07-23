@@ -28,8 +28,8 @@ Database\Entities\BbBtTorrents:
         infoHash:
             type: binary
             nullable: false
-            options:
-                default: ''
+            options: ~
+            #    default: ''
             id: true
             column: info_hash
             generator:
@@ -46,7 +46,7 @@ Database\Entities\BbBtTorrents:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
             column: poster_id
         topicId:

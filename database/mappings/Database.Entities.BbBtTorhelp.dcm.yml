@@ -9,8 +9,8 @@ Database\Entities\BbBtTorhelp:
             type: integer
             nullable: false
             options:
-                unsigned: true
-                default: '0'
+                unsigned: false
+                #default: '0'
             id: true
             column: user_id
             #generator:

@@ -11,7 +11,7 @@ Database\Entities\BbSessions:
             length: 20
             options:
                 fixed: true
-                default: ''
+                #default: ''
                 collation: utf8mb4_bin
             id: true
             column: session_id
