@@ -19,7 +19,7 @@ Database\Entities\BbUsers:
             type: integer
             nullable: false
             options:
-                unsigned: true
+                unsigned: false
             id: true
             column: user_id
             generator:
@@ -37,14 +37,14 @@ Database\Entities\BbUsers:
             length: 25
             options:
                 fixed: false
-                default: ''
+                #default: ''
         userPassword:
             type: string
             nullable: false
             length: 32
             options:
                 fixed: false
-                default: ''
+                #default: ''
                 collation: utf8mb4_bin
             column: user_password
         userSessionTime:
@@ -270,7 +270,7 @@ Database\Entities\BbUsers:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
             column: user_newest_pm_id
         userPoints:

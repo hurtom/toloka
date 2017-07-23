@@ -13,8 +13,8 @@ Database\Entities\BbBtDlstatus:
             type: integer
             nullable: false
             options:
-                unsigned: true
-                default: '0'
+                unsigned: false
+                #default: '0'
             id: true
             column: user_id
         topicId:
@@ -22,7 +22,7 @@ Database\Entities\BbBtDlstatus:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                #default: '0'
             id: true
             column: topic_id
     fields:

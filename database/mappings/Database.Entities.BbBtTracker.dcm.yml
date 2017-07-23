@@ -18,7 +18,7 @@ Database\Entities\BbBtTracker:
             length: 32
             options:
                 fixed: false
-                default: ''
+                #default: ''
                 collation: utf8mb4_bin
             id: true
             column: peer_hash
@@ -44,7 +44,7 @@ Database\Entities\BbBtTracker:
             type: integer
             nullable: false
             options:
-                unsigned: true
+                unsigned: false
                 default: '0'
             column: user_id
         ip:

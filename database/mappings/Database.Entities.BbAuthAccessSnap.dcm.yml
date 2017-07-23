@@ -9,16 +9,16 @@ Database\Entities\BbAuthAccessSnap:
             type: integer
             nullable: false
             options:
-                unsigned: true
-                default: '0'
+                unsigned: false
+                #default: '0'
             id: true
             column: user_id
         forumId:
             type: smallint
             nullable: false
             options:
-                unsigned: false
-                default: '0'
+                unsigned: true
+                #default: '0'
             id: true
             column: forum_id
     fields:
