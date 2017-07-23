@@ -1,0 +1,67 @@
+Database\Entities\BbExtensionGroups:
+    type: entity
+    table: bb_extension_groups
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        groupId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: group_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        groupName:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+                default: ''
+            column: group_name
+        catId:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: cat_id
+        allowGroup:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: allow_group
+        downloadMode:
+            type: boolean
+            nullable: false
+            options:
+                unsigned: true
+                default: '1'
+            column: download_mode
+        uploadIcon:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+            column: upload_icon
+        maxFilesize:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: max_filesize
+        forumPermissions:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: forum_permissions
+    lifecycleCallbacks: {  }

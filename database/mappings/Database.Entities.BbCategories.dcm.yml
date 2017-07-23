@@ -1,0 +1,37 @@
+Database\Entities\BbCategories:
+    type: entity
+    table: bb_categories
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        cat_order:
+            columns:
+                - cat_order
+    id:
+        catId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: cat_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        catTitle:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+            column: cat_title
+        catOrder:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: cat_order
+    lifecycleCallbacks: {  }

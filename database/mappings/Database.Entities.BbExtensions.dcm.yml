@@ -1,0 +1,39 @@
+Database\Entities\BbExtensions:
+    type: entity
+    table: bb_extensions
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        extId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: ext_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        groupId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: group_id
+        extension:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+        comment:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+    lifecycleCallbacks: {  }

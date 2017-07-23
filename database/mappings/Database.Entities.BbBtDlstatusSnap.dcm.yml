@@ -1,0 +1,32 @@
+Database\Entities\BbBtDlstatusSnap:
+    type: entity
+    table: bb_bt_dlstatus_snap
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: topic_id
+            #generator:
+            #    strategy: NONE
+    fields:
+        dlStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: dl_status
+        usersCount:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: users_count
+    lifecycleCallbacks: {  }

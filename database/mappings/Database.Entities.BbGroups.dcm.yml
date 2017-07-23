@@ -1,0 +1,90 @@
+Database\Entities\BbGroups:
+    type: entity
+    table: bb_groups
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        group_single_user:
+            columns:
+                - group_single_user
+    id:
+        groupId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: group_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        avatarExtId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: avatar_ext_id
+        groupTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: group_time
+        modTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: mod_time
+        groupType:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: group_type
+        releaseGroup:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: release_group
+        groupName:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+                default: ''
+            column: group_name
+        groupDescription:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: group_description
+        groupSignature:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: group_signature
+        groupModerator:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: group_moderator
+        groupSingleUser:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: group_single_user
+    lifecycleCallbacks: {  }

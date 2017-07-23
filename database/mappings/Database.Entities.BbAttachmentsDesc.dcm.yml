@@ -1,0 +1,95 @@
+Database\Entities\BbAttachmentsDesc:
+    type: entity
+    table: bb_attachments_desc
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        filetime:
+            columns:
+                - filetime
+        filesize:
+            columns:
+                - filesize
+        physical_filename:
+            columns:
+                - physical_filename
+    id:
+        attachId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: attach_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        physicalFilename:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: physical_filename
+        realFilename:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: real_filename
+        downloadCount:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: download_count
+        comment:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+        extension:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+        mimetype:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+        filesize:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        filetime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        thumbnail:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+        trackerStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: tracker_status
+    lifecycleCallbacks: {  }

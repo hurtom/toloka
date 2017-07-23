@@ -1,0 +1,33 @@
+Database\Entities\BbQuotaLimits:
+    type: entity
+    table: bb_quota_limits
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        quotaLimitId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: quota_limit_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        quotaDesc:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+                default: ''
+            column: quota_desc
+        quotaLimit:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: quota_limit
+    lifecycleCallbacks: {  }

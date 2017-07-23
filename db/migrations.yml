@@ -1,4 +1,0 @@
-name: Toloka Database Migrations
-migrations_namespace: Toloka\Database\Migrations
-migrations_directory: db/migrations
-#table_name: migration_versions

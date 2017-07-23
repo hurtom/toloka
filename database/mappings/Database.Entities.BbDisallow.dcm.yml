@@ -1,0 +1,26 @@
+Database\Entities\BbDisallow:
+    type: entity
+    table: bb_disallow
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        disallowId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: disallow_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        disallowUsername:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+                default: ''
+            column: disallow_username
+    lifecycleCallbacks: {  }

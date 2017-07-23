@@ -1,0 +1,128 @@
+Database\Entities\BbCron:
+    type: entity
+    table: bb_cron
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    uniqueConstraints:
+        title:
+            columns:
+                - cron_title
+        script:
+            columns:
+                - cron_script
+    id:
+        cronId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: cron_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        cronActive:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: cron_active
+        cronTitle:
+            type: string
+            nullable: false
+            length: 120
+            options:
+                fixed: true
+                default: ''
+            column: cron_title
+        cronScript:
+            type: string
+            nullable: false
+            length: 120
+            options:
+                fixed: true
+                default: ''
+            column: cron_script
+        schedule:
+            type: enumcronschedule
+            nullable: false
+            length: null
+            options:
+                fixed: false
+                default: daily
+        runDay:
+            type: enumcronrunday
+            nullable: true
+            length: null
+            options:
+                fixed: false
+            column: run_day
+        runTime:
+            type: time
+            nullable: true
+            options:
+                default: '04:00:00'
+            column: run_time
+        runOrder:
+            type: smallint
+            #length: 1
+            #precision: 1
+            #scale: 1
+            nullable: false
+            options:
+                #fixed: true
+                default: '0'
+            column: run_order
+        lastRun:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: last_run
+        nextRun:
+            type: datetime
+            nullable: false
+            options:
+                default: '0000-00-00 00:00:00'
+            column: next_run
+        runInterval:
+            type: time
+            nullable: true
+            options:
+                default: '00:00:00'
+            column: run_interval
+        logEnabled:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: log_enabled
+        logFile:
+            type: string
+            nullable: false
+            length: 120
+            options:
+                fixed: true
+                default: ''
+            column: log_file
+        logSqlQueries:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: log_sql_queries
+        disableBoard:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: disable_board
+        runCounter:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: run_counter
+    lifecycleCallbacks: {  }

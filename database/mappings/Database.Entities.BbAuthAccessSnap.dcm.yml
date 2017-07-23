@@ -1,0 +1,32 @@
+Database\Entities\BbAuthAccessSnap:
+    type: entity
+    table: bb_auth_access_snap
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: user_id
+        forumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            column: forum_id
+    fields:
+        forumPerm:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: forum_perm
+    lifecycleCallbacks: {  }

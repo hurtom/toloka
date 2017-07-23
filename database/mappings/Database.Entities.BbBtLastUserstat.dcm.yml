@@ -1,0 +1,61 @@
+Database\Entities\BbBtLastUserstat:
+    type: entity
+    table: bb_bt_last_userstat
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            id: true
+            column: user_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        upAdd:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: up_add
+        downAdd:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: down_add
+        releaseAdd:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: release_add
+        bonusAdd:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: bonus_add
+        speedUp:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: speed_up
+        speedDown:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: speed_down
+    lifecycleCallbacks: {  }
