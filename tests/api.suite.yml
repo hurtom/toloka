@@ -1,0 +1,7 @@
+actor: ApiTester
+modules:
+    enabled:
+        - REST:
+            url: http://toloka.dev/api/v1/
+            depends: PhpBrowser
+            part: Json

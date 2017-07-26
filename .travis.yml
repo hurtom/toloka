@@ -1,0 +1,65 @@
+sudo: required
+
+language: php
+
+services:
+  - docker
+
+php:
+  - 7.1
+
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION=1.14.0
+    # Codacy
+    # Code Climate
+  matrix:
+    - COMPOSER_FLAGS="--prefer-lowest"
+    - COMPOSER_FLAGS=""
+
+notifications:
+  webhooks:
+    # gitter integration for travis is used
+    # on_* options: [always|never|change] default: always
+    on_success: change
+    on_failure: always
+    on_start: never
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version
+
+before_script:
+  - test $(grep -q memory_limit docker/php.ini) || echo 'memory_limit=-1' >> docker/php.ini
+  - docker-compose pull
+  - docker-compose up -d
+  - docker-compose exec -T toloka chown -R 33:33 /var/www
+  - docker-compose exec -T toloka chmod -R a+w /var/www/html/tests/_output
+  - travis_retry docker-compose exec -T toloka composer self-update
+  - travis_retry docker-compose exec -T -u 33 toloka composer update --no-interaction --prefer-dist ${COMPOSER_FLAGS}
+
+script:
+  - docker-compose exec -T -u 33 toloka composer test:unit:clover
+
+after_script:
+  ### Codacy
+  - vendor/bin/codacycoverage clover tests/_output/clover.xml
+  ### Scrutinizer
+  #- vendor/bin/ocular code-coverage:upload --format=php-clover tests/_output/clover.xml
+  ### Coveralls
+  - vendor/bin/coveralls -v -x tests/_output/clover.xml
+  ### Code Climate
+  - if [ $TRAVIS_PULL_REQUEST = 'false' ]; then vendor/bin/test-reporter --coverage-report=tests/_output/clover.xml; fi
+  ### stop docker at the end
+  - docker-compose stop
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+addons:
+  hosts:
+    - toloka.dev
+    - toloka.local
