@@ -1,0 +1,21 @@
+#duplication:
+#  enabled: true
+#  exclude_paths:
+#    #- config/**
+#metrics:
+#  enabled: true
+#  exclude_paths:
+#    #- config/**
+#coverage:
+#  enabled: true
+#  exclude_paths:
+#    #- config/engines.yml
+#languages:
+#  css:
+#    extensions:
+#      - '-css.resource'
+exclude_paths:
+  - build/**/*
+  - tests/**
+  - '*.min.js'
+  - '*.min.css'

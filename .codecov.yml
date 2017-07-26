@@ -1,0 +1,10 @@
+coverage:
+  notify:
+    gitter:
+      default:
+        url: secret:kvLT+qHSbVOxA0G+9zqmoJEcsjpbzbS56X1gw0gJDtVBxHjjsvisBWfxQH/OlqPd03Ulqv6CNPSvhtuzhAKA72VzDBor/1w/AVuktCmNdepejXJKl+xcpvnU8/bD4fa8
+        threshold: 1%
+        only_pulls: false
+        branches: null
+        flags: null
+        paths: null
