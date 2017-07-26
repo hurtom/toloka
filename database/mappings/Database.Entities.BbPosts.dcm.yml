@@ -14,6 +14,13 @@ Database\Entities\BbPosts:
         post_time:
             columns:
                 - post_time
+        forum_id:
+            columns:
+                - forum_id
+        topic_time:
+            columns:
+                - topic_id
+                - post_time
         forum_id_post_time:
             columns:
                 - forum_id
@@ -47,7 +54,7 @@ Database\Entities\BbPosts:
             type: integer
             nullable: false
             options:
-                unsigned: true
+                unsigned: false
                 default: '0'
             column: poster_id
         postTime:
@@ -57,12 +64,19 @@ Database\Entities\BbPosts:
                 unsigned: false
                 default: '0'
             column: post_time
+        postCreated:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: post_created
         posterIp:
             type: string
             nullable: false
             length: 42
             options:
-                fixed: true
+                fixed: false
                 default: '0'
                 collation: utf8mb4_bin
             column: poster_ip

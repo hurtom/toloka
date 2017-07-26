@@ -4,6 +4,11 @@ Database\Entities\BbBtUsers:
     options:
         charset: utf8mb4
         collate: utf8mb4_unicode_ci
+    indexes:
+        user_id_down:
+            columns:
+                - user_id
+                - u_down_total
     uniqueConstraints:
         auth_key:
             columns:
@@ -14,7 +19,6 @@ Database\Entities\BbBtUsers:
             nullable: false
             options:
                 unsigned: false
-                #default: '0'
             id: true
             column: user_id
             generator:

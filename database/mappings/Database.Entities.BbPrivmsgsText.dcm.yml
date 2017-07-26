@@ -10,11 +10,8 @@ Database\Entities\BbPrivmsgsText:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
             id: true
             column: privmsgs_text_id
-            #generator:
-            #    strategy: IDENTITY
     fields:
         privmsgsText:
             type: text

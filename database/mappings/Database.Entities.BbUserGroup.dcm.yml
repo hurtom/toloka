@@ -14,7 +14,6 @@ Database\Entities\BbUserGroup:
             nullable: false
             options:
                 unsigned: true
-                #default: '0'
             id: true
             column: group_id
         userId:
@@ -22,7 +21,6 @@ Database\Entities\BbUserGroup:
             nullable: false
             options:
                 unsigned: false
-                #default: '0'
             id: true
             column: user_id
     fields:
@@ -39,4 +37,11 @@ Database\Entities\BbUserGroup:
                 unsigned: false
                 default: '0'
             column: user_time
+        groupModerator:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: group_moderator
     lifecycleCallbacks: {  }

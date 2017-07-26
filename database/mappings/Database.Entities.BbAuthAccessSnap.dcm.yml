@@ -10,7 +10,6 @@ Database\Entities\BbAuthAccessSnap:
             nullable: false
             options:
                 unsigned: false
-                #default: '0'
             id: true
             column: user_id
         forumId:
@@ -18,7 +17,6 @@ Database\Entities\BbAuthAccessSnap:
             nullable: false
             options:
                 unsigned: true
-                #default: '0'
             id: true
             column: forum_id
     fields:

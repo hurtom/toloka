@@ -4,6 +4,10 @@ Database\Entities\BbSearchResults:
     options:
         charset: utf8mb4
         collate: utf8mb4_unicode_ci
+    indexes:
+        search_id:
+            columns:
+                - search_id
     id:
         sessionId:
             type: string
@@ -11,7 +15,6 @@ Database\Entities\BbSearchResults:
             length: 20
             options:
                 fixed: true
-                default: ''
                 collation: utf8mb4_bin
             id: true
             column: session_id
@@ -29,7 +32,6 @@ Database\Entities\BbSearchResults:
             length: 12
             options:
                 fixed: false
-                default: ''
                 collation: utf8mb4_bin
             column: search_id
         searchTime:
@@ -49,7 +51,7 @@ Database\Entities\BbSearchResults:
         searchArray:
             type: text
             nullable: false
-            length: 65535
+            length: 16777215
             options:
                 fixed: false
             column: search_array

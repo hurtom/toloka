@@ -8,15 +8,28 @@ Database\Entities\BbTopics:
         forum_id:
             columns:
                 - forum_id
-        topic_last_post_id:
+        topic_type:
             columns:
-                - topic_last_post_id
+                - topic_type
+        topic_status:
+            columns:
+                - topic_status
+        topic_moved_id:
+            columns:
+                - topic_moved_id
+        topic_poster:
+            columns:
+                - topic_poster
         topic_last_post_time:
             columns:
                 - topic_last_post_time
         topic_title:
             columns:
                 - topic_title
+    uniqueConstraints:
+        topic_last_post_id:
+            columns:
+                - topic_last_post_id
     id:
         topicId:
             type: integer

@@ -10,18 +10,14 @@ Database\Entities\BbBtDlstatusSnap:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
             id: true
             column: topic_id
-            #generator:
-            #    strategy: NONE
-    fields:
         dlStatus:
-            type: boolean
+            type: smallint
             nullable: false
-            options:
-                default: '0'
+            id: true
             column: dl_status
+    fields:
         usersCount:
             type: smallint
             nullable: false

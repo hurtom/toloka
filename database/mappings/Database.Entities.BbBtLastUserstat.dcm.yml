@@ -10,11 +10,8 @@ Database\Entities\BbBtLastUserstat:
             nullable: false
             options:
                 unsigned: false
-                #default: '0'
             id: true
             column: user_id
-            #generator:
-            #    strategy: IDENTITY
     fields:
         upAdd:
             type: bigint

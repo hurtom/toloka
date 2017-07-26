@@ -11,6 +11,10 @@ Database\Entities\BbBtTracker:
         user_id:
             columns:
                 - user_id
+    uniqueConstraints:
+        torrent_peer_id:
+            columns:
+                - peer_id
     id:
         peerHash:
             type: string
@@ -18,7 +22,6 @@ Database\Entities\BbBtTracker:
             length: 32
             options:
                 fixed: false
-                #default: ''
                 collation: utf8mb4_bin
             id: true
             column: peer_hash
@@ -85,9 +88,10 @@ Database\Entities\BbBtTracker:
             options:
                 default: '0'
         torType:
-            type: boolean
+            type: smallint
             nullable: false
             options:
+                unsigned: true
                 default: '0'
             column: tor_type
         uploaded:
@@ -109,14 +113,14 @@ Database\Entities\BbBtTracker:
                 unsigned: true
                 default: '0'
         speedUp:
-            type: integer
+            type: bigint
             nullable: false
             options:
                 unsigned: true
                 default: '0'
             column: speed_up
         speedDown:
-            type: integer
+            type: bigint
             nullable: false
             options:
                 unsigned: true

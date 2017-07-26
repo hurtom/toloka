@@ -9,7 +9,7 @@ Database\Entities\BbExtensionGroups:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
             id: true
             column: group_id
             generator:
@@ -24,9 +24,10 @@ Database\Entities\BbExtensionGroups:
                 default: ''
             column: group_name
         catId:
-            type: boolean
+            type: integer
             nullable: false
             options:
+                unsigned: true
                 default: '0'
             column: cat_id
         allowGroup:
@@ -36,7 +37,7 @@ Database\Entities\BbExtensionGroups:
                 default: '0'
             column: allow_group
         downloadMode:
-            type: boolean
+            type: smallint
             nullable: false
             options:
                 unsigned: true

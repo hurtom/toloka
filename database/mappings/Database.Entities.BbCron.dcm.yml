@@ -66,12 +66,9 @@ Database\Entities\BbCron:
             column: run_time
         runOrder:
             type: smallint
-            #length: 1
-            #precision: 1
-            #scale: 1
             nullable: false
             options:
-                #fixed: true
+                unsigned: true
                 default: '0'
             column: run_order
         lastRun:

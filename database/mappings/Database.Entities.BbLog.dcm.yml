@@ -12,47 +12,37 @@ Database\Entities\BbLog:
             columns:
                 - log_topic_title
     id:
+        id:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
         logTypeId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                #default: '0'
-            id: true
+                default: '0'
             column: log_type_id
         logUserId:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                #default: '0'
-            id: true
+                default: '0'
             column: log_user_id
-        logForumId:
-            type: smallint
+        logUsername:
+            type: string
             nullable: false
+            length: 25
             options:
-                unsigned: true
-                #default: '0'
-            id: true
-            column: log_forum_id
-        logTopicId:
-            type: integer
-            nullable: false
-            options:
-                unsigned: true
-                #default: '0'
-            id: true
-            column: log_topic_id
-        logTime:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-                #default: '0'
-            id: true
-            column: log_time
-    fields:
+                fixed: false
+                default: ''
+            column: log_username
         logUserIp:
             type: string
             nullable: false
@@ -60,8 +50,14 @@ Database\Entities\BbLog:
             options:
                 fixed: false
                 default: '0'
-                collation: utf8mb4_bin
             column: log_user_ip
+        logForumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: log_forum_id
         logForumIdNew:
             type: smallint
             nullable: false
@@ -69,6 +65,13 @@ Database\Entities\BbLog:
                 unsigned: true
                 default: '0'
             column: log_forum_id_new
+        logTopicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: log_topic_id
         logTopicIdNew:
             type: integer
             nullable: false
@@ -92,6 +95,13 @@ Database\Entities\BbLog:
                 fixed: false
                 default: ''
             column: log_topic_title_new
+        logTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: log_time
         logMsg:
             type: text
             nullable: false

@@ -10,7 +10,7 @@ Database\Entities\BbCategories:
                 - cat_order
     id:
         catId:
-            type: smallint
+            type: integer
             nullable: false
             options:
                 unsigned: true

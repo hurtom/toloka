@@ -10,11 +10,8 @@ Database\Entities\BbBtTrackerSnap:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
             id: true
             column: topic_id
-            #generator:
-            #    strategy: IDENTITY
     fields:
         seeders:
             type: integer
@@ -29,14 +26,14 @@ Database\Entities\BbBtTrackerSnap:
                 unsigned: true
                 default: '0'
         speedUp:
-            type: integer
+            type: bigint
             nullable: false
             options:
                 unsigned: true
                 default: '0'
             column: speed_up
         speedDown:
-            type: integer
+            type: bigint
             nullable: false
             options:
                 unsigned: true

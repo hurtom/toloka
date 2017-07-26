@@ -17,6 +17,12 @@ Database\Entities\BbForums:
         forum_parent:
             columns:
                 - forum_parent
+        auth_view:
+            columns:
+                - auth_view
+        auth_read:
+            columns:
+                - auth_read
     id:
         forumId:
             type: smallint
@@ -29,7 +35,7 @@ Database\Entities\BbForums:
                 strategy: IDENTITY
     fields:
         catId:
-            type: smallint
+            type: integer
             nullable: false
             options:
                 unsigned: true

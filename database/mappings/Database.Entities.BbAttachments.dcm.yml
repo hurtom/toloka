@@ -4,6 +4,14 @@ Database\Entities\BbAttachments:
     options:
         charset: utf8mb4
         collate: utf8mb4_unicode_ci
+    indexes:
+        attach_id_privmsgs_id:
+            columns:
+                - attach_id
+                - privmsgs_id
+        privmsgs_id:
+            columns:
+                - privmsgs_id
     id:
         attachId:
             type: integer
@@ -17,10 +25,16 @@ Database\Entities\BbAttachments:
             nullable: false
             options:
                 unsigned: true
-                #default: '0'
             id: true
             column: post_id
     fields:
+        privmsgsId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: privmsgs_id
         userId1:
             type: integer
             nullable: false
@@ -28,4 +42,11 @@ Database\Entities\BbAttachments:
                 unsigned: false
                 default: '0'
             column: user_id_1
+        userId2:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: user_id_2
     lifecycleCallbacks: {  }

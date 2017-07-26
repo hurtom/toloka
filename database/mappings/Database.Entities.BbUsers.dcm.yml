@@ -5,15 +5,18 @@ Database\Entities\BbUsers:
         charset: utf8mb4
         collate: utf8mb4_unicode_ci
     indexes:
+        user_level:
+            columns:
+                - user_level
+        user_regdate:
+            columns:
+                - user_regdate
         username:
             columns:
                 - username
         user_email:
             columns:
                 - user_email
-        user_level:
-            columns:
-                - user_level
     id:
         userId:
             type: integer
@@ -37,14 +40,12 @@ Database\Entities\BbUsers:
             length: 25
             options:
                 fixed: false
-                #default: ''
         userPassword:
             type: string
             nullable: false
-            length: 32
+            length: 60
             options:
                 fixed: false
-                #default: ''
                 collation: utf8mb4_bin
             column: user_password
         userSessionTime:
@@ -54,6 +55,12 @@ Database\Entities\BbUsers:
                 unsigned: false
                 default: '0'
             column: user_session_time
+        userTimer:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: user_timer
         userLastvisit:
             type: integer
             nullable: false
@@ -66,7 +73,7 @@ Database\Entities\BbUsers:
             nullable: false
             length: 42
             options:
-                fixed: true
+                fixed: false
                 default: '0'
                 collation: utf8mb4_bin
             column: user_last_ip
@@ -82,7 +89,7 @@ Database\Entities\BbUsers:
             nullable: false
             length: 42
             options:
-                fixed: true
+                fixed: false
                 default: '0'
                 collation: utf8mb4_bin
             column: user_reg_ip
@@ -143,6 +150,52 @@ Database\Entities\BbUsers:
                 unsigned: false
                 default: '0'
             column: user_opt
+        userLoginTries:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: user_login_tries
+        userLastLoginTry:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: user_last_login_try
+        userViewemail:
+            type: boolean
+            nullable: true
+            column: user_viewemail
+        userAttachsig:
+            type: boolean
+            nullable: true
+            column: user_attachsig
+        userAllowViewonline:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_allow_viewonline
+        userNotify:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_notify
+        userNotifyPm:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_notify_pm
+        userPopupPm:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_popup_pm
         userRank:
             type: integer
             nullable: false
@@ -168,6 +221,19 @@ Database\Entities\BbUsers:
             options:
                 default: '0000-00-00'
             column: user_birthday
+        userAvatar:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: user_avatar
+        userAvatarType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_avatar_type
         userEmail:
             type: string
             nullable: false
@@ -223,6 +289,13 @@ Database\Entities\BbUsers:
             options:
                 fixed: false
             column: user_sig
+        userSigBbcodeUid:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+            column: user_sig_bbcode_uid
         userOcc:
             type: string
             nullable: false
@@ -251,7 +324,7 @@ Database\Entities\BbUsers:
         userNewpasswd:
             type: string
             nullable: false
-            length: 32
+            length: 60
             options:
                 fixed: false
                 default: ''
@@ -289,4 +362,79 @@ Database\Entities\BbUsers:
                 fixed: false
                 default: default
             column: tpl_name
+        userAllowPasskey:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_allow_passkey
+        userFromFlag:
+            type: string
+            nullable: true
+            length: 25
+            options:
+                fixed: false
+            column: user_from_flag
+        userAllowdefaultavatar:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_allowdefaultavatar
+        userWarnings:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_warnings
+        userBanned:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_banned
+        btTorBrowseSet:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: bt_tor_browse_set
+        userUnreadTopics:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: user_unread_topics
+        userHideBtStats:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_hide_bt_stats
+        userHideBtHistory:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_hide_bt_history
+        userHideBtActivity:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_hide_bt_activity
+        userHideBtTopics:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_hide_bt_topics
+        userBtSsl:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_bt_ssl
     lifecycleCallbacks: {  }

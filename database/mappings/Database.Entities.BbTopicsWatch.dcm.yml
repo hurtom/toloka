@@ -17,7 +17,6 @@ Database\Entities\BbTopicsWatch:
             nullable: false
             options:
                 unsigned: true
-                #default: '0'
             id: true
             column: topic_id
         userId:
@@ -25,7 +24,6 @@ Database\Entities\BbTopicsWatch:
             nullable: false
             options:
                 unsigned: false
-                #default: '0'
             id: true
             column: user_id
     fields:

@@ -13,7 +13,7 @@ Database\Entities\BbAuthAccess:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
             id: true
             column: group_id

@@ -11,7 +11,6 @@ Database\Entities\BbConfig:
             length: 255
             options:
                 fixed: false
-                #default: ''
             id: true
             column: config_name
             generator:

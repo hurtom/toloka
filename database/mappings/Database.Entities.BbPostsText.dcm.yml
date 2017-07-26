@@ -10,11 +10,8 @@ Database\Entities\BbPostsText:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
             id: true
             column: post_id
-            #generator:
-            #    strategy: IDENTITY
     fields:
         postText:
             type: text

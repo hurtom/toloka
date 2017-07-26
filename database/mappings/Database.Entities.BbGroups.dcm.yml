@@ -8,12 +8,15 @@ Database\Entities\BbGroups:
         group_single_user:
             columns:
                 - group_single_user
+        group_name:
+            columns:
+                - group_name
     id:
         groupId:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
             id: true
             column: group_id
             generator:

@@ -14,6 +14,12 @@ Database\Entities\BbBtTorrents:
         poster_id:
             columns:
                 - poster_id
+        size:
+            columns:
+                - size
+        topic_check_uid:
+            columns:
+                - checked_user_id
     uniqueConstraints:
         post_id:
             columns:
@@ -28,8 +34,8 @@ Database\Entities\BbBtTorrents:
         infoHash:
             type: binary
             nullable: false
-            options: ~
-            #    default: ''
+            options:
+                fixed: false
             id: true
             column: info_hash
             generator:
@@ -46,7 +52,7 @@ Database\Entities\BbBtTorrents:
             type: integer
             nullable: false
             options:
-                unsigned: true
+                unsigned: false
                 default: '0'
             column: poster_id
         topicId:
@@ -125,23 +131,38 @@ Database\Entities\BbBtTorrents:
                 default: '0'
             column: checked_time
         torType:
-            type: boolean
+            type: smallint
             nullable: false
             options:
+                unsigned: true
                 default: '0'
             column: tor_type
         speedUp:
-            type: integer
+            type: bigint
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
             column: speed_up
         speedDown:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: speed_down
+        topicCheckFirstFid:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: topic_check_first_fid
+        topicCheckDoubleTid:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
-            column: speed_down
+            column: topic_check_double_tid
     lifecycleCallbacks: {  }

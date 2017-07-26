@@ -39,4 +39,10 @@ Database\Entities\BbRanks:
                 fixed: false
                 default: ''
             column: rank_style
+        rankGroup:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            column: rank_group
     lifecycleCallbacks: {  }

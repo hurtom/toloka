@@ -9,12 +9,9 @@ Database\Entities\BbPostsHtml:
             type: integer
             nullable: false
             options:
-                unsigned: false
-                default: '0'
+                unsigned: true
             id: true
             column: post_id
-            #generator:
-            #    strategy: IDENTITY
     fields:
         postHtmlTime:
             type: datetime
