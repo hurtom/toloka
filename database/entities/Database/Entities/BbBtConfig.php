@@ -3,9 +3,9 @@
 namespace Database\Entities;
 
 /**
- * BbConfig
+ * BbBtConfig
  */
-class BbConfig
+class BbBtConfig
 {
     /**
      * @var string

@@ -3,54 +3,49 @@
 namespace Database\Entities;
 
 /**
- * BbBtLastTorstat
+ * BbTopicsMove
  */
-class BbBtLastTorstat
+class BbTopicsMove
 {
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $id;
 
     /**
      * @var integer
      */
-    private $userId = '0';
-
-    /**
-     * @var boolean
-     */
-    private $dlStatus = '0';
+    private $forumId = '0';
 
     /**
      * @var integer
      */
-    private $upAdd = '0';
+    private $waitsDays = '0';
 
     /**
      * @var integer
      */
-    private $downAdd = '0';
+    private $checkFreq = '0';
 
     /**
      * @var integer
      */
-    private $releaseAdd = '0';
+    private $moveFid = '0';
 
     /**
      * @var integer
      */
-    private $bonusAdd = '0';
+    private $recycleWaitsDays = '0';
 
     /**
      * @var integer
      */
-    private $speedUp = '0';
+    private $recycleCheckFreq = '0';
 
     /**
      * @var integer
      */
-    private $speedDown = '0';
+    private $recycleMoveFid = '0';
 
 
 }

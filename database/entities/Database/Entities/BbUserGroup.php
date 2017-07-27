@@ -28,5 +28,10 @@ class BbUserGroup
     private $userTime = '0';
 
 
-}
+    /**
+     * @var boolean
+     */
+    private $groupModerator;
 
+
+}

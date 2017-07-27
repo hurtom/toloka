@@ -3,14 +3,14 @@
 namespace Database\Entities;
 
 /**
- * BbBtTorstat
+ * BbAttachmentsRating
  */
-class BbBtTorstat
+class BbAttachmentsRating
 {
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $attachId = '0';
 
     /**
      * @var integer
@@ -18,14 +18,14 @@ class BbBtTorstat
     private $userId = '0';
 
     /**
-     * @var \DateTime
+     * @var boolean
      */
-    private $lastModifiedTorstat = 'CURRENT_TIMESTAMP';
+    private $thanked = '0';
 
     /**
      * @var boolean
      */
-    private $completed = '0';
+    private $rating = '0';
 
 
 }

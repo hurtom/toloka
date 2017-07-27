@@ -28,5 +28,20 @@ class BbRanks
     private $rankStyle = '';
 
 
-}
+    /**
+     * @var integer
+     */
+    private $rankMin = '0';
 
+    /**
+     * @var boolean
+     */
+    private $rankSpecial = '1';
+
+    /**
+     * @var integer
+     */
+    private $rankGroup;
+
+
+}

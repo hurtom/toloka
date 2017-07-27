@@ -3,14 +3,14 @@
 namespace Database\Entities;
 
 /**
- * BbAttachQuota
+ * BbPostsEdit
  */
-class BbAttachQuota
+class BbPostsEdit
 {
     /**
      * @var integer
      */
-    private $quotaLimitId = '0';
+    private $postId = '0';
 
     /**
      * @var integer
@@ -20,12 +20,12 @@ class BbAttachQuota
     /**
      * @var integer
      */
-    private $groupId = '0';
+    private $postEditCount = '0';
 
     /**
      * @var integer
      */
-    private $quotaType = '0';
+    private $postEditTime;
 
 
 }

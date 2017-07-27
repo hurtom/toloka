@@ -63,5 +63,15 @@ class BbLog
     private $logMsg;
 
 
-}
+    /**
+     * @var integer
+     */
+    private $id;
 
+    /**
+     * @var string
+     */
+    private $logUsername = '';
+
+
+}

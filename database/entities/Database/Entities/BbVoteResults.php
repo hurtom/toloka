@@ -3,29 +3,29 @@
 namespace Database\Entities;
 
 /**
- * BbPollUsers
+ * BbVoteResults
  */
-class BbPollUsers
+class BbVoteResults
 {
     /**
      * @var integer
      */
-    private $topicId;
+    private $voteId = '0';
 
     /**
-     * @var integer
+     * @var boolean
      */
-    private $userId;
+    private $voteOptionId = '0';
 
     /**
      * @var string
      */
-    private $voteIp = '0';
+    private $voteOptionText;
 
     /**
      * @var integer
      */
-    private $voteDt = '0';
+    private $voteResult = '0';
 
 
 }

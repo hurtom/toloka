@@ -3,34 +3,34 @@
 namespace Database\Entities;
 
 /**
- * BbBtTrackerSnap
+ * BbDlStPrevsList
  */
-class BbBtTrackerSnap
+class BbDlStPrevsList
 {
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $prevsId;
 
     /**
      * @var integer
      */
-    private $seeders = '0';
+    private $prevsUserPg = '0';
 
     /**
      * @var integer
      */
-    private $leechers = '0';
+    private $prevsUserPng = '0';
 
     /**
      * @var integer
      */
-    private $speedUp = '0';
+    private $prevsGroupG = '0';
 
     /**
      * @var integer
      */
-    private $speedDown = '0';
+    private $prevsUntil = '0';
 
 
 }

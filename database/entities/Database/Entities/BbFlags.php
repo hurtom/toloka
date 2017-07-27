@@ -3,24 +3,24 @@
 namespace Database\Entities;
 
 /**
- * BbWords
+ * BbFlags
  */
-class BbWords
+class BbFlags
 {
     /**
      * @var integer
      */
-    private $wordId;
+    private $flagId;
 
     /**
      * @var string
      */
-    private $word = '';
+    private $flagName = '';
 
     /**
      * @var string
      */
-    private $replacement = '';
+    private $flagImage = '';
 
 
 }

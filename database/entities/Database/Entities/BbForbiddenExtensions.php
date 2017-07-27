@@ -3,19 +3,19 @@
 namespace Database\Entities;
 
 /**
- * BbPostsSearch
+ * BbForbiddenExtensions
  */
-class BbPostsSearch
+class BbForbiddenExtensions
 {
     /**
      * @var integer
      */
-    private $postId = '0';
+    private $extId;
 
     /**
      * @var string
      */
-    private $searchWords;
+    private $extension = '';
 
 
 }

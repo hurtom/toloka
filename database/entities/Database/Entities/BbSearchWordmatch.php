@@ -3,24 +3,24 @@
 namespace Database\Entities;
 
 /**
- * BbTopicsWatch
+ * BbSearchWordmatch
  */
-class BbTopicsWatch
+class BbSearchWordmatch
 {
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $postId = '0';
 
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $wordId = '0';
 
     /**
      * @var boolean
      */
-    private $notifyStatus = '0';
+    private $titleMatch = '0';
 
 
 }

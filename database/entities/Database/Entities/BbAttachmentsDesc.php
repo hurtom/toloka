@@ -63,5 +63,25 @@ class BbAttachmentsDesc
     private $trackerStatus = '0';
 
 
-}
+    /**
+     * @var integer
+     */
+    private $thanks = '0';
 
+    /**
+     * @var integer
+     */
+    private $ratingSum = '0';
+
+    /**
+     * @var integer
+     */
+    private $ratingCount = '0';
+
+    /**
+     * @var boolean
+     */
+    private $forcePrivate = '0';
+
+
+}

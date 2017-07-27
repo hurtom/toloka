@@ -93,5 +93,15 @@ class BbBtTorrents
     private $speedDown = '0';
 
 
-}
+    /**
+     * @var integer
+     */
+    private $topicCheckFirstFid = '0';
 
+    /**
+     * @var integer
+     */
+    private $topicCheckDoubleTid = '0';
+
+
+}

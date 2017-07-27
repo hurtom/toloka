@@ -3,24 +3,24 @@
 namespace Database\Entities;
 
 /**
- * BbWords
+ * BbWarningsText
  */
-class BbWords
+class BbWarningsText
 {
     /**
      * @var integer
      */
-    private $wordId;
+    private $warningId = '0';
 
     /**
      * @var string
      */
-    private $word = '';
+    private $bbcodeUid = '';
 
     /**
      * @var string
      */
-    private $replacement = '';
+    private $warningText;
 
 
 }

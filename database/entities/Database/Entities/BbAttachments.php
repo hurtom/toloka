@@ -23,5 +23,15 @@ class BbAttachments
     private $userId1 = '0';
 
 
-}
+    /**
+     * @var integer
+     */
+    private $privmsgsId = '0';
 
+    /**
+     * @var integer
+     */
+    private $userId2 = '0';
+
+
+}

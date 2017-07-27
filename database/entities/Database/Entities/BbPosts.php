@@ -88,5 +88,10 @@ class BbPosts
     private $mcUserId = '0';
 
 
-}
+    /**
+     * @var integer
+     */
+    private $postCreated = '0';
 
+
+}

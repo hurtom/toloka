@@ -188,5 +188,130 @@ class BbUsers
     private $tplName = 'default';
 
 
-}
+    /**
+     * @var string
+     */
+    private $userPassword2 = '';
 
+    /**
+     * @var integer
+     */
+    private $userTimer;
+
+    /**
+     * @var integer
+     */
+    private $userLoginTries = '0';
+
+    /**
+     * @var integer
+     */
+    private $userLastLoginTry = '0';
+
+    /**
+     * @var boolean
+     */
+    private $userViewemail;
+
+    /**
+     * @var boolean
+     */
+    private $userAttachsig;
+
+    /**
+     * @var boolean
+     */
+    private $userAllowViewonline = '1';
+
+    /**
+     * @var boolean
+     */
+    private $userNotify = '1';
+
+    /**
+     * @var boolean
+     */
+    private $userNotifyPm = '0';
+
+    /**
+     * @var boolean
+     */
+    private $userPopupPm = '0';
+
+    /**
+     * @var string
+     */
+    private $userAvatar;
+
+    /**
+     * @var boolean
+     */
+    private $userAvatarType = '0';
+
+    /**
+     * @var string
+     */
+    private $userSigBbcodeUid;
+
+    /**
+     * @var boolean
+     */
+    private $userAllowPasskey = '1';
+
+    /**
+     * @var string
+     */
+    private $userFromFlag;
+
+    /**
+     * @var boolean
+     */
+    private $userAllowdefaultavatar = '1';
+
+    /**
+     * @var boolean
+     */
+    private $userWarnings = '0';
+
+    /**
+     * @var boolean
+     */
+    private $userBanned = '0';
+
+    /**
+     * @var string
+     */
+    private $btTorBrowseSet;
+
+    /**
+     * @var string
+     */
+    private $userUnreadTopics;
+
+    /**
+     * @var boolean
+     */
+    private $userHideBtStats = '0';
+
+    /**
+     * @var boolean
+     */
+    private $userHideBtHistory = '1';
+
+    /**
+     * @var boolean
+     */
+    private $userHideBtActivity = '0';
+
+    /**
+     * @var boolean
+     */
+    private $userHideBtTopics = '0';
+
+    /**
+     * @var boolean
+     */
+    private $userBtSsl = '0';
+
+
+}
