@@ -14,11 +14,10 @@ Database\Entities\BbAttachQuota:
             nullable: false
             options:
                 unsigned: true
-                #default: '0'
             id: true
             column: quota_limit_id
-            generator:
-                strategy: IDENTITY
+            #generator:
+            #    strategy: IDENTITY
     fields:
         userId:
             type: integer

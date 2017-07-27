@@ -8,6 +8,7 @@ Database\Entities\BbPostsSearch:
         search_words:
             columns:
                 - search_words
+            flags: fulltext
     id:
         postId:
             type: integer

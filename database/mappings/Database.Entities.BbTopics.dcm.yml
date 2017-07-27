@@ -26,6 +26,7 @@ Database\Entities\BbTopics:
         topic_title:
             columns:
                 - topic_title
+            flags: fulltext
     uniqueConstraints:
         topic_last_post_id:
             columns:
