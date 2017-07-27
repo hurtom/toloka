@@ -1,0 +1,25 @@
+Database\Entities\BbForbiddenExtensions:
+    type: entity
+    table: bb_forbidden_extensions
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        extId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: ext_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        extension:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+    lifecycleCallbacks: {  }

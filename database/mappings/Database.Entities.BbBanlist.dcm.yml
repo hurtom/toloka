@@ -34,6 +34,7 @@ Database\Entities\BbBanlist:
             options:
                 fixed: false
                 default: '0'
+                collation: utf8mb4_bin
             column: ban_ip
         banEmail:
             type: string

@@ -1,0 +1,70 @@
+Database\Entities\BbTopicsMove:
+    type: entity
+    table: bb_topics_move
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        forum_id:
+            columns:
+                - forum_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        forumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: forum_id
+        waitsDays:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: waits_days
+        checkFreq:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: check_freq
+        moveFid:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: move_fid
+        recycleWaitsDays:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: recycle_waits_days
+        recycleCheckFreq:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: recycle_check_freq
+        recycleMoveFid:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: recycle_move_fid
+    lifecycleCallbacks: {  }

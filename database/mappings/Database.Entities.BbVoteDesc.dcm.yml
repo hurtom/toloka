@@ -1,0 +1,76 @@
+Database\Entities\BbVoteDesc:
+    type: entity
+    table: bb_vote_desc
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        topic_id:
+            columns:
+                - topic_id
+    id:
+        voteId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: vote_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: topic_id
+        voteText:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: vote_text
+        voteStart:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: vote_start
+        voteLength:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: vote_length
+        voteMax:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '1'
+            column: vote_max
+        voteVoted:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: vote_voted
+        voteHide:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: vote_hide
+        voteTothide:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: vote_tothide
+    lifecycleCallbacks: {  }

@@ -50,6 +50,7 @@ Database\Entities\BbLog:
             options:
                 fixed: false
                 default: '0'
+                collation: utf8mb4_bin
             column: log_user_ip
         logForumId:
             type: smallint

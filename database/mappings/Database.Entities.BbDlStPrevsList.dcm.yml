@@ -1,0 +1,52 @@
+Database\Entities\BbDlStPrevsList:
+    type: entity
+    table: bb_dl_st_prevs_list
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        prevs_user_pg_user_png_group_g:
+            columns:
+                - prevs_user_pg
+                - prevs_user_png
+                - prevs_group_g
+    id:
+        prevsId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: prevs_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        prevsUserPg:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: prevs_user_pg
+        prevsUserPng:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: prevs_user_png
+        prevsGroupG:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: prevs_group_g
+        prevsUntil:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: prevs_until
+    lifecycleCallbacks: {  }

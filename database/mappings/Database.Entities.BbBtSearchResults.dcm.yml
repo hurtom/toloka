@@ -1,0 +1,47 @@
+Database\Entities\BbBtSearchResults:
+    type: entity
+    table: bb_bt_search_results
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        sessionId:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+                collation: utf8mb4_bin
+            id: true
+            column: session_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        searchId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: search_id
+        added:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+        searchArray:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: search_array
+        searchSettings:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: search_settings
+    lifecycleCallbacks: {  }

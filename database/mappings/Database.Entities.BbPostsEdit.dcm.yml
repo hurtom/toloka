@@ -1,39 +1,40 @@
-Database\Entities\BbPollUsers:
+Database\Entities\BbPostsEdit:
     type: entity
-    table: bb_poll_users
+    table: bb_posts_edit
     options:
         charset: utf8mb4
         collate: utf8mb4_unicode_ci
+    indexes:
+        post_id:
+            columns:
+                - post_id
     id:
-        topicId:
+        postId:
             type: integer
             nullable: false
             options:
                 unsigned: true
             id: true
-            column: topic_id
+            column: post_id
+    fields:
         userId:
             type: integer
             nullable: false
             options:
                 unsigned: false
-            id: true
-            column: user_id
-    fields:
-        voteIp:
-            type: string
-            nullable: false
-            length: 42
-            options:
-                fixed: false
                 default: '0'
-                collation: utf8mb4_bin
-            column: vote_ip
-        voteDt:
-            type: integer
+            column: user_id
+        postEditCount:
+            type: smallint
             nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: post_edit_count
+        postEditTime:
+            type: integer
+            nullable: true
             options:
                 unsigned: false
-                default: '0'
-            column: vote_dt
+            column: post_edit_time
     lifecycleCallbacks: {  }

@@ -1,0 +1,36 @@
+Database\Entities\BbBtTorrentsDel:
+    type: entity
+    table: bb_bt_torrents_del
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        torrentId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: torrent_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        infoHash:
+            type: binary
+            nullable: false
+            options:
+                default: "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+            column: info_hash
+        isDel:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: is_del
+        dlPercent:
+            type: boolean
+            nullable: false
+            options:
+                default: '100'
+            column: dl_percent
+    lifecycleCallbacks: {  }
