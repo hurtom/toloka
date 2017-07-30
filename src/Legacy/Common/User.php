@@ -399,7 +399,8 @@ class User
             $sql = "
 				SELECT *
 				FROM " . BB_USERS . "
-				WHERE username = '$username_sql'
+				WHERE (username = '$username_sql'
+				  OR user_email = '$username_sql')
 				  AND user_password = '$password_sql'
 				  AND user_active = 1
 				  AND user_id != " . GUEST_UID . "
