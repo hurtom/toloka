@@ -2,11 +2,21 @@
 
 namespace Database\Migrations;
 
+use App\Helpers\BBCodeHelper;
 use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Migrations\Version;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
 class Version20170601000000 extends AbstractMigration
 {
+    private $bbCodeHelper;
+
+    public function __construct(Version $version)
+    {
+        $this->bbCodeHelper = new BBCodeHelper();
+        parent::__construct($version);
+    }
+
     /**
      * @param Schema $schema
      */
@@ -14,12 +24,19 @@ class Version20170601000000 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        // new tables
         $this->addSql('CREATE TABLE bb_ads (ad_id INT UNSIGNED AUTO_INCREMENT NOT NULL, ad_block_ids VARCHAR(255) DEFAULT \'\' NOT NULL, ad_start_time DATETIME DEFAULT \'0000-00-00 00:00:00\' NOT NULL, ad_active_days SMALLINT DEFAULT 0 NOT NULL, ad_status TINYINT(1) DEFAULT \'1\' NOT NULL, ad_desc VARCHAR(255) DEFAULT \'\' NOT NULL, ad_html TEXT NOT NULL, PRIMARY KEY(ad_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_auth_access_snap (user_id INT NOT NULL, forum_id SMALLINT UNSIGNED NOT NULL, forum_perm INT DEFAULT 0 NOT NULL, PRIMARY KEY(user_id, forum_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_bt_dlstatus (user_id INT NOT NULL, topic_id INT UNSIGNED NOT NULL, user_status SMALLINT DEFAULT 0 NOT NULL, last_modified_dlstatus DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, INDEX topic_id (topic_id), PRIMARY KEY(user_id, topic_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_bt_dlstatus_snap (topic_id INT UNSIGNED NOT NULL, dl_status SMALLINT NOT NULL, users_count SMALLINT UNSIGNED DEFAULT 0 NOT NULL, PRIMARY KEY(topic_id, dl_status)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_bt_last_torstat (topic_id INT UNSIGNED NOT NULL, user_id INT NOT NULL, dl_status TINYINT(1) DEFAULT \'0\' NOT NULL, up_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, down_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, release_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, bonus_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, speed_up BIGINT UNSIGNED DEFAULT 0 NOT NULL, speed_down BIGINT UNSIGNED DEFAULT 0 NOT NULL, PRIMARY KEY(topic_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_bt_last_userstat (user_id INT NOT NULL, up_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, down_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, release_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, bonus_add BIGINT UNSIGNED DEFAULT 0 NOT NULL, speed_up BIGINT UNSIGNED DEFAULT 0 NOT NULL, speed_down BIGINT UNSIGNED DEFAULT 0 NOT NULL, PRIMARY KEY(user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_bt_torhelp (user_id INT NOT NULL, topic_id_csv TEXT NOT NULL, PRIMARY KEY(user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
         $this->addSql('CREATE TABLE bb_bt_torstat (topic_id INT UNSIGNED NOT NULL, user_id INT NOT NULL, last_modified_torstat DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, completed TINYINT(1) DEFAULT \'0\' NOT NULL, PRIMARY KEY(topic_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -29,13 +46,21 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('CREATE TABLE bb_bt_user_settings (user_id INT NOT NULL, tor_search_set TEXT NOT NULL, last_modified INT DEFAULT 0 NOT NULL, PRIMARY KEY(user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
         $this->addSql('CREATE TABLE bb_cron (cron_id SMALLINT UNSIGNED AUTO_INCREMENT NOT NULL, cron_active TINYINT(1) DEFAULT \'1\' NOT NULL, cron_title CHAR(120) DEFAULT \'\' NOT NULL, cron_script CHAR(120) DEFAULT \'\' NOT NULL, schedule ENUM(\'hourly\',\'daily\',\'weekly\',\'monthly\',\'interval\') DEFAULT \'daily\' NOT NULL COMMENT \'(DC2Type:enumcronschedule)\', run_day ENUM(\'1\',\'2\',\'3\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\',\'10\',\'11\',\'12\',\'13\',\'14\',\'15\',\'16\',\'17\',\'18\',\'19\',\'20\',\'21\',\'22\',\'23\',\'24\',\'25\',\'26\',\'27\',\'28\') DEFAULT NULL COMMENT \'(DC2Type:enumcronrunday)\', run_time TIME DEFAULT \'04:00:00\', run_order SMALLINT UNSIGNED DEFAULT 0 NOT NULL, last_run DATETIME DEFAULT \'0000-00-00 00:00:00\' NOT NULL, next_run DATETIME DEFAULT \'0000-00-00 00:00:00\' NOT NULL, run_interval TIME DEFAULT \'00:00:00\', log_enabled TINYINT(1) DEFAULT \'0\' NOT NULL, log_file CHAR(120) DEFAULT \'\' NOT NULL, log_sql_queries TINYINT(1) DEFAULT \'0\' NOT NULL, disable_board TINYINT(1) DEFAULT \'0\' NOT NULL, run_counter BIGINT UNSIGNED DEFAULT 0 NOT NULL, UNIQUE INDEX title (cron_title), UNIQUE INDEX script (cron_script), PRIMARY KEY(cron_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_log (id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, log_type_id INT UNSIGNED DEFAULT 0 NOT NULL, log_user_id INT DEFAULT 0 NOT NULL, log_username VARCHAR(25) DEFAULT \'\' NOT NULL, log_user_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, log_forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL, log_forum_id_new SMALLINT UNSIGNED DEFAULT 0 NOT NULL, log_topic_id INT UNSIGNED DEFAULT 0 NOT NULL, log_topic_id_new INT UNSIGNED DEFAULT 0 NOT NULL, log_topic_title VARCHAR(250) DEFAULT \'\' NOT NULL, log_topic_title_new VARCHAR(250) DEFAULT \'\' NOT NULL, log_time INT DEFAULT 0 NOT NULL, log_msg TEXT NOT NULL, INDEX log_time (log_time), FULLTEXT INDEX log_topic_title (log_topic_title), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_poll_users (topic_id INT UNSIGNED NOT NULL, user_id INT NOT NULL, vote_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, vote_dt INT DEFAULT 0 NOT NULL, PRIMARY KEY(topic_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_poll_votes (topic_id INT UNSIGNED NOT NULL, vote_id TINYINT(1) NOT NULL, vote_text VARCHAR(255) NOT NULL, vote_result INT UNSIGNED NOT NULL, PRIMARY KEY(topic_id, vote_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_posts_html (post_id INT UNSIGNED NOT NULL, post_html_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, post_html MEDIUMTEXT NOT NULL, PRIMARY KEY(post_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_posts_search (post_id INT UNSIGNED NOT NULL, search_words TEXT NOT NULL, FULLTEXT INDEX search_words (search_words), PRIMARY KEY(post_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_search_rebuild (rebuild_session_id INT UNSIGNED AUTO_INCREMENT NOT NULL, start_post_id INT UNSIGNED DEFAULT 0 NOT NULL, end_post_id INT UNSIGNED DEFAULT 0 NOT NULL, start_time INT DEFAULT 0 NOT NULL, end_time INT DEFAULT 0 NOT NULL, last_cycle_time INT DEFAULT 0 NOT NULL, session_time INT DEFAULT 0 NOT NULL, session_posts INT UNSIGNED DEFAULT 0 NOT NULL, session_cycles INT UNSIGNED DEFAULT 0 NOT NULL, search_size INT UNSIGNED DEFAULT 0 NOT NULL, rebuild_session_status TINYINT(1) DEFAULT \'0\' NOT NULL, PRIMARY KEY(rebuild_session_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE bb_topic_tpl (tpl_id SMALLINT AUTO_INCREMENT NOT NULL, tpl_name VARCHAR(60) DEFAULT \'\' NOT NULL, tpl_src_form TEXT NOT NULL, tpl_src_title TEXT NOT NULL, tpl_src_msg TEXT NOT NULL, tpl_comment TEXT NOT NULL, tpl_rules_post_id INT UNSIGNED DEFAULT 0 NOT NULL, tpl_last_edit_tm INT DEFAULT 0 NOT NULL, tpl_last_edit_by INT DEFAULT 0 NOT NULL, UNIQUE INDEX tpl_name (tpl_name), PRIMARY KEY(tpl_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+
         $this->addSql('CREATE TABLE buf_last_seeder (topic_id INT UNSIGNED NOT NULL, seeder_last_seen INT DEFAULT 0 NOT NULL, PRIMARY KEY(topic_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE buf_topic_view (topic_id INT UNSIGNED NOT NULL, topic_views INT UNSIGNED DEFAULT 0 NOT NULL, PRIMARY KEY(topic_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
@@ -48,6 +73,7 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_themes');
         $this->addSql('DROP TABLE bb_themes_name');
 
+        // modify tables
         $this->addSql('DROP INDEX attach_id_post_id ON bb_attachments');
         $this->addSql('DROP INDEX post_id ON bb_attachments');
         $this->addSql('ALTER TABLE bb_attachments CHANGE attach_id attach_id INT UNSIGNED NOT NULL, CHANGE post_id post_id INT UNSIGNED NOT NULL, ADD PRIMARY KEY (attach_id, post_id), ENGINE=InnoDB');
@@ -60,8 +86,90 @@ class Version20170601000000 extends AbstractMigration
 
         $this->addSql('ALTER TABLE bb_attach_quota CHANGE user_id user_id INT DEFAULT 0 NOT NULL, CHANGE quota_limit_id quota_limit_id INT UNSIGNED NOT NULL, ADD PRIMARY KEY (quota_limit_id), ENGINE=InnoDB');
 
+        // <migrateBbAuthAccess>
+        // https://github.com/hurtom/toloka/issues/29
+        $table = $schema->getTable('bb_auth_access');
+
         $this->addSql('DROP INDEX group_id ON bb_auth_access');
-        $this->addSql('ALTER TABLE bb_auth_access ADD forum_perm INT DEFAULT 0 NOT NULL, DROP auth_view, DROP auth_read, DROP auth_post, DROP auth_reply, DROP auth_edit, DROP auth_delete, DROP auth_sticky, DROP auth_announce, DROP auth_vote, DROP auth_pollcreate, DROP auth_attachments, DROP auth_mod, DROP auth_download, CHANGE group_id group_id INT UNSIGNED DEFAULT 0 NOT NULL, ADD PRIMARY KEY (group_id, forum_id), ENGINE=InnoDB');
+        $this->addSql('ALTER TABLE bb_auth_access ADD forum_perm INT DEFAULT 0 NOT NULL, CHANGE group_id group_id INT UNSIGNED DEFAULT 0 NOT NULL, ADD PRIMARY KEY (group_id, forum_id), ENGINE=InnoDB');
+
+        // migrate permissions
+        $st = $this->connection->executeQuery('SELECT * FROM bb_auth_access');
+        $rows = $st->fetchAll();
+        $permAssoc = $this->bbCodeHelper::FORUM_PERM;
+        foreach ($rows as $row) {
+            $_perm = [];
+            foreach ($permAssoc as $ident => $bit) {
+                if (!empty($row[$ident])) {
+                    $_perm[] = $bit;
+                }
+            }
+            $this->addSql('UPDATE bb_auth_access SET forum_perm = ? WHERE group_id = ? AND forum_id = ?',
+                [bit2dec($_perm), $row['group_id'], $row['forum_id']]);
+        }
+
+        $this->addSql("DELETE FROM bb_auth_access_snap");
+        $this->addSql('
+            INSERT INTO bb_auth_access_snap
+                (user_id, forum_id, forum_perm)
+            SELECT
+                ug.user_id, aa.forum_id, BIT_OR(aa.forum_perm)
+            FROM
+                bb_user_group ug,
+                bb_groups g,
+                bb_auth_access aa
+            WHERE
+                ug.user_pending = 0
+                AND g.group_id = ug.group_id
+                AND aa.group_id = g.group_id
+            GROUP BY
+                ug.user_id, aa.forum_id
+        ');
+
+        if ($table->hasColumn('auth_view')) {
+            $table->dropColumn('auth_view');
+        }
+        if ($table->hasColumn('auth_read')) {
+            $table->dropColumn('auth_read');
+        }
+        if ($table->hasColumn('auth_post')) {
+            $table->dropColumn('auth_post');
+        }
+        if ($table->hasColumn('auth_reply')) {
+            $table->dropColumn('auth_reply');
+        }
+        if ($table->hasColumn('auth_edit')) {
+            $table->dropColumn('auth_edit');
+        }
+        if ($table->hasColumn('auth_delete')) {
+            $table->dropColumn('auth_delete');
+        }
+        if ($table->hasColumn('auth_sticky')) {
+            $table->dropColumn('auth_sticky');
+        }
+        if ($table->hasColumn('auth_announce')) {
+            $table->dropColumn('auth_announce');
+        }
+        if ($table->hasColumn('auth_vote')) {
+            $table->dropColumn('auth_vote');
+        }
+        if ($table->hasColumn('auth_pollcreate')) {
+            $table->dropColumn('auth_pollcreate');
+        }
+        if ($table->hasColumn('auth_attachments')) {
+            $table->dropColumn('auth_attachments');
+        }
+        if ($table->hasColumn('auth_mod')) {
+            $table->dropColumn('auth_mod');
+        }
+        if ($table->hasColumn('auth_download')) {
+            $table->dropColumn('auth_download');
+        }
+        // if ($table->hasIndex('forum_id')) {
+        //     $this->table("bb_auth_access")->removeIndexByName('forum_id');
+        // }
+        // $this->addSql('ALTER TABLE bb_auth_access DROP auth_view, DROP auth_read, DROP auth_post, DROP auth_reply, DROP auth_edit, DROP auth_delete, DROP auth_sticky, DROP auth_announce, DROP auth_vote, DROP auth_pollcreate, DROP auth_attachments, DROP auth_mod, DROP auth_download');
+        // </migrateBbAuthAccess>
 
         $this->addSql('ALTER TABLE bb_banlist CHANGE ban_ip ban_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, CHANGE ban_email ban_email VARCHAR(255) DEFAULT \'\' NOT NULL, ENGINE=InnoDB');
 
@@ -90,7 +198,35 @@ class Version20170601000000 extends AbstractMigration
         // $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
         // $this->addSql('CREATE UNIQUE INDEX torrent_peer_id ON bb_bt_tracker (peer_id)');
 
-        $this->addSql('ALTER TABLE bb_bt_users ADD u_up_release BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD u_up_bonus BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD up_today BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD down_today BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD up_release_today BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD up_bonus_today BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD points_today DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL, ADD up_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD down_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD up_release_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD up_bonus_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL, ADD points_yesterday DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL, DROP u_bonus_total, DROP u_bonus_today, DROP u_bonus_hourly, DROP u_down_today, DROP u_up_today, DROP u_bonus_yday, DROP u_down_yday, DROP u_up_yday, DROP max_up_speed, DROP max_down_speed, DROP ratio_nulled, DROP u_up_old, DROP u_down_old, DROP u_bonus_old, DROP max_up_speed_old, DROP u_releases, DROP can_leech, CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL, CHANGE auth_key auth_key CHAR(10) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, ENGINE=InnoDB ROW_FORMAT=DEFAULT');
+        // <migrateBbBtUsers>
+        // https://github.com/hurtom/toloka/issues/47
+        $this->addSql('ALTER TABLE bb_bt_users
+            ADD u_up_release BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER u_down_total,
+            CHANGE u_bonus_total u_up_bonus BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER u_up_release,
+            CHANGE u_up_today up_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER u_up_bonus,
+            CHANGE u_down_today down_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_today,
+            ADD up_release_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER down_today,
+            CHANGE u_bonus_today up_bonus_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_release_today,
+            ADD points_today DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL AFTER up_bonus_today,
+            CHANGE u_up_yday up_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER points_today,
+            CHANGE u_down_yday down_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_yesterday,
+            ADD up_release_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER down_yesterday,
+            CHANGE u_bonus_yday up_bonus_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_release_yesterday,
+            ADD points_yesterday DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL AFTER up_bonus_yesterday,
+            DROP u_bonus_hourly,
+            DROP max_up_speed,
+            DROP max_down_speed,
+            DROP ratio_nulled,
+            DROP u_up_old,
+            DROP u_down_old,
+            DROP u_bonus_old,
+            DROP max_up_speed_old,
+            DROP u_releases,
+            DROP can_leech,
+            CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL,
+            CHANGE auth_key auth_key CHAR(10) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin,
+            ENGINE=InnoDB ROW_FORMAT=DEFAULT');
+        // </migrateBbBtUsers>
 
         $this->addSql('ALTER TABLE bb_categories DROP cat_title_short, DROP cat_title_hashtag, DROP cat_url, DROP cat_desc, CHANGE cat_title cat_title VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE cat_order cat_order SMALLINT UNSIGNED DEFAULT 0 NOT NULL, ENGINE=InnoDB');
 
@@ -155,8 +291,9 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP INDEX group_id ON bb_user_group');
         $this->addSql('ALTER TABLE bb_user_group ADD user_time INT DEFAULT 0 NOT NULL, CHANGE group_id group_id INT UNSIGNED NOT NULL, CHANGE user_id user_id INT NOT NULL, CHANGE user_pending user_pending TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE group_moderator group_moderator INT DEFAULT 0 NOT NULL, ADD PRIMARY KEY (group_id, user_id), ENGINE=InnoDB');
 
+        // bb_users
         $this->addSql('DROP INDEX user_session_time ON bb_users');
-        $this->addSql('ALTER TABLE bb_users ADD user_password VARCHAR(60) NOT NULL COLLATE utf8mb4_bin, ADD user_last_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, ADD user_reg_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, ADD user_opt INT DEFAULT 0 NOT NULL, ADD avatar_ext_id TINYINT(1) DEFAULT \'0\' NOT NULL, ADD user_gender TINYINT(1) DEFAULT \'0\' NOT NULL, ADD user_birthday DATE DEFAULT \'0000-00-00\' NOT NULL, ADD user_twitter VARCHAR(15) DEFAULT \'\' NOT NULL, ADD autologin_id VARCHAR(12) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, ADD user_newest_pm_id INT UNSIGNED DEFAULT 0 NOT NULL, ADD user_points DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL, ADD tpl_name VARCHAR(255) DEFAULT \'default\' NOT NULL, DROP user_password2, DROP user_session_page, DROP user_style, DROP user_dateformat, DROP user_emailtime, DROP user_allowhtml, DROP user_allowbbcode, DROP user_allowsmile, DROP user_allowavatar, DROP user_allow_pm, DROP user_aim, DROP user_yim, DROP user_msnm, CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL, CHANGE user_active user_active TINYINT(1) DEFAULT \'1\' NOT NULL, CHANGE username username VARCHAR(25) NOT NULL, CHANGE user_level user_level TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE user_lang user_lang VARCHAR(255) DEFAULT \'uk\' NOT NULL, CHANGE user_rank user_rank INT DEFAULT 0 NOT NULL, CHANGE user_email user_email VARCHAR(255) DEFAULT \'\' NOT NULL, CHANGE user_icq user_icq VARCHAR(15) DEFAULT \'\' NOT NULL, CHANGE user_website user_website VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE user_from user_from VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE user_sig user_sig TEXT NOT NULL, CHANGE user_occ user_occ VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE user_interests user_interests VARCHAR(255) DEFAULT \'\' NOT NULL, CHANGE user_actkey user_actkey VARCHAR(32) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, CHANGE user_newpasswd user_newpasswd VARCHAR(60) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, CHANGE user_skype user_skype VARCHAR(32) DEFAULT \'\' NOT NULL, ENGINE=InnoDB');
+        $this->addSql('ALTER TABLE bb_users CHANGE user_password2 user_password VARCHAR(60) NOT NULL COLLATE utf8mb4_bin, ADD user_last_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, ADD user_reg_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, ADD user_opt INT DEFAULT 0 NOT NULL, ADD avatar_ext_id TINYINT(1) DEFAULT \'0\' NOT NULL, ADD user_gender TINYINT(1) DEFAULT \'0\' NOT NULL, ADD user_birthday DATE DEFAULT \'0000-00-00\' NOT NULL, ADD user_twitter VARCHAR(15) DEFAULT \'\' NOT NULL, ADD autologin_id VARCHAR(12) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, ADD user_newest_pm_id INT UNSIGNED DEFAULT 0 NOT NULL, ADD user_points DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL, ADD tpl_name VARCHAR(255) DEFAULT \'default\' NOT NULL, DROP user_session_page, DROP user_style, DROP user_dateformat, DROP user_emailtime, DROP user_allowhtml, DROP user_allowbbcode, DROP user_allowsmile, DROP user_allowavatar, DROP user_allow_pm, DROP user_aim, DROP user_yim, DROP user_msnm, CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL, CHANGE user_active user_active TINYINT(1) DEFAULT \'1\' NOT NULL, CHANGE username username VARCHAR(25) NOT NULL, CHANGE user_level user_level TINYINT(1) DEFAULT \'0\' NOT NULL, CHANGE user_lang user_lang VARCHAR(255) DEFAULT \'uk\' NOT NULL, CHANGE user_rank user_rank INT DEFAULT 0 NOT NULL, CHANGE user_email user_email VARCHAR(255) DEFAULT \'\' NOT NULL, CHANGE user_icq user_icq VARCHAR(15) DEFAULT \'\' NOT NULL, CHANGE user_website user_website VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE user_from user_from VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE user_sig user_sig TEXT NOT NULL, CHANGE user_occ user_occ VARCHAR(100) DEFAULT \'\' NOT NULL, CHANGE user_interests user_interests VARCHAR(255) DEFAULT \'\' NOT NULL, CHANGE user_actkey user_actkey VARCHAR(32) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, CHANGE user_newpasswd user_newpasswd VARCHAR(60) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin, CHANGE user_skype user_skype VARCHAR(32) DEFAULT \'\' NOT NULL, ENGINE=InnoDB');
 
         $this->addSql('ALTER TABLE bb_vote_results CHANGE vote_id vote_id INT UNSIGNED AUTO_INCREMENT NOT NULL, CHANGE vote_option_id vote_option_id TINYINT(1) DEFAULT \'0\' NOT NULL, ADD PRIMARY KEY (vote_id), ENGINE=InnoDB');
 
