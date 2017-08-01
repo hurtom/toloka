@@ -65,7 +65,7 @@ switch ($mode) {
      */
     case 'register':
         if (!$can_register) {
-            redirect('index.php');
+            redirectToUrl('index.php');
         }
 
         if (!IS_ADMIN) {

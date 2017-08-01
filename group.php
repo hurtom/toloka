@@ -180,7 +180,7 @@ if (!$group_id) {
         ));
     } else {
         if (IS_ADMIN) {
-            redirect('admin/admin_groups.php');
+            redirectToUrl('admin/admin_groups.php');
         } else {
             bb_die($lang['NO_GROUPS_EXIST']);
         }
