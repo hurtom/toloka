@@ -9,11 +9,20 @@ use Doctrine\DBAL\Schema\Schema as Schema;
 
 class Version20170601000000 extends AbstractMigration
 {
+    /**
+     * @var \App\Helpers\BBCodeHelper $bbCodeHelper
+     */
     private $bbCodeHelper;
+
+    /**
+     * @var \TorrentPier\Legacy\BBCode $bbCode
+     */
+    private $bbCode;
 
     public function __construct(Version $version)
     {
         $this->bbCodeHelper = new BBCodeHelper();
+        $this->bbCode = $this->bbCodeHelper->getBBCode();
         parent::__construct($version);
     }
 
@@ -250,7 +259,41 @@ class Version20170601000000 extends AbstractMigration
 
         $this->addSql('ALTER TABLE bb_posts_edit CHANGE post_id post_id INT UNSIGNED NOT NULL, ADD PRIMARY KEY (post_id), ENGINE=InnoDB');
 
-        $this->addSql('ALTER TABLE bb_posts_text DROP bbcode_uid, DROP post_subject, CHANGE post_id post_id INT UNSIGNED NOT NULL, CHANGE post_text post_text TEXT NOT NULL, ENGINE=InnoDB');
+        // <migrateBbPostsText>
+        // start logic hurtom bb_posts_text + bb_posts_html мігрувати
+        // $this->addSql('ALTER TABLE bb_posts_text DROP bbcode_uid, DROP post_subject, CHANGE post_id post_id INT UNSIGNED NOT NULL, CHANGE post_text post_text TEXT NOT NULL, ENGINE=InnoDB');
+        $table = $schema->getTable('bb_posts_text');
+        $this->addSql('ALTER TABLE bb_posts_text CHANGE post_id post_id INT UNSIGNED NOT NULL, CHANGE post_text post_text TEXT NOT NULL, ENGINE=InnoDB');
+
+        $this->addSql("UPDATE bb_posts_text SET post_text = REPLACE(`post_text`, CONCAT(':', `bbcode_uid`), '')");
+        if ($table->hasColumn('bbcode_uid')) {
+            $table->dropColumn('bbcode_uid');
+        }
+        if ($table->hasColumn('post_subject')) {
+            $table->dropColumn('post_subject');
+        }
+
+        $bbcode = $this->bbCode;
+        $smilies = [];
+
+        $conn = $this->connection;
+        $st = $conn->executeQuery('SELECT * FROM bb_smilies');
+        $rows = $st->fetchAll();
+        foreach ($rows as $smile) {
+            $smilies['orig'][] = '#(?<=^|\W)' . preg_quote($smile['code'], '#') . '(?=$|\W)#';
+            $smilies['repl'][] = ' <img class="smile" src="' . $bb_cfg['smilies_path'] . '/' . $smile['smile_url'] . '" alt="' . $smile['emoticon'] . '" align="absmiddle" border="0" />';
+            $smilies['smile'][] = $smile;
+        }
+
+        $bbcode->smilies = $smilies;
+        $st = $conn->executeQuery('SELECT * FROM bb_posts_text');
+        $rows = $st->fetchAll();
+        foreach ($rows as $row) {
+            $postText = $bbcode->bbcode2html($row['post_text']);
+            $this->addSql('INSERT INTO bb_posts_html (post_id, post_html) VALUES (?, ?)',
+                [$row['post_id'], /*$conn->quote($postText)*/$postText]);
+        }
+        // </migrateBbPostsText>
 
         $this->addSql('ALTER TABLE bb_privmsgs DROP privmsgs_enable_bbcode, DROP privmsgs_enable_html, DROP privmsgs_enable_smilies, DROP privmsgs_attach_sig, DROP privmsgs_attachment, CHANGE privmsgs_subject privmsgs_subject VARCHAR(255) DEFAULT \'0\' NOT NULL, CHANGE privmsgs_ip privmsgs_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin, ENGINE=InnoDB');
 

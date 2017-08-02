@@ -60,7 +60,12 @@ namespace {
 
     require_once BB_ROOT.'library/defines.php';
     require_once BB_ROOT.'library/config.php';
+    $GLOBALS['bb_cfg'] = $bb_cfg;
+
+    // common.php
     define('DBG_USER', (isset($_COOKIE[COOKIE_DBG])));
+    define('BT_AUTH_KEY_LENGTH', 10);
+
     // require_once BB_ROOT.'library/includes/functions.php';
     define('AUTH_ALL', 0);
     define('AUTH_VIEW', 1);
@@ -106,17 +111,21 @@ namespace App\Helpers {
         ];
 
         /**
-         * @var \TorrentPier\Legacy\BBCode $bbcode
+         * @var \TorrentPier\Legacy\BBCode $bbCode
          */
-        private $bbcode;
+        private $bbCode;
 
         /**
          * Constructor
          */
         public function __construct()
         {
-            $this->bbcode = new BBCode();
+            $this->bbCode = new BBCode();
         }
 
+        public function getBBCode()
+        {
+            return $this->bbCode;
+        }
     }
 }
