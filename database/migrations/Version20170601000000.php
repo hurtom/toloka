@@ -296,6 +296,12 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_easymod');
         $this->addSql('DROP TABLE bb_easymod_processed_files');
 
+        /**
+         * bb_flags
+         * @see https://github.com/hurtom/toloka/issues/100
+         */
+        $this->addSql('DROP TABLE bb_flags');
+
         $this->addSql('DROP TABLE bb_forum_prune');
         $this->addSql('DROP TABLE bb_sessions_keys');
         $this->addSql('DROP TABLE bb_themes');
@@ -562,11 +568,6 @@ class Version20170601000000 extends AbstractMigration
         // bb_extensions
         $this->addSql('ALTER TABLE bb_extensions
             CHANGE comment comment VARCHAR(100) DEFAULT \'\' NOT NULL,
-            ENGINE = InnoDB');
-
-        // bb_flags
-        $this->addSql('ALTER TABLE bb_flags
-            CHANGE flag_id flag_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             ENGINE = InnoDB');
 
         // bb_forbidden_extensions
