@@ -289,8 +289,13 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_dl_st_prevs_list');
 
+        /**
+         * bb_easymod & bb_easymod_processed_files
+         * @see https://github.com/hurtom/toloka/issues/39
+         */
         $this->addSql('DROP TABLE bb_easymod');
         $this->addSql('DROP TABLE bb_easymod_processed_files');
+
         $this->addSql('DROP TABLE bb_forum_prune');
         $this->addSql('DROP TABLE bb_sessions_keys');
         $this->addSql('DROP TABLE bb_themes');
