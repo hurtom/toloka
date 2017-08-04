@@ -257,6 +257,12 @@ class Version20170601000000 extends AbstractMigration
             PRIMARY KEY(topic_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
+        /**
+         * bb_bt_config
+         * @see https://github.com/hurtom/toloka/issues/95
+         */
+        $this->addSql('DROP TABLE bb_bt_config');
+
         $this->addSql('DROP TABLE bb_bt_users_dl_status');
         $this->addSql('DROP TABLE bb_confirm');
         $this->addSql('DROP TABLE bb_easymod');
@@ -394,11 +400,6 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('ALTER TABLE bb_banlist
             CHANGE ban_ip ban_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
             CHANGE ban_email ban_email VARCHAR(255) DEFAULT \'\' NOT NULL,
-            ENGINE = InnoDB');
-
-        // bb_bt_config
-        $this->addSql('ALTER TABLE bb_bt_config
-            CHANGE config_name config_name VARCHAR(255) NOT NULL,
             ENGINE = InnoDB');
 
         // bb_bt_search_results
