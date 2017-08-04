@@ -326,7 +326,12 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_search_wordmatch');
 
+        /**
+         * bb_sessions_keys
+         * @see https://github.com/hurtom/toloka/issues/37
+         */
         $this->addSql('DROP TABLE bb_sessions_keys');
+
         $this->addSql('DROP TABLE bb_themes');
         $this->addSql('DROP TABLE bb_themes_name');
 
