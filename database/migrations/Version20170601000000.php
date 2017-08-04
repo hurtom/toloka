@@ -269,6 +269,12 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_bt_search_results');
 
+        /**
+         * bb_bt_torrents_del
+         * @see https://github.com/hurtom/toloka/issues/96
+         */
+        $this->addSql('DROP TABLE bb_bt_torrents_del');
+
         $this->addSql('DROP TABLE bb_bt_users_dl_status');
         $this->addSql('DROP TABLE bb_confirm');
         $this->addSql('DROP TABLE bb_easymod');
@@ -453,13 +459,6 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('CREATE INDEX forum_id ON bb_bt_torrents (forum_id)');
         $this->addSql('ALTER TABLE bb_bt_torrents ADD PRIMARY KEY (info_hash)');
         $this->addSql('CREATE INDEX topic_check_uid ON bb_bt_torrents (checked_user_id)');
-
-        // bb_bt_torrents_del
-        // CHANGE info_hash info_hash VARBINARY(255) DEFAULT \'' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '' . "\0" . '\' NOT NULL,
-        $this->addSql('ALTER TABLE bb_bt_torrents_del
-            CHANGE torrent_id torrent_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-            CHANGE info_hash info_hash VARBINARY(255) DEFAULT \'' . "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0" . '\' NOT NULL,
-            ENGINE = InnoDB');
 
         // bb_bt_tracker
         $this->addSql('DROP INDEX torrent_peer_id ON bb_bt_tracker');
