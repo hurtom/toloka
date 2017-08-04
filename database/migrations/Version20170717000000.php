@@ -17,16 +17,16 @@ class Version20170717000000 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE bb_cron 
+        $this->addSql('ALTER TABLE bb_cron
           CHANGE schedule schedule ENUM(
-            \'hourly\', \'daily\', \'weekly\', \'monthly\', 
+            \'hourly\', \'daily\', \'weekly\', \'monthly\',
             \'interval\'
-          ) DEFAULT \'daily\' NOT NULL COMMENT \'(DC2Type:enumcronschedule)\', 
+          ) DEFAULT \'daily\' NOT NULL COMMENT \'(DC2Type:enumcronschedule)\',
           CHANGE run_day run_day ENUM(
-            \'1\', \'2\', \'3\', \'4\', \'5\', \'6\', \'7\', \'8\', 
-            \'9\', \'10\', \'11\', \'12\', \'13\', \'14\', \'15\', 
-            \'16\', \'17\', \'18\', \'19\', \'20\', \'21\', 
-            \'22\', \'23\', \'24\', \'25\', \'26\', \'27\', 
+            \'1\', \'2\', \'3\', \'4\', \'5\', \'6\', \'7\', \'8\',
+            \'9\', \'10\', \'11\', \'12\', \'13\', \'14\', \'15\',
+            \'16\', \'17\', \'18\', \'19\', \'20\', \'21\',
+            \'22\', \'23\', \'24\', \'25\', \'26\', \'27\',
             \'28\'
           ) DEFAULT NULL COMMENT \'(DC2Type:enumcronrunday)\'');
     }
@@ -36,6 +36,6 @@ class Version20170717000000 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
-        // nothing to do
+        $this->abortIf(true, 'We do not support downgrade, sorry.');
     }
 }

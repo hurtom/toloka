@@ -284,6 +284,6 @@ class Version20170717000001 extends AbstractMigration
      */
     public function down(Schema $schema)
     {
-        // nothing to do
+        $this->abortIf(true, 'We do not support downgrade, sorry.');
     }
 }
