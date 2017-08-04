@@ -23,6 +23,11 @@ class BbBtDlstatus
     private $userStatus = '0';
 
     /**
+     * @var integer
+     */
+    private $complCount = '0';
+
+    /**
      * @var \DateTime
      */
     private $lastModifiedDlstatus = 'CURRENT_TIMESTAMP';

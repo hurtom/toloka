@@ -33,9 +33,9 @@ class Version20170601000000 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        /*
-         * add new tables
-         */
+        /******************
+         * Add new tables
+         ******************/
 
         // bb_ads
         $this->addSql('CREATE TABLE bb_ads (
@@ -57,11 +57,12 @@ class Version20170601000000 extends AbstractMigration
             PRIMARY KEY(user_id, forum_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
-        // bb_bt_dlstatus
+        // bb_bt_dlstatus, migration of old data later on
         $this->addSql('CREATE TABLE bb_bt_dlstatus (
             user_id INT NOT NULL,
             topic_id INT UNSIGNED NOT NULL,
             user_status SMALLINT DEFAULT 0 NOT NULL,
+            compl_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
             last_modified_dlstatus DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
             INDEX topic_id (topic_id),
             PRIMARY KEY(user_id, topic_id)
@@ -257,6 +258,10 @@ class Version20170601000000 extends AbstractMigration
             PRIMARY KEY(topic_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
+        /******************
+         * Drop old tables
+         ******************/
+
         /**
          * bb_bt_config
          * @see https://github.com/hurtom/toloka/issues/95
@@ -276,8 +281,6 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_bt_torrents_del');
         $this->addSql('DROP TRIGGER IF EXISTS bb_topics_au');
-
-        $this->addSql('DROP TABLE bb_bt_users_dl_status');
 
         /**
          * bb_confirm
@@ -347,9 +350,9 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_topics_move');
 
-        /*
-         * modify tables
-         */
+        /******************
+         * Modify tables
+         ******************/
 
         // bb_attachments
         $this->addSql('DROP INDEX attach_id_post_id ON bb_attachments');
@@ -664,7 +667,27 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('CREATE INDEX topic_id ON bb_posts (topic_id)');
         $this->addSql('CREATE INDEX forum_id_post_time ON bb_posts (forum_id, post_time)');
 
-        // bb_posts_edit
+        /**
+         * bb_bt_users_dl_status migration to bb_bt_dlstatus
+         * @see https://github.com/hurtom/toloka/issues/97
+         */
+        $this->addSql('
+            INSERT INTO bb_bt_dlstatus
+                (user_id, topic_id, user_status, compl_count, last_modified_dlstatus)
+            SELECT
+                user_id,
+                topic_id,
+                user_status,
+                compl_count,
+                FROM_UNIXTIME(update_time)
+            FROM bb_bt_users_dl_status
+        ');
+        $this->addSql('DROP TABLE bb_bt_users_dl_status');
+
+        /**
+         * bb_posts_edit
+         * @see https://github.com/hurtom/toloka/issues/40
+         */
         $this->addSql('ALTER TABLE bb_posts_edit
             CHANGE post_id post_id INT UNSIGNED NOT NULL,
             ADD PRIMARY KEY (post_id),

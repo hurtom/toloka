@@ -30,6 +30,13 @@ Database\Entities\BbBtDlstatus:
             options:
                 default: '0'
             column: user_status
+        complCount:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: compl_count
         lastModifiedDlstatus:
             type: datetime
             nullable: false
