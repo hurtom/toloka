@@ -270,10 +270,12 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_bt_search_results');
 
         /**
-         * bb_bt_torrents_del
+         * bb_bt_torrents_del & bb_topics_au trigger
          * @see https://github.com/hurtom/toloka/issues/96
+         * @see https://github.com/hurtom/toloka/issues/108
          */
         $this->addSql('DROP TABLE bb_bt_torrents_del');
+        $this->addSql('DROP TRIGGER IF EXISTS bb_topics_au');
 
         $this->addSql('DROP TABLE bb_bt_users_dl_status');
 
