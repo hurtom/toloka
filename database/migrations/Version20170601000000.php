@@ -308,7 +308,12 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_forbidden_extensions');
 
+        /**
+         * bb_forum_prune
+         * @see https://github.com/hurtom/toloka/issues/102
+         */
         $this->addSql('DROP TABLE bb_forum_prune');
+
         $this->addSql('DROP TABLE bb_sessions_keys');
         $this->addSql('DROP TABLE bb_themes');
         $this->addSql('DROP TABLE bb_themes_name');
