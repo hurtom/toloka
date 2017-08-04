@@ -320,6 +320,12 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_search_wordlist');
 
+        /**
+         * bb_search_wordmatch
+         * @see https://github.com/hurtom/toloka/issues/90
+         */
+        $this->addSql('DROP TABLE bb_search_wordmatch');
+
         $this->addSql('DROP TABLE bb_sessions_keys');
         $this->addSql('DROP TABLE bb_themes');
         $this->addSql('DROP TABLE bb_themes_name');
@@ -730,13 +736,6 @@ class Version20170601000000 extends AbstractMigration
         // delay index building after changing CHARSET (due it is done via BLOB and back)
         // $this->addSql('CREATE INDEX search_id ON bb_search_results (search_id)');
         // $this->addSql('ALTER TABLE bb_search_results ADD PRIMARY KEY (session_id, search_type)');
-
-        // bb_search_wordmatch
-        $this->addSql('ALTER TABLE bb_search_wordmatch
-            CHANGE post_id post_id INT UNSIGNED NOT NULL,
-            CHANGE word_id word_id INT UNSIGNED NOT NULL,
-            ADD PRIMARY KEY (post_id, word_id),
-            ENGINE = InnoDB');
 
         // bb_sessions
         $this->addSql('DROP INDEX session_user_id ON bb_sessions');
