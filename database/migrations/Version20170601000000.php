@@ -339,6 +339,12 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_themes');
         $this->addSql('DROP TABLE bb_themes_name');
 
+        /**
+         * bb_topics_move
+         * @see https://github.com/hurtom/toloka/issues/105
+         */
+        $this->addSql('DROP TABLE bb_topics_move');
+
         /*
          * modify tables
          */
