@@ -276,7 +276,13 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_bt_torrents_del');
 
         $this->addSql('DROP TABLE bb_bt_users_dl_status');
+
+        /**
+         * bb_confirm
+         * @see https://github.com/hurtom/toloka/issues/98
+         */
         $this->addSql('DROP TABLE bb_confirm');
+
         $this->addSql('DROP TABLE bb_easymod');
         $this->addSql('DROP TABLE bb_easymod_processed_files');
         $this->addSql('DROP TABLE bb_forum_prune');
