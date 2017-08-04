@@ -21,8 +21,8 @@ Database\Entities\BbBtUsers:
                 unsigned: false
             id: true
             column: user_id
-            generator:
-                strategy: IDENTITY
+            # generator:
+            #     strategy: IDENTITY
     fields:
         authKey:
             type: string
