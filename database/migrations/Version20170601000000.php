@@ -263,6 +263,12 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP TABLE bb_bt_config');
 
+        /**
+         * bb_bt_search_results
+         * @see https://github.com/hurtom/toloka/issues/94
+         */
+        $this->addSql('DROP TABLE bb_bt_search_results');
+
         $this->addSql('DROP TABLE bb_bt_users_dl_status');
         $this->addSql('DROP TABLE bb_confirm');
         $this->addSql('DROP TABLE bb_easymod');
@@ -400,11 +406,6 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('ALTER TABLE bb_banlist
             CHANGE ban_ip ban_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
             CHANGE ban_email ban_email VARCHAR(255) DEFAULT \'\' NOT NULL,
-            ENGINE = InnoDB');
-
-        // bb_bt_search_results
-        $this->addSql('ALTER TABLE bb_bt_search_results
-            CHANGE session_id session_id VARCHAR(32) NOT NULL COLLATE utf8mb4_bin,
             ENGINE = InnoDB');
 
         // bb_bt_tor_dl_stat
