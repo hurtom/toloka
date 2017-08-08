@@ -852,21 +852,41 @@ class Version20170601000000 extends AbstractMigration
             CHANGE user_skype user_skype VARCHAR(32) DEFAULT \'\' NOT NULL,
             ENGINE = InnoDB');
 
-        // bb_vote_results
-        $this->addSql('ALTER TABLE bb_vote_results
-            CHANGE vote_id vote_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-            CHANGE vote_option_id vote_option_id TINYINT(1) DEFAULT \'0\' NOT NULL,
-            ADD PRIMARY KEY (vote_id),
-            ENGINE = InnoDB');
-
-        // bb_vote_voters
-        $this->addSql('DROP INDEX vote_id ON bb_vote_voters');
-        $this->addSql('ALTER TABLE bb_vote_voters
-            CHANGE vote_id vote_id INT UNSIGNED NOT NULL,
-            CHANGE vote_user_id vote_user_id INT NOT NULL,
-            CHANGE vote_user_ip vote_user_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
-            ADD PRIMARY KEY (vote_id, vote_user_id),
-            ENGINE = InnoDB');
+        /**
+         * bb_vote_(desc|results|voters)
+         * @see https://github.com/hurtom/toloka/issues/91
+         */
+        $this->addSql('
+            INSERT INTO bb_poll_votes
+                (topic_id, vote_id, vote_text, vote_result)
+            SELECT
+                vd.topic_id,
+                0 AS vote_id,
+                vd.vote_text,
+                0 AS vote_result
+            FROM bb_vote_desc vd
+            UNION
+            SELECT
+                vd.topic_id,
+                vr.vote_option_id AS vote_id,
+                vr.vote_option_text AS vote_text,
+                vr.vote_result
+            FROM bb_vote_desc vd, bb_vote_results vr
+            WHERE vr.vote_id = vd.vote_id
+        ');
+        $this->addSql('
+            INSERT INTO bb_poll_users (topic_id, user_id, vote_ip, vote_dt)
+            SELECT
+                vd.topic_id,
+                vv.vote_user_id AS user_id,
+                CASE vv.vote_user_ip WHEN \'-\' THEN 0 WHEN \'\' THEN 0 WHEN NULL THEN 0 ELSE vv.vote_user_ip END AS user_ip,
+                vv.vote_timestamp AS vote_dt
+            FROM bb_vote_desc vd, bb_vote_voters vv
+            WHERE vv.vote_id = vd.vote_id
+        ');
+        $this->addSql('DROP TABLE bb_vote_desc');
+        $this->addSql('DROP TABLE bb_vote_results');
+        $this->addSql('DROP TABLE bb_vote_voters');
 
         // bb_warnings*
         $this->addSql('ALTER TABLE bb_warnings
