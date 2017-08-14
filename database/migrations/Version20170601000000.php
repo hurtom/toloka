@@ -688,14 +688,17 @@ class Version20170601000000 extends AbstractMigration
          * bb_posts_edit
          * @see https://github.com/hurtom/toloka/issues/40
          */
+        if ($schema->getTable('bb_posts_edit')->hasIndex('post_id')) {
+            $this->addSql('DROP INDEX post_id ON bb_posts_edit');
+        }
         $this->addSql('ALTER TABLE bb_posts_edit
             CHANGE post_id post_id INT UNSIGNED NOT NULL,
-            ADD PRIMARY KEY (post_id),
+            ADD PRIMARY KEY (post_id, user_id),
+            ADD INDEX (user_id),
             ENGINE = InnoDB');
 
         // <migrateBbPostsText>
-        // start logic hurtom bb_posts_text + bb_posts_html мігрувати
-        // $this->addSql('ALTER TABLE bb_posts_text DROP bbcode_uid, DROP post_subject, CHANGE post_id post_id INT UNSIGNED NOT NULL, CHANGE post_text post_text TEXT NOT NULL, ENGINE=InnoDB');
+        // start logic hurtom bb_posts_text + bb_posts_html migration
         $table = $schema->getTable('bb_posts_text');
         $this->addSql('ALTER TABLE bb_posts_text
             CHANGE post_id post_id INT UNSIGNED NOT NULL,

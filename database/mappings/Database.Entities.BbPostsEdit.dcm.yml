@@ -5,9 +5,9 @@ Database\Entities\BbPostsEdit:
         charset: utf8mb4
         collate: utf8mb4_unicode_ci
     indexes:
-        post_id:
+        user_id:
             columns:
-                - post_id
+                - user_id
     id:
         postId:
             type: integer
@@ -16,14 +16,14 @@ Database\Entities\BbPostsEdit:
                 unsigned: true
             id: true
             column: post_id
-    fields:
         userId:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+            id: true
             column: user_id
+    fields:
         postEditCount:
             type: smallint
             nullable: false
