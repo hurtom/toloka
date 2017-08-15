@@ -9,6 +9,9 @@ Database\Entities\BbAttachments:
             columns:
                 - attach_id
                 - privmsgs_id
+        post_id:
+            columns:
+                - post_id
         privmsgs_id:
             columns:
                 - privmsgs_id
@@ -33,20 +36,20 @@ Database\Entities\BbAttachments:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: privmsgs_id
         userId1:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_id_1
         userId2:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_id_2
     lifecycleCallbacks: {  }

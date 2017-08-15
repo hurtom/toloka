@@ -354,12 +354,17 @@ class Version20170601000000 extends AbstractMigration
          * Modify tables
          ******************/
 
-        // bb_attachments
+        /**
+         * bb_attachments
+         * @see https://github.com/hurtom/toloka/issues/27
+         */
         $this->addSql('DROP INDEX attach_id_post_id ON bb_attachments');
-        $this->addSql('DROP INDEX post_id ON bb_attachments');
         $this->addSql('ALTER TABLE bb_attachments
             CHANGE attach_id attach_id INT UNSIGNED NOT NULL,
             CHANGE post_id post_id INT UNSIGNED NOT NULL,
+            CHANGE privmsgs_id privmsgs_id INT UNSIGNED DEFAULT 0 NOT NULL,
+            CHANGE user_id_1 user_id_1 INT DEFAULT 0 NOT NULL,
+            CHANGE user_id_2 user_id_2 INT DEFAULT 0 NOT NULL,
             ADD PRIMARY KEY (attach_id, post_id),
             ENGINE = InnoDB');
 
@@ -786,6 +791,7 @@ class Version20170601000000 extends AbstractMigration
             DROP privmsgs_enable_smilies,
             DROP privmsgs_attach_sig,
             DROP privmsgs_attachment,
+            CHANGE privmsgs_id privmsgs_id INT UNSIGNED NOT NULL,
             CHANGE privmsgs_subject privmsgs_subject VARCHAR(255) DEFAULT \'0\' NOT NULL,
             CHANGE privmsgs_ip privmsgs_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             ENGINE = InnoDB');

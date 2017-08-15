@@ -26,7 +26,7 @@ Database\Entities\BbPrivmsgs:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: 0
             column: privmsgs_type
         privmsgsSubject:
             type: string
@@ -41,21 +41,21 @@ Database\Entities\BbPrivmsgs:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: privmsgs_from_userid
         privmsgsToUserid:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: privmsgs_to_userid
         privmsgsDate:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: privmsgs_date
         privmsgsIp:
             type: string

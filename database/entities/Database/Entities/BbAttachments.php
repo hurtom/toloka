@@ -15,23 +15,22 @@ class BbAttachments
     /**
      * @var integer
      */
-    private $postId = '0';
+    private $postId;
 
     /**
      * @var integer
      */
-    private $userId1 = '0';
-
-
-    /**
-     * @var integer
-     */
-    private $privmsgsId = '0';
+    private $privmsgsId = 0;
 
     /**
      * @var integer
      */
-    private $userId2 = '0';
+    private $userId1 = 0;
+
+    /**
+     * @var integer
+     */
+    private $userId2 = 0;
 
 
 }
