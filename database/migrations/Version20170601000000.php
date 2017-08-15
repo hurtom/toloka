@@ -552,6 +552,7 @@ class Version20170601000000 extends AbstractMigration
                 bb_bt_torrents.forum_id = bb_topics.forum_id,
                 bb_bt_torrents.call_seed_time = bb_topics.call_seed_time
             WHERE bb_bt_torrents.topic_id = bb_topics.topic_id');
+        // </bb_bt_torrents>
 
         // bb_bt_tor_dl_stat
         $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
@@ -567,7 +568,7 @@ class Version20170601000000 extends AbstractMigration
             ADD PRIMARY KEY (topic_id, user_id)');
 
         /**
-         * bb_bt_tracker
+         * <bb_bt_tracker>
          * @see https://github.com/hurtom/toloka/issues/42
          */
         if ($schema->getTable('bb_bt_tracker')->hasIndex('torrent_peer_id')) {
@@ -603,10 +604,15 @@ class Version20170601000000 extends AbstractMigration
             SET bb_bt_tracker.topic_id = tmp_torrents_topics.topic_id,
                 bb_bt_tracker.peer_hash = tmp_torrents_topics.peer_hash
             WHERE bb_bt_tracker.torrent_id = tmp_torrents_topics.torrent_id');
+        $this->addSql('ALTER TABLE bb_bt_tracker
+            DROP torrent_id');
+
         // remove temp mapping
         $this->addSql('DROP TABLE tmp_torrents_topics');
+
         // index creation delayed after CHARSET converion time
         // $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
+        // </bb_bt_tracker>
 
         /**
          * bb_bt_users
