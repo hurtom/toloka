@@ -24,7 +24,7 @@ Database\Entities\BbAttachmentsRating:
             type: boolean
             nullable: false
             options:
-                default: 0
+                default: false
         rating:
             type: smallint
             nullable: false

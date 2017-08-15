@@ -92,12 +92,13 @@ Database\Entities\BbAttachmentsDesc:
             options:
                 default: '0'
             column: tracker_status
-        thanks:
+        thanksCount:
             type: integer
             nullable: false
             options:
-                unsigned: false
+                unsigned: true
                 default: '0'
+            column: thanks_count
         ratingSum:
             type: integer
             nullable: false

@@ -379,6 +379,7 @@ class Version20170601000000 extends AbstractMigration
             CHANGE comment comment VARCHAR(255) DEFAULT \'\' NOT NULL,
             CHANGE extension extension VARCHAR(100) DEFAULT \'\' NOT NULL,
             CHANGE mimetype mimetype VARCHAR(100) DEFAULT \'\' NOT NULL,
+            CHANGE thanks thanks_count INT UNSIGNED DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
 
         // bb_attachments_rating

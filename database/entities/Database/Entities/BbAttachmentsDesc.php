@@ -25,7 +25,7 @@ class BbAttachmentsDesc
     /**
      * @var integer
      */
-    private $downloadCount = '0';
+    private $downloadCount = 0;
 
     /**
      * @var string
@@ -45,12 +45,12 @@ class BbAttachmentsDesc
     /**
      * @var integer
      */
-    private $filesize = '0';
+    private $filesize = 0;
 
     /**
      * @var integer
      */
-    private $filetime = '0';
+    private $filetime = 0;
 
     /**
      * @var boolean
@@ -62,26 +62,25 @@ class BbAttachmentsDesc
      */
     private $trackerStatus = '0';
 
+    /**
+     * @var integer
+     */
+    private $thanksCount = 0;
 
     /**
      * @var integer
      */
-    private $thanks = '0';
+    private $ratingSum = 0;
 
     /**
      * @var integer
      */
-    private $ratingSum = '0';
-
-    /**
-     * @var integer
-     */
-    private $ratingCount = '0';
+    private $ratingCount = 0;
 
     /**
      * @var boolean
      */
-    private $forcePrivate = '0';
+    private $forcePrivate = false;
 
 
 }
