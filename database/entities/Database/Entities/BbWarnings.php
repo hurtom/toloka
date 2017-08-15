@@ -20,27 +20,27 @@ class BbWarnings
     /**
      * @var integer
      */
-    private $warningPostId = '0';
+    private $warningPostId = 0;
 
     /**
      * @var integer
      */
-    private $warningUserId = '0';
+    private $warningUserId = 0;
 
     /**
      * @var integer
      */
-    private $warningPosterId = '0';
+    private $warningPosterId = 0;
 
     /**
      * @var integer
      */
-    private $warningPosted = '0';
+    private $warningPosted = 0;
 
     /**
      * @var integer
      */
-    private $warningExpires = '0';
+    private $warningExpires = 0;
 
     /**
      * @var boolean

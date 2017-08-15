@@ -15,22 +15,22 @@ class BbPosts
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $topicId = 0;
 
     /**
      * @var integer
      */
-    private $forumId = '0';
+    private $forumId = 0;
 
     /**
      * @var integer
      */
-    private $posterId = '0';
+    private $posterId = 0;
 
     /**
      * @var integer
      */
-    private $postTime = '0';
+    private $postTime = 0;
 
     /**
      * @var string
@@ -40,7 +40,7 @@ class BbPosts
     /**
      * @var integer
      */
-    private $posterRgId = '0';
+    private $posterRgId = 0;
 
     /**
      * @var boolean
@@ -55,12 +55,12 @@ class BbPosts
     /**
      * @var integer
      */
-    private $postEditTime = '0';
+    private $postEditTime = 0;
 
     /**
      * @var integer
      */
-    private $postEditCount = '0';
+    private $postEditCount = 0;
 
     /**
      * @var boolean
@@ -85,13 +85,12 @@ class BbPosts
     /**
      * @var integer
      */
-    private $mcUserId = '0';
-
+    private $mcUserId = 0;
 
     /**
      * @var integer
      */
-    private $postCreated = '0';
+    private $postCreated = 0;
 
 
 }

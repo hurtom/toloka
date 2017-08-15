@@ -41,35 +41,35 @@ Database\Entities\BbPosts:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_id
         forumId:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_id
         posterId:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: poster_id
         postTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: post_time
         postCreated:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: post_created
         posterIp:
             type: string
@@ -85,7 +85,7 @@ Database\Entities\BbPosts:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: poster_rg_id
         attachRgSig:
             type: boolean
@@ -106,14 +106,14 @@ Database\Entities\BbPosts:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: post_edit_time
         postEditCount:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: post_edit_count
         postAttachment:
             type: boolean
@@ -145,6 +145,6 @@ Database\Entities\BbPosts:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: mc_user_id
     lifecycleCallbacks: {  }

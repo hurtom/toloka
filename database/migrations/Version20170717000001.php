@@ -92,11 +92,11 @@ class Version20170717000001 extends AbstractMigration
             MODIFY ipv6 BLOB,
             MODIFY client BLOB');
         $this->addSql('ALTER TABLE
-            bb_bt_tracker MODIFY peer_hash varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
-            MODIFY peer_id varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'0\',
-            MODIFY ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
-            MODIFY ipv6 varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-            MODIFY client varchar(51) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'Unknown\',
+            bb_bt_tracker MODIFY peer_hash VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+            MODIFY peer_id VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'0\' NOT NULL,
+            MODIFY ip VARCHAR(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL,
+            MODIFY ipv6 VARCHAR(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+            MODIFY client VARCHAR(51) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'Unknown\' NOT NULL,
             ADD PRIMARY KEY (peer_hash)');
         // delayed from Version20170601000000
         $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
@@ -149,8 +149,14 @@ class Version20170717000001 extends AbstractMigration
             MODIFY log_msg text NOT NULL,
             ADD FULLTEXT KEY log_topic_title (log_topic_title)');
 
+        // bb_poll_users has utf8*_bin columns
         $this->addSql('ALTER TABLE
-            bb_poll_users CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+            bb_poll_users DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_poll_users MODIFY vote_ip BLOB');
+        $this->addSql('ALTER TABLE
+            bb_poll_users MODIFY vote_ip VARCHAR(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL');
+
         $this->addSql('ALTER TABLE
             bb_poll_votes CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
@@ -162,8 +168,8 @@ class Version20170717000001 extends AbstractMigration
             MODIFY post_username BLOB,
             MODIFY mc_comment BLOB');
         $this->addSql('ALTER TABLE
-            bb_posts MODIFY poster_ip char(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
-            MODIFY post_username varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
+            bb_posts MODIFY poster_ip VARCHAR(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL,
+            MODIFY post_username varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
             MODIFY mc_comment text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL');
 
         $this->addSql('ALTER TABLE
@@ -180,8 +186,8 @@ class Version20170717000001 extends AbstractMigration
             bb_privmsgs MODIFY privmsgs_subject BLOB,
             MODIFY privmsgs_ip BLOB');
         $this->addSql('ALTER TABLE
-            bb_privmsgs MODIFY privmsgs_subject varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'0\',
-            MODIFY privmsgs_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\'');
+            bb_privmsgs MODIFY privmsgs_subject varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'0\' NOT NULL,
+            MODIFY privmsgs_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL');
 
         $this->addSql('ALTER TABLE
             bb_privmsgs_text CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
@@ -202,8 +208,8 @@ class Version20170717000001 extends AbstractMigration
             MODIFY search_settings BLOB,
             MODIFY search_array BLOB');
         $this->addSql('ALTER TABLE
-            bb_search_results MODIFY session_id char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
-            MODIFY search_id varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
+            bb_search_results MODIFY session_id char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+            MODIFY search_id varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
             MODIFY search_settings text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
             MODIFY search_array text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
             ADD PRIMARY KEY (session_id,search_type)');
@@ -219,7 +225,7 @@ class Version20170717000001 extends AbstractMigration
             MODIFY session_ip BLOB');
         $this->addSql('ALTER TABLE
             bb_sessions MODIFY session_id char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-            MODIFY session_ip char(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
+            MODIFY session_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL,
             ADD PRIMARY KEY (session_id)');
 
         $this->addSql('ALTER TABLE
@@ -258,24 +264,24 @@ class Version20170717000001 extends AbstractMigration
             MODIFY autologin_id BLOB,
             MODIFY tpl_name BLOB');
         $this->addSql('ALTER TABLE
-            bb_users MODIFY username varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_password varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
-            MODIFY user_last_ip char(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
-            MODIFY user_reg_ip char(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
-            MODIFY user_lang varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'uk\',
-            MODIFY user_email varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_skype varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_twitter varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_icq varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_website varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_from varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
+            bb_users MODIFY username varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+            MODIFY user_password varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+            MODIFY user_last_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL,
+            MODIFY user_reg_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL,
+            MODIFY user_lang varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'uk\' NOT NULL,
+            MODIFY user_email varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_skype varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_twitter varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_icq varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_website varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_from varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
             MODIFY user_sig text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-            MODIFY user_occ varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_interests varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY user_actkey varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
-            MODIFY user_newpasswd varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
-            MODIFY autologin_id varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
-            MODIFY tpl_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'default\',
+            MODIFY user_occ varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_interests varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY user_actkey varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'\' NOT NULL,
+            MODIFY user_newpasswd varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'\' NOT NULL,
+            MODIFY autologin_id varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'\' NOT NULL,
+            MODIFY tpl_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'default\' NOT NULL,
             ADD KEY username (username),
             ADD KEY user_email (user_email)');
 

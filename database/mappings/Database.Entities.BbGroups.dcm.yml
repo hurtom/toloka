@@ -27,21 +27,21 @@ Database\Entities\BbGroups:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: avatar_ext_id
         groupTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: group_time
         modTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: mod_time
         groupType:
             type: boolean
@@ -82,7 +82,7 @@ Database\Entities\BbGroups:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: group_moderator
         groupSingleUser:
             type: boolean

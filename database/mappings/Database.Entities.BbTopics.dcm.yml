@@ -47,7 +47,7 @@ Database\Entities\BbTopics:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_id
         topicTitle:
             type: string
@@ -62,28 +62,28 @@ Database\Entities\BbTopics:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: topic_poster
         topicTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: topic_time
         topicViews:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_views
         topicReplies:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_replies
         topicStatus:
             type: boolean
@@ -108,21 +108,21 @@ Database\Entities\BbTopics:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_first_post_id
         topicLastPostId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_last_post_id
         topicMovedId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_moved_id
         topicAttachment:
             type: boolean
@@ -141,7 +141,7 @@ Database\Entities\BbTopics:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: topic_last_post_time
         topicShowFirstPost:
             type: boolean

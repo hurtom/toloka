@@ -10,12 +10,12 @@ class BbTopicsWatch
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $topicId;
 
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId;
 
     /**
      * @var boolean

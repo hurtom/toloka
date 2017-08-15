@@ -10,7 +10,7 @@ class BbPostsSearch
     /**
      * @var integer
      */
-    private $postId = '0';
+    private $postId;
 
     /**
      * @var string

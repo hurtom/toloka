@@ -10,12 +10,12 @@ class BbAttachmentsRating
     /**
      * @var integer
      */
-    private $attachId = 0;
+    private $attachId;
 
     /**
      * @var integer
      */
-    private $userId = 0;
+    private $userId;
 
     /**
      * @var boolean

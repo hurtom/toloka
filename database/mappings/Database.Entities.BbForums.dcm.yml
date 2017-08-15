@@ -39,7 +39,7 @@ Database\Entities\BbForums:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: cat_id
         forumName:
             type: string
@@ -67,42 +67,42 @@ Database\Entities\BbForums:
             nullable: false
             options:
                 unsigned: true
-                default: '1'
+                default: 1
             column: forum_order
         forumPosts:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_posts
         forumTopics:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_topics
         forumLastPostId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_last_post_id
         forumTplId:
             type: smallint
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: forum_tpl_id
         pruneDays:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: prune_days
         authView:
             type: boolean
@@ -199,7 +199,7 @@ Database\Entities\BbForums:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_parent
         showOnIndex:
             type: boolean
@@ -214,9 +214,10 @@ Database\Entities\BbForums:
                 default: '0'
             column: forum_display_sort
         forumDisplayOrder:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: false
+                default: 0
             column: forum_display_order
     lifecycleCallbacks: {  }

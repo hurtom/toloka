@@ -10,7 +10,7 @@ class BbPostsText
     /**
      * @var integer
      */
-    private $postId = '0';
+    private $postId;
 
     /**
      * @var string

@@ -20,7 +20,7 @@ class BbCategories
     /**
      * @var integer
      */
-    private $catOrder = '0';
+    private $catOrder = 0;
 
 
 }

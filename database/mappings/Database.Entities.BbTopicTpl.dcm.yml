@@ -60,20 +60,20 @@ Database\Entities\BbTopicTpl:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: tpl_rules_post_id
         tplLastEditTm:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: tpl_last_edit_tm
         tplLastEditBy:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: tpl_last_edit_by
     lifecycleCallbacks: {  }

@@ -32,6 +32,6 @@ Database\Entities\BbCategories:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: cat_order
     lifecycleCallbacks: {  }

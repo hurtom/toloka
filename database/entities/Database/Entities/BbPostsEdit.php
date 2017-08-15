@@ -10,17 +10,17 @@ class BbPostsEdit
     /**
      * @var integer
      */
-    private $postId = '0';
+    private $postId;
 
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId;
 
     /**
      * @var integer
      */
-    private $postEditCount = '0';
+    private $postEditCount = 0;
 
     /**
      * @var integer

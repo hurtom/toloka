@@ -15,7 +15,7 @@ class BbTopics
     /**
      * @var integer
      */
-    private $forumId = '0';
+    private $forumId = 0;
 
     /**
      * @var string
@@ -25,22 +25,22 @@ class BbTopics
     /**
      * @var integer
      */
-    private $topicPoster = '0';
+    private $topicPoster = 0;
 
     /**
      * @var integer
      */
-    private $topicTime = '0';
+    private $topicTime = 0;
 
     /**
      * @var integer
      */
-    private $topicViews = '0';
+    private $topicViews = 0;
 
     /**
      * @var integer
      */
-    private $topicReplies = '0';
+    private $topicReplies = 0;
 
     /**
      * @var boolean
@@ -60,17 +60,17 @@ class BbTopics
     /**
      * @var integer
      */
-    private $topicFirstPostId = '0';
+    private $topicFirstPostId = 0;
 
     /**
      * @var integer
      */
-    private $topicLastPostId = '0';
+    private $topicLastPostId = 0;
 
     /**
      * @var integer
      */
-    private $topicMovedId = '0';
+    private $topicMovedId = 0;
 
     /**
      * @var boolean
@@ -85,7 +85,7 @@ class BbTopics
     /**
      * @var integer
      */
-    private $topicLastPostTime = '0';
+    private $topicLastPostTime = 0;
 
     /**
      * @var boolean

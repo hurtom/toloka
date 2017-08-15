@@ -15,17 +15,17 @@ class BbGroups
     /**
      * @var integer
      */
-    private $avatarExtId = '0';
+    private $avatarExtId = 0;
 
     /**
      * @var integer
      */
-    private $groupTime = '0';
+    private $groupTime = 0;
 
     /**
      * @var integer
      */
-    private $modTime = '0';
+    private $modTime = 0;
 
     /**
      * @var boolean
@@ -55,7 +55,7 @@ class BbGroups
     /**
      * @var integer
      */
-    private $groupModerator = '0';
+    private $groupModerator = 0;
 
     /**
      * @var boolean

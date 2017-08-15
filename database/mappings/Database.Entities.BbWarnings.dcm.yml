@@ -30,35 +30,35 @@ Database\Entities\BbWarnings:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: warning_post_id
         warningUserId:
             type: integer
             nullable: false
             options:
-                unsigned: true
-                default: '0'
+                unsigned: false
+                default: 0
             column: warning_user_id
         warningPosterId:
             type: integer
             nullable: false
             options:
-                unsigned: true
-                default: '0'
+                unsigned: false
+                default: 0
             column: warning_poster_id
         warningPosted:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: warning_posted
         warningExpires:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: warning_expires
         warningProceed:
             type: boolean

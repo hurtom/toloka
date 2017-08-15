@@ -10,7 +10,7 @@ class BbWarningsText
     /**
      * @var integer
      */
-    private $warningId = '0';
+    private $warningId;
 
     /**
      * @var string
