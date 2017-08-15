@@ -10,22 +10,22 @@ class BbAttachmentsRating
     /**
      * @var integer
      */
-    private $attachId = '0';
+    private $attachId = 0;
 
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId = 0;
 
     /**
      * @var boolean
      */
-    private $thanked = '0';
+    private $thanked = false;
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $rating = '0';
+    private $rating = 0;
 
 
 }

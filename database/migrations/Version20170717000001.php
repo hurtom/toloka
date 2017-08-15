@@ -46,6 +46,8 @@ class Version20170717000001 extends AbstractMigration
         $this->addSql('ALTER TABLE
             bb_attachments_desc CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
+            bb_attachments_rating CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
             bb_auth_access CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
             bb_auth_access_snap CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');

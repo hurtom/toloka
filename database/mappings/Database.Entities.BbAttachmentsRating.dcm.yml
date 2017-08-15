@@ -24,10 +24,11 @@ Database\Entities\BbAttachmentsRating:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: 0
         rating:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: true
+                default: 0
     lifecycleCallbacks: {  }
