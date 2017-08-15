@@ -15,7 +15,7 @@ class BbAttachments
     /**
      * @var integer
      */
-    private $postId;
+    private $postId = 0;
 
     /**
      * @var integer

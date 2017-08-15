@@ -28,16 +28,18 @@ Database\Entities\BbAttachments:
             nullable: false
             options:
                 unsigned: true
+                default: 0
             id: true
             column: post_id
-    fields:
         privmsgsId:
             type: integer
             nullable: false
             options:
                 unsigned: true
                 default: 0
+            id: true
             column: privmsgs_id
+    fields:
         userId1:
             type: integer
             nullable: false
