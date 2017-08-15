@@ -394,18 +394,27 @@ class Version20170601000000 extends AbstractMigration
             ADD PRIMARY KEY (quota_limit_id),
             ENGINE = InnoDB');
 
-        // <migrateBbAuthAccess>
-        // https://github.com/hurtom/toloka/issues/29
+        /**
+         * <bb_auth_access>
+         * @see https://github.com/hurtom/toloka/issues/29
+         */
         $table = $schema->getTable('bb_auth_access');
-
-        $this->addSql('DROP INDEX group_id ON bb_auth_access');
-        $this->addSql('ALTER TABLE bb_auth_access ADD forum_perm INT DEFAULT 0 NOT NULL, CHANGE group_id group_id INT UNSIGNED DEFAULT 0 NOT NULL, ADD PRIMARY KEY (group_id, forum_id), ENGINE=InnoDB');
+        if ($table->hasIndex('group_id')) {
+            $this->addSql('DROP INDEX group_id ON bb_auth_access');
+        }
+        $this->addSql('ALTER TABLE bb_auth_access
+            ADD forum_perm INT DEFAULT 0 NOT NULL,
+            CHANGE group_id group_id INT UNSIGNED DEFAULT 0 NOT NULL,
+            ADD PRIMARY KEY (group_id, forum_id),
+            ENGINE = InnoDB');
 
         // migrate permissions
         $st = $this->connection->executeQuery('SELECT * FROM bb_auth_access');
-        $rows = $st->fetchAll();
+        // TODO: better fetch over with iterator
+        // $rows = $st->fetchAll();
         $permAssoc = $this->bbCodeHelper::FORUM_PERM;
-        foreach ($rows as $row) {
+        // foreach ($rows as $row) {
+        while ($row = $st->fetch()) {
             $_perm = [];
             foreach ($permAssoc as $ident => $bit) {
                 if (!empty($row[$ident])) {
@@ -476,8 +485,7 @@ class Version20170601000000 extends AbstractMigration
         // if ($table->hasIndex('forum_id')) {
         //     $this->table("bb_auth_access")->removeIndexByName('forum_id');
         // }
-        // $this->addSql('ALTER TABLE bb_auth_access DROP auth_view, DROP auth_read, DROP auth_post, DROP auth_reply, DROP auth_edit, DROP auth_delete, DROP auth_sticky, DROP auth_announce, DROP auth_vote, DROP auth_pollcreate, DROP auth_attachments, DROP auth_mod, DROP auth_download');
-        // </migrateBbAuthAccess>
+        // </bb_auth_access>
 
         // bb_banlist
         $this->addSql('ALTER TABLE bb_banlist
@@ -630,6 +638,23 @@ class Version20170601000000 extends AbstractMigration
             CHANGE auth_key auth_key CHAR(10) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
             ENGINE=InnoDB ROW_FORMAT=DEFAULT');
 
+        /**
+         * bb_bt_users_dl_status migration to bb_bt_dlstatus
+         * @see https://github.com/hurtom/toloka/issues/97
+         */
+        $this->addSql('
+            INSERT INTO bb_bt_dlstatus
+                (user_id, topic_id, user_status, compl_count, last_modified_dlstatus)
+            SELECT
+                user_id,
+                topic_id,
+                user_status,
+                compl_count,
+                FROM_UNIXTIME(update_time)
+            FROM bb_bt_users_dl_status
+        ');
+        $this->addSql('DROP TABLE bb_bt_users_dl_status');
+
         // bb_categories
         $this->addSql('ALTER TABLE bb_categories
             DROP cat_title_short,
@@ -645,6 +670,9 @@ class Version20170601000000 extends AbstractMigration
             CHANGE config_name config_name VARCHAR(255) NOT NULL,
             CHANGE config_value config_value TEXT NOT NULL,
             ENGINE = InnoDB');
+
+        // bb_disallow
+        $this->addSql('ALTER TABLE bb_disallow ENGINE = InnoDB');
 
         // bb_extension_groups
         $this->addSql('ALTER TABLE bb_extension_groups
@@ -715,24 +743,7 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('CREATE INDEX forum_id_post_time ON bb_posts (forum_id, post_time)');
 
         /**
-         * bb_bt_users_dl_status migration to bb_bt_dlstatus
-         * @see https://github.com/hurtom/toloka/issues/97
-         */
-        $this->addSql('
-            INSERT INTO bb_bt_dlstatus
-                (user_id, topic_id, user_status, compl_count, last_modified_dlstatus)
-            SELECT
-                user_id,
-                topic_id,
-                user_status,
-                compl_count,
-                FROM_UNIXTIME(update_time)
-            FROM bb_bt_users_dl_status
-        ');
-        $this->addSql('DROP TABLE bb_bt_users_dl_status');
-
-        /**
-         * bb_posts_edit
+         * <bb_posts_edit>
          * @see https://github.com/hurtom/toloka/issues/40
          */
         if ($schema->getTable('bb_posts_edit')->hasIndex('post_id')) {
@@ -743,9 +754,12 @@ class Version20170601000000 extends AbstractMigration
             ADD PRIMARY KEY (post_id, user_id),
             ADD INDEX (user_id),
             ENGINE = InnoDB');
+        // </bb_posts_edit>
 
-        // <migrateBbPostsText>
-        // start logic hurtom bb_posts_text + bb_posts_html migration
+        /**
+         * <bb_posts_text>
+         * start logic hurtom bb_posts_text + bb_posts_html migration
+         */
         $table = $schema->getTable('bb_posts_text');
         $this->addSql('ALTER TABLE bb_posts_text
             CHANGE post_id post_id INT UNSIGNED NOT NULL,
@@ -766,8 +780,10 @@ class Version20170601000000 extends AbstractMigration
 
         $conn = $this->connection;
         $st = $conn->executeQuery('SELECT * FROM bb_smilies');
-        $rows = $st->fetchAll();
-        foreach ($rows as $smile) {
+        // TODO: better fetch over with iterator
+        // $rows = $st->fetchAll();
+        // foreach ($rows as $smile) {
+        while ($smile = $st->fetch()) {
             $smilies['orig'][] = '#(?<=^|\W)' . preg_quote($smile['code'], '#') . '(?=$|\W)#';
             $smilies['repl'][] = ' <img class="smile" src="' . $bb_cfg['smilies_path'] . '/' . $smile['smile_url'] . '" alt="' . $smile['emoticon'] . '" align="absmiddle" border="0" />';
             $smilies['smile'][] = $smile;
@@ -776,13 +792,14 @@ class Version20170601000000 extends AbstractMigration
         $bbcode->smilies = $smilies;
         $st = $conn->executeQuery('SELECT * FROM bb_posts_text');
         // TODO: better not use fetchAll() here - possibly huge amount of rows
-        $rows = $st->fetchAll();
-        foreach ($rows as $row) {
+        // $rows = $st->fetchAll();
+        // foreach ($rows as $row) {
+        while ($row = $st->fetch()) {
             $postText = $bbcode->bbcode2html($row['post_text']);
             $this->addSql('INSERT INTO bb_posts_html (post_id, post_html) VALUES (?, ?)',
                 [$row['post_id'], $postText]);
         }
-        // </migrateBbPostsText>
+        // </bb_posts_text>
 
         // bb_privmsgs
         $this->addSql('ALTER TABLE bb_privmsgs
@@ -802,6 +819,9 @@ class Version20170601000000 extends AbstractMigration
             CHANGE privmsgs_text_id privmsgs_text_id INT UNSIGNED NOT NULL,
             CHANGE privmsgs_text privmsgs_text TEXT NOT NULL,
             ENGINE = InnoDB');
+
+        // bb_quota_limits
+        $this->addSql('ALTER TABLE bb_quota_limits ENGINE = InnoDB');
 
         // bb_ranks
         $this->addSql('ALTER TABLE bb_ranks
@@ -842,7 +862,8 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('ALTER TABLE bb_smilies
             CHANGE code code VARCHAR(50) DEFAULT \'\' NOT NULL,
             CHANGE smile_url smile_url VARCHAR(100) DEFAULT \'\' NOT NULL,
-            CHANGE emoticon emoticon VARCHAR(75) DEFAULT \'\' NOT NULL');
+            CHANGE emoticon emoticon VARCHAR(75) DEFAULT \'\' NOT NULL,
+            ENGINE = InnoDB');
 
         // bb_topics
         $this->addSql('DROP INDEX topic_cache_lock ON bb_topics');
@@ -927,7 +948,7 @@ class Version20170601000000 extends AbstractMigration
             ENGINE = InnoDB');
 
         /**
-         * bb_vote_(desc|results|voters)
+         * <bb_vote_(desc|results|voters)>
          * @see https://github.com/hurtom/toloka/issues/91
          */
         $this->addSql('
@@ -961,6 +982,7 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_vote_desc');
         $this->addSql('DROP TABLE bb_vote_results');
         $this->addSql('DROP TABLE bb_vote_voters');
+        // </bb_vote_(desc|results|voters)>
 
         // bb_warnings*
         $this->addSql('ALTER TABLE bb_warnings
