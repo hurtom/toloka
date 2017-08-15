@@ -34,6 +34,7 @@ Database\Entities\BbBtTorrents:
         infoHash:
             type: binary
             nullable: false
+            length: 20
             options:
                 fixed: false
             id: true

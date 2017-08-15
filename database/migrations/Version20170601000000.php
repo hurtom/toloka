@@ -495,25 +495,10 @@ class Version20170601000000 extends AbstractMigration
             CHANGE ban_email ban_email VARCHAR(255) DEFAULT \'\' NOT NULL,
             ENGINE = InnoDB');
 
-        // bb_bt_tor_dl_stat
-        $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
-            DROP PRIMARY KEY,
-            ENGINE=InnoDB ROW_FORMAT=DEFAULT');
-        $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
-            ADD topic_id INT UNSIGNED NOT NULL,
-            DROP torrent_id,
-            CHANGE user_id user_id INT NOT NULL');
-        $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
-            ADD PRIMARY KEY (topic_id, user_id)');
-
         /**
-         * bb_bt_torrents
+         * <bb_bt_torrents>
          * @see https://github.com/hurtom/toloka/issues/43
          */
-//         $this->addSql('ALTER TABLE bb_bt_torrents
-//             DROP PRIMARY KEY,
-//             DROP torrent_id,
-//             ENGINE = InnoDB');
         if ($schema->getTable('bb_bt_torrents')->hasIndex('info_hash')) {
             $this->addSql('DROP INDEX info_hash ON bb_bt_torrents');
         }
@@ -523,6 +508,7 @@ class Version20170601000000 extends AbstractMigration
         if ($schema->getTable('bb_bt_torrents')->hasIndex('forum_id')) {
             $this->addSql('DROP INDEX forum_id ON bb_bt_torrents');
         }
+
         // temporary mapping
         $this->addSql('CREATE TABLE tmp_torrents_topics (
             torrent_id INT UNSIGNED NOT NULL,
@@ -538,10 +524,11 @@ class Version20170601000000 extends AbstractMigration
             LEFT JOIN bb_bt_tracker tr USING (torrent_id)
             LEFT JOIN bb_bt_users u USING (user_id)');
         // end of temporary mapping
+
         $this->addSql('ALTER TABLE bb_bt_torrents
             DROP PRIMARY KEY,
             DROP torrent_id,
-            CHANGE info_hash info_hash VARBINARY(255) NOT NULL,
+            CHANGE info_hash info_hash VARBINARY(20) NOT NULL,
             ADD forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER topic_id,
             ADD call_seed_time INT DEFAULT 0 NOT NULL AFTER reg_time,
             CHANGE topic_check_status tor_status TINYINT(3) UNSIGNED NOT NULL DEFAULT 0 AFTER seeder_last_seen,
@@ -565,6 +552,19 @@ class Version20170601000000 extends AbstractMigration
                 bb_bt_torrents.forum_id = bb_topics.forum_id,
                 bb_bt_torrents.call_seed_time = bb_topics.call_seed_time
             WHERE bb_bt_torrents.topic_id = bb_topics.topic_id');
+
+        // bb_bt_tor_dl_stat
+        $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
+            DROP PRIMARY KEY,
+            ADD topic_id INT UNSIGNED NOT NULL FIRST,
+            ENGINE=InnoDB ROW_FORMAT=DEFAULT');
+        $this->addSql('UPDATE bb_bt_tor_dl_stat, tmp_torrents_topics
+            SET bb_bt_tor_dl_stat.topic_id = tmp_torrents_topics.topic_id
+            WHERE bb_bt_tor_dl_stat.torrent_id = tmp_torrents_topics.torrent_id');
+        $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
+            DROP torrent_id,
+            CHANGE user_id user_id INT NOT NULL,
+            ADD PRIMARY KEY (topic_id, user_id)');
 
         /**
          * bb_bt_tracker
