@@ -10,12 +10,12 @@ class BbBtDlstatus
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId = 0;
 
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $topicId = 0;
 
     /**
      * @var boolean
@@ -25,7 +25,7 @@ class BbBtDlstatus
     /**
      * @var integer
      */
-    private $complCount = '0';
+    private $complCount = 0;
 
     /**
      * @var \DateTime

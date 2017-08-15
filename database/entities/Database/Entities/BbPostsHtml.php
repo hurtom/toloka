@@ -10,7 +10,7 @@ class BbPostsHtml
     /**
      * @var integer
      */
-    private $postId = '0';
+    private $postId = 0;
 
     /**
      * @var \DateTime

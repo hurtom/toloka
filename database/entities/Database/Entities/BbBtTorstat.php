@@ -10,12 +10,12 @@ class BbBtTorstat
     /**
      * @var integer
      */
-    private $topicId = '0';
+    private $topicId = 0;
 
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId = 0;
 
     /**
      * @var \DateTime

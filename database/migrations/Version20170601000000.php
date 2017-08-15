@@ -63,7 +63,7 @@ class Version20170601000000 extends AbstractMigration
             topic_id INT UNSIGNED NOT NULL,
             user_status SMALLINT DEFAULT 0 NOT NULL,
             compl_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
-            last_modified_dlstatus DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            last_modified_dlstatus TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
             INDEX topic_id (topic_id),
             PRIMARY KEY(user_id, topic_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -113,7 +113,7 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('CREATE TABLE bb_bt_torstat (
             topic_id INT UNSIGNED NOT NULL,
             user_id INT NOT NULL,
-            last_modified_torstat DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            last_modified_torstat TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
             completed TINYINT(1) DEFAULT \'0\' NOT NULL,
             PRIMARY KEY(topic_id, user_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
@@ -200,7 +200,7 @@ class Version20170601000000 extends AbstractMigration
         // bb_posts_html
         $this->addSql('CREATE TABLE bb_posts_html (
             post_id INT UNSIGNED NOT NULL,
-            post_html_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            post_html_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
             post_html MEDIUMTEXT NOT NULL,
             PRIMARY KEY(post_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');

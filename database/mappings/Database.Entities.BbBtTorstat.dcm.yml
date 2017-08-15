@@ -22,6 +22,10 @@ Database\Entities\BbBtTorstat:
     fields:
         lastModifiedTorstat:
             type: datetime
+            version: true
+            gedmo:
+                timestampable:
+                    on: update
             nullable: false
             options:
                 default: CURRENT_TIMESTAMP

@@ -45,8 +45,9 @@ return [
         /*
          * Doctrine ORM & Migrations
          */
-         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
-         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+        LaravelDoctrine\ORM\DoctrineServiceProvider::class,
+        LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+        LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
 
         /*
          * Application Service Providers...
