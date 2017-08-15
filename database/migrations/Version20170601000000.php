@@ -476,7 +476,8 @@ class Version20170601000000 extends AbstractMigration
 
         // bb_banlist
         $this->addSql('ALTER TABLE bb_banlist
-            CHANGE ban_ip ban_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE ban_userid ban_userid INT DEFAULT 0 NOT NULL,
+            CHANGE ban_ip ban_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             CHANGE ban_email ban_email VARCHAR(255) DEFAULT \'\' NOT NULL,
             ENGINE = InnoDB');
 
@@ -491,70 +492,112 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
             ADD PRIMARY KEY (topic_id, user_id)');
 
-        // bb_bt_torrents
+        /**
+         * bb_bt_torrents
+         * @see https://github.com/hurtom/toloka/issues/43
+         */
+//         $this->addSql('ALTER TABLE bb_bt_torrents
+//             DROP PRIMARY KEY,
+//             DROP torrent_id,
+//             ENGINE = InnoDB');
+        if ($schema->getTable('bb_bt_torrents')->hasIndex('info_hash')) {
+            $this->addSql('DROP INDEX info_hash ON bb_bt_torrents');
+        }
+        if ($schema->getTable('bb_bt_torrents')->hasIndex('topic_check_uid')) {
+            $this->addSql('DROP INDEX topic_check_uid ON bb_bt_torrents');
+        }
+        if ($schema->getTable('bb_bt_torrents')->hasIndex('forum_id')) {
+            $this->addSql('DROP INDEX forum_id ON bb_bt_torrents');
+        }
+        // temporary mapping
+        $this->addSql('CREATE TABLE tmp_torrents_topics (
+            torrent_id INT UNSIGNED NOT NULL,
+            topic_id INT UNSIGNED NOT NULL,
+            peer_hash VARCHAR(32) NOT NULL COLLATE utf8_bin,
+            PRIMARY KEY(torrent_id)
+        )');
+        $this->addSql('INSERT INTO tmp_torrents_topics (torrent_id, topic_id, peer_hash)
+            SELECT tor.torrent_id,
+                   tor.topic_id,
+                   MD5(CONCAT(RTRIM(tor.info_hash), IFNULL(u.auth_key,\'\'), IFNULL(tr.ip,0), IFNULL(tr.port,0)))
+            FROM bb_bt_torrents tor
+            LEFT JOIN bb_bt_tracker tr USING (torrent_id)
+            LEFT JOIN bb_bt_users u USING (user_id)');
+        // end of temporary mapping
         $this->addSql('ALTER TABLE bb_bt_torrents
             DROP PRIMARY KEY,
-            MODIFY torrent_id INT UNSIGNED NOT NULL,
-            ENGINE = InnoDB');
-        $this->addSql('DROP INDEX info_hash ON bb_bt_torrents');
-        // $this->addSql('ALTER TABLE bb_bt_torrents DROP PRIMARY KEY');
-        $this->addSql('DROP INDEX topic_check_uid ON bb_bt_torrents');
-        $this->addSql('ALTER TABLE bb_bt_torrents
-            ADD forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD call_seed_time INT DEFAULT 0 NOT NULL,
-            ADD tor_status TINYINT(1) DEFAULT \'0\' NOT NULL,
-            ADD checked_user_id INT DEFAULT 0 NOT NULL,
-            ADD checked_time INT DEFAULT 0 NOT NULL,
-            ADD tor_type SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD speed_up BIGINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD speed_down BIGINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD topic_check_double_tid INT UNSIGNED DEFAULT 0 NOT NULL,
             DROP torrent_id,
+            CHANGE info_hash info_hash VARBINARY(255) NOT NULL,
+            ADD forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER topic_id,
+            ADD call_seed_time INT DEFAULT 0 NOT NULL AFTER reg_time,
+            CHANGE topic_check_status tor_status TINYINT(3) UNSIGNED NOT NULL DEFAULT 0 AFTER seeder_last_seen,
+            CHANGE topic_check_uid checked_user_id INT NOT NULL DEFAULT 0 AFTER tor_status,
+            CHANGE topic_check_date checked_time INT NOT NULL DEFAULT 0 AFTER checked_user_id,
+            ADD tor_type SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER checked_time,
+            CHANGE speed_ul speed_up BIGINT(20) UNSIGNED NOT NULL DEFAULT 0 AFTER tor_type,
+            CHANGE speed_dl speed_down BIGINT(20) UNSIGNED NOT NULL DEFAULT 0 AFTER speed_up,
             DROP piece_length,
             DROP last_seeder_uid,
-            DROP topic_check_status,
-            DROP topic_check_uid,
-            DROP topic_check_date,
-            DROP topic_check_duble_tid,
             DROP leechers,
             DROP seeders,
-            DROP speed_ul,
-            DROP speed_dl,
-            CHANGE info_hash info_hash VARBINARY(255) NOT NULL,
-            CHANGE topic_check_first_fid topic_check_first_fid SMALLINT UNSIGNED DEFAULT 0 NOT NULL');
+            CHANGE topic_check_first_fid topic_check_orig_fid SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER speed_down,
+            CHANGE topic_check_duble_tid topic_check_dup_tid INT UNSIGNED DEFAULT 0 NOT NULL AFTER topic_check_orig_fid,
+            ADD PRIMARY KEY (info_hash),
+            ENGINE = InnoDB');
         $this->addSql('CREATE INDEX forum_id ON bb_bt_torrents (forum_id)');
-        $this->addSql('ALTER TABLE bb_bt_torrents ADD PRIMARY KEY (info_hash)');
-        $this->addSql('CREATE INDEX topic_check_uid ON bb_bt_torrents (checked_user_id)');
+        $this->addSql('CREATE INDEX checked_user_id ON bb_bt_torrents (checked_user_id)');
+        $this->addSql('UPDATE bb_bt_torrents, bb_topics
+            SET bb_bt_torrents.tor_type = bb_topics.topic_type_gold,
+                bb_bt_torrents.forum_id = bb_topics.forum_id,
+                bb_bt_torrents.call_seed_time = bb_topics.call_seed_time
+            WHERE bb_bt_torrents.topic_id = bb_topics.topic_id');
 
-        // bb_bt_tracker
-        $this->addSql('DROP INDEX torrent_peer_id ON bb_bt_tracker');
+        /**
+         * bb_bt_tracker
+         * @see https://github.com/hurtom/toloka/issues/42
+         */
+        if ($schema->getTable('bb_bt_tracker')->hasIndex('torrent_peer_id')) {
+            $this->addSql('DROP INDEX torrent_peer_id ON bb_bt_tracker');
+        }
         $this->addSql('ALTER TABLE bb_bt_tracker
-            ADD peer_hash VARCHAR(32) NOT NULL COLLATE utf8mb4_bin,
-            ADD client VARCHAR(51) DEFAULT \'Unknown\' NOT NULL,
-            ADD releaser TINYINT(1) DEFAULT \'0\' NOT NULL,
-            ADD tor_type SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD remain BIGINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD up_add BIGINT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD down_add BIGINT UNSIGNED DEFAULT 0 NOT NULL,
+            ADD peer_hash VARCHAR(32) NOT NULL COLLATE utf8_bin FIRST,
+            ADD topic_id INT UNSIGNED DEFAULT 0 NOT NULL AFTER peer_hash,
+            CHANGE peer_id peer_id VARCHAR(20) DEFAULT \'0\' NOT NULL AFTER topic_id,
+            CHANGE user_id user_id INT DEFAULT 0 NOT NULL AFTER peer_id,
+            CHANGE ip ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin AFTER user_id,
+            CHANGE ipv6 ipv6 VARCHAR(42) DEFAULT NULL COLLATE utf8_bin AFTER ip,
+            CHANGE port port SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER ipv6,
+            ADD client VARCHAR(51) DEFAULT \'Unknown\' NOT NULL AFTER port,
+            CHANGE seeder seeder TINYINT(1) DEFAULT 0 NOT NULL AFTER client,
+            ADD releaser TINYINT(1) DEFAULT 0 NOT NULL AFTER seeder,
+            ADD tor_type SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER releaser,
+            CHANGE uploaded uploaded BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER tor_type,
+            CHANGE downloaded downloaded BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER uploaded,
+            ADD remain BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER downloaded,
+            CHANGE speed_up speed_up BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER remain,
+            CHANGE speed_down speed_down BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER speed_up,
+            CHANGE last_stored_up up_add BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER speed_down,
+            CHANGE last_stored_down down_add BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_add,
+            CHANGE update_time update_time INT DEFAULT 0 NOT NULL AFTER down_add,
+            CHANGE complete_percent complete_percent BIGINT DEFAULT 0 NOT NULL AFTER update_time,
             ADD complete INT DEFAULT 0 NOT NULL,
-            DROP last_stored_up,
-            DROP last_stored_down,
             DROP stat_last_updated,
             DROP expire_time,
-            CHANGE peer_id peer_id VARCHAR(20) DEFAULT \'0\' NOT NULL,
-            CHANGE ip ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
-            CHANGE complete_percent complete_percent BIGINT DEFAULT 0 NOT NULL,
-            CHANGE speed_up speed_up BIGINT UNSIGNED DEFAULT 0 NOT NULL,
-            CHANGE speed_down speed_down BIGINT UNSIGNED DEFAULT 0 NOT NULL,
-            CHANGE torrent_id topic_id INT UNSIGNED DEFAULT 0 NOT NULL,
-            ADD PRIMARY KEY (peer_hash),
+            /* ADD PRIMARY KEY (peer_hash), */
             ENGINE = InnoDB');
+        $this->addSql('UPDATE bb_bt_tracker, tmp_torrents_topics
+            SET bb_bt_tracker.topic_id = tmp_torrents_topics.topic_id,
+                bb_bt_tracker.peer_hash = tmp_torrents_topics.peer_hash
+            WHERE bb_bt_tracker.torrent_id = tmp_torrents_topics.torrent_id');
+        // remove temp mapping
+        $this->addSql('DROP TABLE tmp_torrents_topics');
         // index creation delayed after CHARSET converion time
         // $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
-        // $this->addSql('CREATE UNIQUE INDEX torrent_peer_id ON bb_bt_tracker (peer_id)');
 
-        // <migrateBbBtUsers>
-        // https://github.com/hurtom/toloka/issues/47
+        /**
+         * bb_bt_users
+         * @see https://github.com/hurtom/toloka/issues/47
+         */
         $this->addSql('ALTER TABLE bb_bt_users
             ADD u_up_release BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER u_down_total,
             CHANGE u_bonus_total u_up_bonus BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER u_up_release,
@@ -579,9 +622,8 @@ class Version20170601000000 extends AbstractMigration
             DROP u_releases,
             DROP can_leech,
             CHANGE user_id user_id INT NOT NULL,
-            CHANGE auth_key auth_key CHAR(10) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE auth_key auth_key CHAR(10) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
             ENGINE=InnoDB ROW_FORMAT=DEFAULT');
-        // </migrateBbBtUsers>
 
         // bb_categories
         $this->addSql('ALTER TABLE bb_categories
@@ -660,7 +702,7 @@ class Version20170601000000 extends AbstractMigration
             DROP parsed,
             DROP dont_cache,
             DROP cache_file_md5,
-            CHANGE poster_ip poster_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE poster_ip poster_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             CHANGE post_username post_username VARCHAR(25) DEFAULT \'\' NOT NULL,
             CHANGE post_edit_time post_edit_time INT DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
@@ -745,7 +787,7 @@ class Version20170601000000 extends AbstractMigration
             DROP privmsgs_attach_sig,
             DROP privmsgs_attachment,
             CHANGE privmsgs_subject privmsgs_subject VARCHAR(255) DEFAULT \'0\' NOT NULL,
-            CHANGE privmsgs_ip privmsgs_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE privmsgs_ip privmsgs_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             ENGINE = InnoDB');
 
         // bb_privmsgs_text
@@ -774,8 +816,8 @@ class Version20170601000000 extends AbstractMigration
             ADD search_type TINYINT(1) DEFAULT \'0\' NOT NULL,
             ADD search_time INT DEFAULT 0 NOT NULL,
             ADD search_settings TEXT NOT NULL,
-            CHANGE search_id search_id VARCHAR(12) NOT NULL COLLATE utf8mb4_bin,
-            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8mb4_bin');
+            CHANGE search_id search_id VARCHAR(12) NOT NULL COLLATE utf8_bin,
+            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8_bin');
         // delay index building after changing CHARSET (due it is done via BLOB and back)
         // $this->addSql('CREATE INDEX search_id ON bb_search_results (search_id)');
         // $this->addSql('ALTER TABLE bb_search_results ADD PRIMARY KEY (session_id, search_type)');
@@ -786,8 +828,8 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP INDEX session_time ON bb_sessions');
         $this->addSql('ALTER TABLE bb_sessions
             DROP session_page,
-            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8mb4_bin,
-            CHANGE session_ip session_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8_bin,
+            CHANGE session_ip session_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             ENGINE=InnoDB ROW_FORMAT=DEFAULT');
 
         // bb_smilies
@@ -836,15 +878,15 @@ class Version20170601000000 extends AbstractMigration
         // bb_users
         $this->addSql('DROP INDEX user_session_time ON bb_users');
         $this->addSql('ALTER TABLE bb_users
-            CHANGE user_password2 user_password VARCHAR(60) NOT NULL COLLATE utf8mb4_bin,
-            ADD user_last_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
-            ADD user_reg_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE user_password2 user_password VARCHAR(60) NOT NULL COLLATE utf8_bin,
+            ADD user_last_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
+            ADD user_reg_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             ADD user_opt INT DEFAULT 0 NOT NULL,
             ADD avatar_ext_id TINYINT(1) DEFAULT \'0\' NOT NULL,
             ADD user_gender TINYINT(1) DEFAULT \'0\' NOT NULL,
             ADD user_birthday DATE DEFAULT \'0000-00-00\' NOT NULL,
             ADD user_twitter VARCHAR(15) DEFAULT \'\' NOT NULL,
-            ADD autologin_id VARCHAR(12) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin,
+            ADD autologin_id VARCHAR(12) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
             ADD user_newest_pm_id INT UNSIGNED DEFAULT 0 NOT NULL,
             ADD user_points DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL,
             ADD tpl_name VARCHAR(255) DEFAULT \'default\' NOT NULL,
@@ -873,8 +915,8 @@ class Version20170601000000 extends AbstractMigration
             CHANGE user_sig user_sig TEXT NOT NULL,
             CHANGE user_occ user_occ VARCHAR(100) DEFAULT \'\' NOT NULL,
             CHANGE user_interests user_interests VARCHAR(255) DEFAULT \'\' NOT NULL,
-            CHANGE user_actkey user_actkey VARCHAR(32) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin,
-            CHANGE user_newpasswd user_newpasswd VARCHAR(60) DEFAULT \'\' NOT NULL COLLATE utf8mb4_bin,
+            CHANGE user_actkey user_actkey VARCHAR(32) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
+            CHANGE user_newpasswd user_newpasswd VARCHAR(60) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
             CHANGE user_skype user_skype VARCHAR(32) DEFAULT \'\' NOT NULL,
             ENGINE = InnoDB');
 

@@ -25,7 +25,7 @@ Database\Entities\BbBanlist:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: ban_userid
         banIp:
             type: string

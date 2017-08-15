@@ -17,7 +17,7 @@ Database\Entities\BbBtTorrents:
         size:
             columns:
                 - size
-        topic_check_uid:
+        checked_user_id:
             columns:
                 - checked_user_id
     uniqueConstraints:
@@ -46,123 +46,123 @@ Database\Entities\BbBtTorrents:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: post_id
         posterId:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: poster_id
         topicId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_id
         forumId:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: forum_id
         attachId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: attach_id
         size:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
         regTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: reg_time
         callSeedTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: call_seed_time
         completeCount:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: complete_count
         seederLastSeen:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: seeder_last_seen
         torStatus:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: 0
             column: tor_status
         checkedUserId:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: checked_user_id
         checkedTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: checked_time
         torType:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: tor_type
         speedUp:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: speed_up
         speedDown:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: speed_down
-        topicCheckFirstFid:
+        topicCheckOrigFid:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
-            column: topic_check_first_fid
-        topicCheckDoubleTid:
+                default: 0
+            column: topic_check_orig_fid
+        topicCheckDupTid:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
-            column: topic_check_double_tid
+                default: 0
+            column: topic_check_dup_tid
     lifecycleCallbacks: {  }

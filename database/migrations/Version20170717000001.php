@@ -51,8 +51,19 @@ class Version20170717000001 extends AbstractMigration
             bb_auth_access CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
             bb_auth_access_snap CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+
+        // bb_banlist has utf8*_bin columns
         $this->addSql('ALTER TABLE
-            bb_banlist CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+            bb_banlist DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_banlist DROP INDEX ban_ip_user_id,
+            MODIFY ban_ip BLOB,
+            MODIFY ban_email BLOB');
+        $this->addSql('ALTER TABLE
+            bb_banlist MODIFY ban_ip VARCHAR(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
+            MODIFY ban_email VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
+            ADD KEY ban_ip_user_id (ban_ip,ban_userid)');
+
         $this->addSql('ALTER TABLE
             bb_bt_dlstatus CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
@@ -74,7 +85,7 @@ class Version20170717000001 extends AbstractMigration
         $this->addSql('ALTER TABLE
             bb_bt_tracker DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
-            bb_bt_tracker DROP PRIMARY KEY,
+            bb_bt_tracker /* DROP PRIMARY KEY, */
             MODIFY peer_hash BLOB,
             MODIFY peer_id BLOB,
             MODIFY ip BLOB,
@@ -84,12 +95,11 @@ class Version20170717000001 extends AbstractMigration
             bb_bt_tracker MODIFY peer_hash varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
             MODIFY peer_id varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'0\',
             MODIFY ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
-            MODIFY ipv6 varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+            MODIFY ipv6 varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
             MODIFY client varchar(51) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'Unknown\',
             ADD PRIMARY KEY (peer_hash)');
         // delayed from Version20170601000000
         $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
-        $this->addSql('CREATE UNIQUE INDEX torrent_peer_id ON bb_bt_tracker (peer_id)');
 
         $this->addSql('ALTER TABLE
             bb_bt_tracker_snap CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
@@ -208,7 +218,7 @@ class Version20170717000001 extends AbstractMigration
             MODIFY session_id BLOB,
             MODIFY session_ip BLOB');
         $this->addSql('ALTER TABLE
-            bb_sessions MODIFY session_id char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'\',
+            bb_sessions MODIFY session_id char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
             MODIFY session_ip char(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
             ADD PRIMARY KEY (session_id)');
 

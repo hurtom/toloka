@@ -11,10 +11,6 @@ Database\Entities\BbBtTracker:
         user_id:
             columns:
                 - user_id
-    uniqueConstraints:
-        torrent_peer_id:
-            columns:
-                - peer_id
     id:
         peerHash:
             type: string
@@ -33,7 +29,7 @@ Database\Entities\BbBtTracker:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_id
         peerId:
             type: string
@@ -48,7 +44,7 @@ Database\Entities\BbBtTracker:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_id
         ip:
             type: string
@@ -61,15 +57,16 @@ Database\Entities\BbBtTracker:
         ipv6:
             type: string
             nullable: true
-            length: 32
+            length: 42
             options:
                 fixed: false
+                collation: utf8mb4_bin
         port:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
         client:
             type: string
             nullable: false
@@ -81,83 +78,83 @@ Database\Entities\BbBtTracker:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: 0
         releaser:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: 0
         torType:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: tor_type
         uploaded:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
         downloaded:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
         remain:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
         speedUp:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: speed_up
         speedDown:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: speed_down
         upAdd:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_add
         downAdd:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: down_add
         updateTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: update_time
         completePercent:
             type: bigint
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: complete_percent
         complete:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
     lifecycleCallbacks: {  }
