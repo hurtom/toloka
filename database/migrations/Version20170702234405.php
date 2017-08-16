@@ -17,6 +17,11 @@ class Version20170702234405 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
+        if (!$schema->getTable('bb_attachments_desc')->hasColumn('thanks_count')) {
+            $this->addSql('ALTER TABLE bb_attachments_desc
+                ADD thanks_count INT UNSIGNED DEFAULT 0 NOT NULL AFTER tracker_status');
+        }
+
         if (!$schema->hasTable('bb_attachments_rating')) {
             $this->addSql('CREATE TABLE bb_attachments_rating (
                 attach_id INT UNSIGNED NOT NULL,
