@@ -131,10 +131,11 @@ Database\Entities\BbTopics:
                 default: '0'
             column: topic_attachment
         topicDlType:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: true
+                default: 0
             column: topic_dl_type
         topicLastPostTime:
             type: integer
@@ -144,9 +145,10 @@ Database\Entities\BbTopics:
                 default: 0
             column: topic_last_post_time
         topicShowFirstPost:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: true
+                default: 0
             column: topic_show_first_post
     lifecycleCallbacks: {  }

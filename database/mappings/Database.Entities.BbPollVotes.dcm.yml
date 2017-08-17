@@ -13,8 +13,10 @@ Database\Entities\BbPollVotes:
             id: true
             column: topic_id
         voteId:
-            type: boolean
+            type: smallint
             nullable: false
+            options:
+                unsigned: true
             id: true
             column: vote_id
     fields:

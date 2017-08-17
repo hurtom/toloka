@@ -19,10 +19,11 @@ Database\Entities\BbSearchResults:
             id: true
             column: session_id
         searchType:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: true
+                default: 0
             id: true
             column: search_type
     fields:
@@ -39,7 +40,7 @@ Database\Entities\BbSearchResults:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: search_time
         searchSettings:
             type: text

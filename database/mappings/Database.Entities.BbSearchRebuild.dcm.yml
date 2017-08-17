@@ -20,68 +20,69 @@ Database\Entities\BbSearchRebuild:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: start_post_id
         endPostId:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: end_post_id
         startTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: start_time
         endTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: end_time
         lastCycleTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: last_cycle_time
         sessionTime:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: session_time
         sessionPosts:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: session_posts
         sessionCycles:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: session_cycles
         searchSize:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: search_size
         rebuildSessionStatus:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: true
+                default: 0
             column: rebuild_session_status
     lifecycleCallbacks: {  }

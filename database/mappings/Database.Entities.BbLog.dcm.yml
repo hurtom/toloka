@@ -36,14 +36,6 @@ Database\Entities\BbLog:
                 unsigned: false
                 default: '0'
             column: log_user_id
-        logUsername:
-            type: string
-            nullable: false
-            length: 25
-            options:
-                fixed: false
-                default: ''
-            column: log_username
         logUserIp:
             type: string
             nullable: false

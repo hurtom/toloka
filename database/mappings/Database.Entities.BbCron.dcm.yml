@@ -26,7 +26,7 @@ Database\Entities\BbCron:
             type: boolean
             nullable: false
             options:
-                default: '1'
+                default: true
             column: cron_active
         cronTitle:
             type: string
@@ -69,7 +69,7 @@ Database\Entities\BbCron:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: run_order
         lastRun:
             type: datetime
@@ -93,7 +93,7 @@ Database\Entities\BbCron:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: log_enabled
         logFile:
             type: string
@@ -107,19 +107,19 @@ Database\Entities\BbCron:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: log_sql_queries
         disableBoard:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: disable_board
         runCounter:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: run_counter
     lifecycleCallbacks: {  }

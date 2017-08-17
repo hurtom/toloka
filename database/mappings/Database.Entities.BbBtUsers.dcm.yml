@@ -38,56 +38,56 @@ Database\Entities\BbBtUsers:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: u_up_total
         uDownTotal:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: u_down_total
         uUpRelease:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: u_up_release
         uUpBonus:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: u_up_bonus
         upToday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_today
         downToday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: down_today
         upReleaseToday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_release_today
         upBonusToday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_bonus_today
         pointsToday:
             type: float
@@ -95,6 +95,7 @@ Database\Entities\BbBtUsers:
             precision: 16
             scale: 2
             options:
+                unsigned: true
                 default: '0.00'
             column: points_today
         upYesterday:
@@ -102,28 +103,28 @@ Database\Entities\BbBtUsers:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_yesterday
         downYesterday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: down_yesterday
         upReleaseYesterday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_release_yesterday
         upBonusYesterday:
             type: bigint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: up_bonus_yesterday
         pointsYesterday:
             type: float
@@ -131,6 +132,7 @@ Database\Entities\BbBtUsers:
             precision: 16
             scale: 2
             options:
+                unsigned: true
                 default: '0.00'
             column: points_yesterday
     lifecycleCallbacks: {  }

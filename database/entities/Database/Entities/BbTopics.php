@@ -78,9 +78,9 @@ class BbTopics
     private $topicAttachment = '0';
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $topicDlType = '0';
+    private $topicDlType = 0;
 
     /**
      * @var integer
@@ -88,9 +88,9 @@ class BbTopics
     private $topicLastPostTime = 0;
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $topicShowFirstPost = '0';
+    private $topicShowFirstPost = 0;
 
 
 }

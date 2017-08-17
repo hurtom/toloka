@@ -34,6 +34,6 @@ Database\Entities\BbPollUsers:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: vote_dt
     lifecycleCallbacks: {  }

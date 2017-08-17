@@ -10,12 +10,12 @@ class BbSearchResults
     /**
      * @var string
      */
-    private $sessionId = '';
+    private $sessionId;
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $searchType = '0';
+    private $searchType = 0;
 
     /**
      * @var string
@@ -25,7 +25,7 @@ class BbSearchResults
     /**
      * @var integer
      */
-    private $searchTime = '0';
+    private $searchTime = 0;
 
     /**
      * @var string

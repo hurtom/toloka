@@ -15,52 +15,52 @@ class BbSearchRebuild
     /**
      * @var integer
      */
-    private $startPostId = '0';
+    private $startPostId = 0;
 
     /**
      * @var integer
      */
-    private $endPostId = '0';
+    private $endPostId = 0;
 
     /**
      * @var integer
      */
-    private $startTime = '0';
+    private $startTime = 0;
 
     /**
      * @var integer
      */
-    private $endTime = '0';
+    private $endTime = 0;
 
     /**
      * @var integer
      */
-    private $lastCycleTime = '0';
+    private $lastCycleTime = 0;
 
     /**
      * @var integer
      */
-    private $sessionTime = '0';
+    private $sessionTime = 0;
 
     /**
      * @var integer
      */
-    private $sessionPosts = '0';
+    private $sessionPosts = 0;
 
     /**
      * @var integer
      */
-    private $sessionCycles = '0';
+    private $sessionCycles = 0;
 
     /**
      * @var integer
      */
-    private $searchSize = '0';
+    private $searchSize = 0;
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $rebuildSessionStatus = '0';
+    private $rebuildSessionStatus = 0;
 
 
 }

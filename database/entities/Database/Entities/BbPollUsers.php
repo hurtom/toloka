@@ -25,7 +25,7 @@ class BbPollUsers
     /**
      * @var integer
      */
-    private $voteDt = '0';
+    private $voteDt = 0;
 
 
 }

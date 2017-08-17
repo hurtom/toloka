@@ -10,7 +10,7 @@ class BbBtUsers
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId;
 
     /**
      * @var string
@@ -20,42 +20,42 @@ class BbBtUsers
     /**
      * @var integer
      */
-    private $uUpTotal = '0';
+    private $uUpTotal = 0;
 
     /**
      * @var integer
      */
-    private $uDownTotal = '0';
+    private $uDownTotal = 0;
 
     /**
      * @var integer
      */
-    private $uUpRelease = '0';
+    private $uUpRelease = 0;
 
     /**
      * @var integer
      */
-    private $uUpBonus = '0';
+    private $uUpBonus = 0;
 
     /**
      * @var integer
      */
-    private $upToday = '0';
+    private $upToday = 0;
 
     /**
      * @var integer
      */
-    private $downToday = '0';
+    private $downToday = 0;
 
     /**
      * @var integer
      */
-    private $upReleaseToday = '0';
+    private $upReleaseToday = 0;
 
     /**
      * @var integer
      */
-    private $upBonusToday = '0';
+    private $upBonusToday = 0;
 
     /**
      * @var float
@@ -65,22 +65,22 @@ class BbBtUsers
     /**
      * @var integer
      */
-    private $upYesterday = '0';
+    private $upYesterday = 0;
 
     /**
      * @var integer
      */
-    private $downYesterday = '0';
+    private $downYesterday = 0;
 
     /**
      * @var integer
      */
-    private $upReleaseYesterday = '0';
+    private $upReleaseYesterday = 0;
 
     /**
      * @var integer
      */
-    private $upBonusYesterday = '0';
+    private $upBonusYesterday = 0;
 
     /**
      * @var float

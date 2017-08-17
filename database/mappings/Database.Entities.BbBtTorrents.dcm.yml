@@ -112,9 +112,10 @@ Database\Entities\BbBtTorrents:
                 default: 0
             column: seeder_last_seen
         torStatus:
-            type: boolean
+            type: smallint
             nullable: false
             options:
+                unsigned: true
                 default: 0
             column: tor_status
         checkedUserId:

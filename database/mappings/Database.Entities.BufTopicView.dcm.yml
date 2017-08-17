@@ -18,6 +18,6 @@ Database\Entities\BufTopicView:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: topic_views
     lifecycleCallbacks: {  }

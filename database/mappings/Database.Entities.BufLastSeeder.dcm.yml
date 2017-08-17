@@ -18,6 +18,6 @@ Database\Entities\BufLastSeeder:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: seeder_last_seen
     lifecycleCallbacks: {  }

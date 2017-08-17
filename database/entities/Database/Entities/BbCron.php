@@ -15,7 +15,7 @@ class BbCron
     /**
      * @var boolean
      */
-    private $cronActive = '1';
+    private $cronActive = true;
 
     /**
      * @var string
@@ -43,9 +43,9 @@ class BbCron
     private $runTime = '04:00:00';
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $runOrder = '0';
+    private $runOrder = 0;
 
     /**
      * @var \DateTime
@@ -65,7 +65,7 @@ class BbCron
     /**
      * @var boolean
      */
-    private $logEnabled = '0';
+    private $logEnabled = false;
 
     /**
      * @var string
@@ -75,17 +75,17 @@ class BbCron
     /**
      * @var boolean
      */
-    private $logSqlQueries = '0';
+    private $logSqlQueries = false;
 
     /**
      * @var boolean
      */
-    private $disableBoard = '0';
+    private $disableBoard = false;
 
     /**
      * @var integer
      */
-    private $runCounter = '0';
+    private $runCounter = 0;
 
 
 }

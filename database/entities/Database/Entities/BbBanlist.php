@@ -15,7 +15,7 @@ class BbBanlist
     /**
      * @var integer
      */
-    private $banUserid = '0';
+    private $banUserid = 0;
 
     /**
      * @var string

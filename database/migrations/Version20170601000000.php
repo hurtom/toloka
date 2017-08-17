@@ -7,6 +7,11 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Migrations\Version;
 use Doctrine\DBAL\Schema\Schema as Schema;
 
+/**
+ * Migration: Main database migration from the old TorrentPier
+ *
+ * This one will be skipped if schema corresponds to the new version of TorrentPier
+ */
 class Version20170601000000 extends AbstractMigration
 {
     /**
@@ -29,25 +34,42 @@ class Version20170601000000 extends AbstractMigration
     /**
      * @param Schema $schema
      */
+    private function checkAlreadyOnNew(Schema $schema) {
+        // we assume we're already on new TorrentPier engine if new tables are already present
+        return $schema->hasTable('bb_auth_access_snap') &&
+               $schema->hasTable('bb_bt_dlstatus') &&
+               $schema->hasTable('bb_bt_dlstatus_snap') &&
+               $schema->hasTable('bb_bt_last_torstat') &&
+               $schema->hasTable('bb_bt_last_userstat') &&
+               $schema->hasTable('bb_bt_torhelp') &&
+               $schema->hasTable('bb_bt_torstat') &&
+               $schema->hasTable('bb_bt_tracker_snap') &&
+               $schema->hasTable('bb_bt_user_settings') &&
+               $schema->hasTable('bb_cron') &&
+               $schema->hasTable('bb_log') &&
+               $schema->hasTable('bb_poll_users') &&
+               $schema->hasTable('bb_poll_votes') &&
+               $schema->hasTable('bb_posts_html') &&
+               $schema->hasTable('bb_posts_search') &&
+               $schema->hasTable('bb_search_rebuild') &&
+               $schema->hasTable('bb_topic_tpl') &&
+               $schema->hasTable('buf_last_seeder') &&
+               $schema->hasTable('buf_topic_view')
+            ? true
+            : false;
+    }
+
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema)
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->skipIf($this->checkAlreadyOnNew($schema), 'This migration is only performed on the old TorrentPier engine');
 
         /******************
          * Add new tables
          ******************/
-
-        // bb_ads
-        $this->addSql('CREATE TABLE bb_ads (
-            ad_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-            ad_block_ids VARCHAR(255) DEFAULT \'\' NOT NULL,
-            ad_start_time DATETIME DEFAULT \'0000-00-00 00:00:00\' NOT NULL,
-            ad_active_days SMALLINT DEFAULT 0 NOT NULL,
-            ad_status TINYINT(1) DEFAULT \'1\' NOT NULL,
-            ad_desc VARCHAR(255) DEFAULT \'\' NOT NULL,
-            ad_html TEXT NOT NULL,
-            PRIMARY KEY(ad_id)
-        ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
         // bb_auth_access_snap
         $this->addSql('CREATE TABLE bb_auth_access_snap (
@@ -164,7 +186,6 @@ class Version20170601000000 extends AbstractMigration
             id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
             log_type_id INT UNSIGNED DEFAULT 0 NOT NULL,
             log_user_id INT DEFAULT 0 NOT NULL,
-            log_username VARCHAR(25) DEFAULT \'\' NOT NULL,
             log_user_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8mb4_bin,
             log_forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
             log_forum_id_new SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
@@ -191,7 +212,7 @@ class Version20170601000000 extends AbstractMigration
         // bb_poll_votes
         $this->addSql('CREATE TABLE bb_poll_votes (
             topic_id INT UNSIGNED NOT NULL,
-            vote_id TINYINT(1) NOT NULL,
+            vote_id SMALLINT UNSIGNED NOT NULL,
             vote_text VARCHAR(255) NOT NULL,
             vote_result INT UNSIGNED NOT NULL,
             PRIMARY KEY(topic_id, vote_id)
@@ -225,7 +246,7 @@ class Version20170601000000 extends AbstractMigration
             session_posts INT UNSIGNED DEFAULT 0 NOT NULL,
             session_cycles INT UNSIGNED DEFAULT 0 NOT NULL,
             search_size INT UNSIGNED DEFAULT 0 NOT NULL,
-            rebuild_session_status TINYINT(1) DEFAULT \'0\' NOT NULL,
+            rebuild_session_status SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
             PRIMARY KEY(rebuild_session_id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 
@@ -360,27 +381,28 @@ class Version20170601000000 extends AbstractMigration
          */
         $this->addSql('DROP INDEX attach_id_post_id ON bb_attachments');
         $this->addSql('ALTER TABLE bb_attachments
-            CHANGE attach_id attach_id INT UNSIGNED NOT NULL,
-            CHANGE post_id post_id INT UNSIGNED DEFAULT 0 NOT NULL,
+            -- CHANGE attach_id attach_id INT UNSIGNED NOT NULL,
+            -- CHANGE post_id post_id INT UNSIGNED DEFAULT 0 NOT NULL,
             CHANGE privmsgs_id privmsgs_id INT UNSIGNED DEFAULT 0 NOT NULL,
-            CHANGE user_id_1 user_id_1 INT DEFAULT 0 NOT NULL,
+            -- CHANGE user_id_1 user_id_1 INT DEFAULT 0 NOT NULL,
             CHANGE user_id_2 user_id_2 INT DEFAULT 0 NOT NULL,
             ADD PRIMARY KEY (attach_id, post_id, privmsgs_id),
             ENGINE = InnoDB');
 
         // bb_attachments_config
         $this->addSql('ALTER TABLE bb_attachments_config
-            CHANGE config_name config_name VARCHAR(255) NOT NULL,
+            -- CHANGE config_name config_name VARCHAR(255) NOT NULL,
             ENGINE = InnoDB');
 
         // bb_attachments_desc
         $this->addSql('ALTER TABLE bb_attachments_desc
-            CHANGE attach_id attach_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+            -- CHANGE attach_id attach_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE real_filename real_filename VARCHAR(255) DEFAULT \'\' NOT NULL,
             CHANGE comment comment VARCHAR(255) DEFAULT \'\' NOT NULL,
             CHANGE extension extension VARCHAR(100) DEFAULT \'\' NOT NULL,
             CHANGE mimetype mimetype VARCHAR(100) DEFAULT \'\' NOT NULL,
             CHANGE thanks thanks_count INT UNSIGNED DEFAULT 0 NOT NULL,
+            CHANGE rating_count rating_count INT DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
 
         // bb_attachments_rating
@@ -493,8 +515,7 @@ class Version20170601000000 extends AbstractMigration
 
         // bb_banlist
         $this->addSql('ALTER TABLE bb_banlist
-            CHANGE ban_userid ban_userid INT DEFAULT 0 NOT NULL,
-            CHANGE ban_ip ban_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
+            -- CHANGE ban_userid ban_userid INT DEFAULT 0 NOT NULL,
             CHANGE ban_email ban_email VARCHAR(255) DEFAULT \'\' NOT NULL,
             ENGINE = InnoDB');
 
@@ -532,17 +553,17 @@ class Version20170601000000 extends AbstractMigration
             DROP PRIMARY KEY,
             DROP torrent_id,
             CHANGE info_hash info_hash VARBINARY(20) NOT NULL,
-            CHANGE post_id post_id INT UNSIGNED DEFAULT 0 NOT NULL,
-            CHANGE topic_id topic_id INT UNSIGNED DEFAULT 0 NOT NULL,
-            CHANGE attach_id attach_id INT UNSIGNED DEFAULT 0 NOT NULL,
+            -- CHANGE post_id post_id INT UNSIGNED DEFAULT 0 NOT NULL,
+            -- CHANGE topic_id topic_id INT UNSIGNED DEFAULT 0 NOT NULL,
+            -- CHANGE attach_id attach_id INT UNSIGNED DEFAULT 0 NOT NULL,
             ADD forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER topic_id,
             ADD call_seed_time INT DEFAULT 0 NOT NULL AFTER reg_time,
-            CHANGE topic_check_status tor_status TINYINT(3) UNSIGNED NOT NULL DEFAULT 0 AFTER seeder_last_seen,
-            CHANGE topic_check_uid checked_user_id INT NOT NULL DEFAULT 0 AFTER tor_status,
-            CHANGE topic_check_date checked_time INT NOT NULL DEFAULT 0 AFTER checked_user_id,
+            CHANGE topic_check_status tor_status SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER seeder_last_seen,
+            CHANGE topic_check_uid checked_user_id INT DEFAULT 0 NOT NULL AFTER tor_status,
+            CHANGE topic_check_date checked_time INT DEFAULT 0 NOT NULL AFTER checked_user_id,
             ADD tor_type SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER checked_time,
-            CHANGE speed_ul speed_up BIGINT(20) UNSIGNED NOT NULL DEFAULT 0 AFTER tor_type,
-            CHANGE speed_dl speed_down BIGINT(20) UNSIGNED NOT NULL DEFAULT 0 AFTER speed_up,
+            CHANGE speed_ul speed_up BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER tor_type,
+            CHANGE speed_dl speed_down BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER speed_up,
             DROP piece_length,
             DROP last_seeder_uid,
             DROP leechers,
@@ -606,7 +627,7 @@ class Version20170601000000 extends AbstractMigration
             DROP stat_last_updated,
             DROP expire_time,
             /* ADD PRIMARY KEY (peer_hash), */
-            ENGINE = InnoDB');
+            ENGINE = InnoDB MAX_ROWS = 0 ROW_FORMAT = DEFAULT');
         $this->addSql('UPDATE bb_bt_tracker, tmp_torrents_topics
             SET bb_bt_tracker.topic_id = tmp_torrents_topics.topic_id,
                 bb_bt_tracker.peer_hash = tmp_torrents_topics.peer_hash
@@ -632,12 +653,12 @@ class Version20170601000000 extends AbstractMigration
             CHANGE u_down_today down_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_today,
             ADD up_release_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER down_today,
             CHANGE u_bonus_today up_bonus_today BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_release_today,
-            ADD points_today DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL AFTER up_bonus_today,
+            ADD points_today FLOAT(16,2) UNSIGNED DEFAULT \'0.00\' NOT NULL AFTER up_bonus_today,
             CHANGE u_up_yday up_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER points_today,
             CHANGE u_down_yday down_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_yesterday,
             ADD up_release_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER down_yesterday,
             CHANGE u_bonus_yday up_bonus_yesterday BIGINT UNSIGNED DEFAULT 0 NOT NULL AFTER up_release_yesterday,
-            ADD points_yesterday DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL AFTER up_bonus_yesterday,
+            ADD points_yesterday FLOAT(16,2) UNSIGNED DEFAULT \'0.00\' NOT NULL AFTER up_bonus_yesterday,
             DROP u_bonus_hourly,
             DROP max_up_speed,
             DROP max_down_speed,
@@ -730,14 +751,16 @@ class Version20170601000000 extends AbstractMigration
 
         // bb_groups
         $this->addSql('ALTER TABLE bb_groups
-            ADD group_time INT DEFAULT 0 NOT NULL,
-            ADD mod_time INT DEFAULT 0 NOT NULL,
-            ADD release_group TINYINT(1) DEFAULT \'0\' NOT NULL,
-            ADD group_signature TEXT NOT NULL,
+            ADD avatar_ext_id INT DEFAULT 0 NOT NULL AFTER group_id,
+            ADD group_time INT DEFAULT 0 NOT NULL AFTER avatar_ext_id,
+            ADD mod_time INT DEFAULT 0 NOT NULL AFTER group_time,
+            ADD release_group TINYINT(1) DEFAULT \'0\' NOT NULL AFTER group_type,
+            ADD group_signature TEXT NOT NULL AFTER group_description,
             CHANGE group_id group_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE group_name group_name VARCHAR(40) DEFAULT \'\' NOT NULL,
             CHANGE group_description group_description TEXT NOT NULL,
-            CHANGE group_order avatar_ext_id INT DEFAULT 0 NOT NULL, ENGINE=InnoDB');
+            DROP group_order,
+            ENGINE = InnoDB');
 
         // bb_posts
         $this->addSql('ALTER TABLE bb_posts
@@ -757,7 +780,6 @@ class Version20170601000000 extends AbstractMigration
             CHANGE post_id post_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE topic_id topic_id INT UNSIGNED DEFAULT 0 NOT NULL,
             CHANGE poster_id poster_id INT DEFAULT 0 NOT NULL,
-            CHANGE poster_ip poster_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             CHANGE post_username post_username VARCHAR(25) DEFAULT \'\' NOT NULL,
             CHANGE post_edit_time post_edit_time INT DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
@@ -833,7 +855,6 @@ class Version20170601000000 extends AbstractMigration
             DROP privmsgs_attachment,
             CHANGE privmsgs_id privmsgs_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE privmsgs_subject privmsgs_subject VARCHAR(255) DEFAULT \'0\' NOT NULL,
-            CHANGE privmsgs_ip privmsgs_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             ENGINE = InnoDB');
 
         // bb_privmsgs_text
@@ -848,7 +869,7 @@ class Version20170601000000 extends AbstractMigration
 
         // bb_ranks
         $this->addSql('ALTER TABLE bb_ranks
-            ADD rank_style VARCHAR(255) DEFAULT \'\' NOT NULL,
+            ADD rank_style VARCHAR(255) DEFAULT \'\' NOT NULL AFTER rank_image,
             DROP rank_min,
             DROP rank_special,
             CHANGE rank_title rank_title VARCHAR(50) DEFAULT \'\' NOT NULL,
@@ -862,11 +883,11 @@ class Version20170601000000 extends AbstractMigration
             DROP PRIMARY KEY,
             ENGINE = InnoDB');
         $this->addSql('ALTER TABLE bb_search_results
-            ADD search_type TINYINT(1) DEFAULT \'0\' NOT NULL AFTER session_id,
-            ADD search_time INT DEFAULT 0 NOT NULL AFTER search_id,
-            ADD search_settings TEXT NOT NULL AFTER search_time,
+            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8_bin FIRST,
+            ADD search_type SMALLINT DEFAULT 0 NOT NULL AFTER session_id,
             CHANGE search_id search_id VARCHAR(12) NOT NULL COLLATE utf8_bin AFTER search_type,
-            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8_bin FIRST');
+            ADD search_time INT DEFAULT 0 NOT NULL AFTER search_id,
+            ADD search_settings TEXT NOT NULL AFTER search_time');
         // delay index building after changing CHARSET (due it is done via BLOB and back)
         // $this->addSql('CREATE INDEX search_id ON bb_search_results (search_id)');
         // $this->addSql('ALTER TABLE bb_search_results ADD PRIMARY KEY (session_id, search_type)');
@@ -877,8 +898,6 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP INDEX session_time ON bb_sessions');
         $this->addSql('ALTER TABLE bb_sessions
             DROP session_page,
-            CHANGE session_id session_id CHAR(20) NOT NULL COLLATE utf8_bin,
-            CHANGE session_ip session_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin,
             ENGINE=InnoDB ROW_FORMAT=DEFAULT');
 
         // bb_smilies
@@ -891,7 +910,7 @@ class Version20170601000000 extends AbstractMigration
         // bb_topics
         $this->addSql('DROP INDEX topic_cache_lock ON bb_topics');
         $this->addSql('ALTER TABLE bb_topics
-            ADD topic_last_post_time INT DEFAULT 0 NOT NULL,
+            ADD topic_last_post_time INT DEFAULT 0 NOT NULL AFTER topic_dl_type,
             DROP topic_dl_status,
             DROP topic_type_gold,
             DROP call_seed_time,
@@ -901,7 +920,7 @@ class Version20170601000000 extends AbstractMigration
             CHANGE topic_title topic_title VARCHAR(250) DEFAULT \'\' NOT NULL,
             CHANGE topic_first_post_id topic_first_post_id INT UNSIGNED DEFAULT 0 NOT NULL,
             CHANGE topic_last_post_id topic_last_post_id INT UNSIGNED DEFAULT 0 NOT NULL,
-            CHANGE topic_show_first_post topic_show_first_post TINYINT(1) DEFAULT \'0\' NOT NULL,
+            CHANGE topic_show_first_post topic_show_first_post SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
         $this->addSql('CREATE INDEX topic_last_post_time ON bb_topics (topic_last_post_time)');
         $this->addSql('CREATE FULLTEXT INDEX topic_title ON bb_topics (topic_title)');
@@ -921,28 +940,44 @@ class Version20170601000000 extends AbstractMigration
         // bb_user_group
         $this->addSql('DROP INDEX group_id ON bb_user_group');
         $this->addSql('ALTER TABLE bb_user_group
-            ADD user_time INT DEFAULT 0 NOT NULL,
+            ADD user_time INT DEFAULT 0 NOT NULL AFTER user_pending,
             CHANGE group_id group_id INT UNSIGNED NOT NULL,
             CHANGE user_id user_id INT NOT NULL,
-            CHANGE user_pending user_pending TINYINT(1) DEFAULT \'0\' NOT NULL,
-            CHANGE group_moderator group_moderator INT DEFAULT 0 NOT NULL,
+            CHANGE user_pending user_pending TINYINT(1) DEFAULT 0 NOT NULL,
+            CHANGE group_moderator group_moderator INT DEFAULT 0 NOT NULL AFTER user_time,
             ADD PRIMARY KEY (group_id, user_id),
             ENGINE = InnoDB');
 
         // bb_users
         $this->addSql('DROP INDEX user_session_time ON bb_users');
         $this->addSql('ALTER TABLE bb_users
+            CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL,
+            CHANGE user_active user_active TINYINT(1) DEFAULT \'1\' NOT NULL,
+            CHANGE username username VARCHAR(25) NOT NULL,
             CHANGE user_password2 user_password VARCHAR(60) NOT NULL COLLATE utf8_bin,
+            CHANGE user_level user_level TINYINT(1) DEFAULT \'0\' NOT NULL,
+            CHANGE user_lang user_lang VARCHAR(255) DEFAULT \'uk\' NOT NULL,
             ADD user_last_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin AFTER user_lastvisit,
             ADD user_reg_ip VARCHAR(42) DEFAULT \'0\' NOT NULL COLLATE utf8_bin AFTER user_regdate,
             ADD user_opt INT DEFAULT 0 NOT NULL AFTER user_last_privmsg,
-            ADD avatar_ext_id TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_rank,
+            CHANGE user_rank user_rank INT DEFAULT 0 NOT NULL AFTER user_opt,
+            ADD avatar_ext_id INT DEFAULT 0 NOT NULL AFTER user_rank,
             ADD user_gender TINYINT(1) DEFAULT \'0\' NOT NULL AFTER avatar_ext_id,
             ADD user_birthday DATE DEFAULT \'0000-00-00\' NOT NULL AFTER user_gender,
+            CHANGE user_email user_email VARCHAR(255) DEFAULT \'\' NOT NULL AFTER user_birthday,
+            CHANGE user_skype user_skype VARCHAR(32) DEFAULT \'\' NOT NULL AFTER user_email,
             ADD user_twitter VARCHAR(15) DEFAULT \'\' NOT NULL AFTER user_skype,
+            CHANGE user_icq user_icq VARCHAR(15) DEFAULT \'\' NOT NULL AFTER user_twitter,
+            CHANGE user_website user_website VARCHAR(100) DEFAULT \'\' NOT NULL AFTER user_icq,
+            CHANGE user_from user_from VARCHAR(100) DEFAULT \'\' NOT NULL AFTER user_website,
+            CHANGE user_sig user_sig TEXT NOT NULL AFTER user_from,
+            CHANGE user_occ user_occ VARCHAR(100) DEFAULT \'\' NOT NULL AFTER user_sig,
+            CHANGE user_interests user_interests VARCHAR(255) DEFAULT \'\' NOT NULL AFTER user_occ,
+            CHANGE user_actkey user_actkey VARCHAR(32) DEFAULT \'\' NOT NULL COLLATE utf8_bin AFTER user_interests,
+            CHANGE user_newpasswd user_newpasswd VARCHAR(60) DEFAULT \'\' NOT NULL COLLATE utf8_bin AFTER user_actkey,
             ADD autologin_id VARCHAR(12) DEFAULT \'\' NOT NULL COLLATE utf8_bin AFTER user_newpasswd,
             ADD user_newest_pm_id INT UNSIGNED DEFAULT 0 NOT NULL AFTER autologin_id,
-            ADD user_points DOUBLE PRECISION DEFAULT \'0.00\' NOT NULL AFTER user_newest_pm_id,
+            ADD user_points FLOAT(16,2) DEFAULT \'0.00\' NOT NULL AFTER user_newest_pm_id,
             ADD tpl_name VARCHAR(255) DEFAULT \'default\' NOT NULL AFTER user_points,
             DROP user_session_page,
             DROP user_style,
@@ -956,22 +991,30 @@ class Version20170601000000 extends AbstractMigration
             DROP user_aim,
             DROP user_yim,
             DROP user_msnm,
-            CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL,
-            CHANGE user_active user_active TINYINT(1) DEFAULT \'1\' NOT NULL,
-            CHANGE username username VARCHAR(25) NOT NULL,
-            CHANGE user_level user_level TINYINT(1) DEFAULT \'0\' NOT NULL,
-            CHANGE user_lang user_lang VARCHAR(255) DEFAULT \'uk\' NOT NULL,
-            CHANGE user_rank user_rank INT DEFAULT 0 NOT NULL,
-            CHANGE user_email user_email VARCHAR(255) DEFAULT \'\' NOT NULL,
-            CHANGE user_icq user_icq VARCHAR(15) DEFAULT \'\' NOT NULL,
-            CHANGE user_website user_website VARCHAR(100) DEFAULT \'\' NOT NULL,
-            CHANGE user_from user_from VARCHAR(100) DEFAULT \'\' NOT NULL,
-            CHANGE user_sig user_sig TEXT NOT NULL,
-            CHANGE user_occ user_occ VARCHAR(100) DEFAULT \'\' NOT NULL,
-            CHANGE user_interests user_interests VARCHAR(255) DEFAULT \'\' NOT NULL,
-            CHANGE user_actkey user_actkey VARCHAR(32) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
-            CHANGE user_newpasswd user_newpasswd VARCHAR(60) DEFAULT \'\' NOT NULL COLLATE utf8_bin,
-            CHANGE user_skype user_skype VARCHAR(32) DEFAULT \'\' NOT NULL,
+            CHANGE user_timer user_timer INT NOT NULL AFTER tpl_name,
+            CHANGE user_login_tries user_login_tries SMALLINT DEFAULT 0 NOT NULL AFTER user_timer,
+            CHANGE user_last_login_try user_last_login_try INT DEFAULT 0 NOT NULL AFTER user_login_tries,
+            CHANGE user_viewemail user_viewemail TINYINT(1) DEFAULT NULL AFTER user_last_login_try,
+            CHANGE user_attachsig user_attachsig TINYINT(1) DEFAULT NULL AFTER user_viewemail,
+            CHANGE user_allow_viewonline user_allow_viewonline TINYINT(1) DEFAULT \'1\' NOT NULL AFTER user_attachsig,
+            CHANGE user_notify user_notify TINYINT(1) DEFAULT \'1\' NOT NULL AFTER user_allow_viewonline,
+            CHANGE user_notify_pm user_notify_pm TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_notify,
+            CHANGE user_popup_pm user_popup_pm TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_notify_pm,
+            CHANGE user_avatar user_avatar VARCHAR(100) DEFAULT NULL AFTER user_popup_pm,
+            CHANGE user_avatar_type user_avatar_type TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_avatar,
+            CHANGE user_sig_bbcode_uid user_sig_bbcode_uid VARCHAR(10) DEFAULT NULL AFTER user_avatar_type,
+            CHANGE user_allow_passkey user_allow_passkey TINYINT(1) DEFAULT \'1\' NOT NULL AFTER user_sig_bbcode_uid,
+            CHANGE user_from_flag user_from_flag VARCHAR(25) DEFAULT NULL AFTER user_allow_passkey,
+            CHANGE user_allowdefaultavatar user_allowdefaultavatar TINYINT(1) DEFAULT \'1\' NOT NULL AFTER user_from_flag,
+            CHANGE user_warnings user_warnings TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_allowdefaultavatar,
+            CHANGE user_banned user_banned TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_warnings,
+            CHANGE bt_tor_browse_set bt_tor_browse_set TEXT DEFAULT NULL AFTER user_banned,
+            CHANGE user_unread_topics user_unread_topics TEXT DEFAULT NULL AFTER bt_tor_browse_set,
+            CHANGE user_hide_bt_stats user_hide_bt_stats TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_unread_topics,
+            CHANGE user_hide_bt_history user_hide_bt_history TINYINT(1) DEFAULT \'1\' NOT NULL AFTER user_hide_bt_stats,
+            CHANGE user_hide_bt_activity user_hide_bt_activity TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_hide_bt_history,
+            CHANGE user_hide_bt_topics user_hide_bt_topics TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_hide_bt_activity,
+            CHANGE user_bt_ssl user_bt_ssl TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_hide_bt_topics,
             ENGINE = InnoDB');
 
         /**
@@ -1016,8 +1059,8 @@ class Version20170601000000 extends AbstractMigration
             CHANGE warning_id warning_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE warning_type warning_type TINYINT(1) DEFAULT \'0\' NOT NULL,
             CHANGE warning_post_id warning_post_id INT UNSIGNED DEFAULT 0 NOT NULL,
-            -- TODO: warning_user_id
-            -- TODO: warning_poster_id
+            CHANGE warning_user_id warning_user_id INT DEFAULT 0 NOT NULL,
+            CHANGE warning_poster_id warning_poster_id INT DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
         $this->addSql('ALTER TABLE bb_warnings_text
             CHANGE warning_id warning_id INT UNSIGNED NOT NULL,

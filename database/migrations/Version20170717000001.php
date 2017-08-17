@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Migration: Convert database to CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
  *
- * From the MySQL doc (https://dev.mysql.com/doc/refman/5.7/en/alter-table.html):
+ * @see https://dev.mysql.com/doc/refman/5.7/en/alter-table.html#alter-table-character-set
  *
  * To avoid data type changes of the type just described, do not use CONVERT TO CHARACTER SET.
  * Instead, use MODIFY to change individual columns.
@@ -23,6 +23,7 @@ use Doctrine\DBAL\Schema\Schema;
  *   - ALTER TABLE t1 CHANGE c1 c1 TEXT CHARACTER SET utf8;
  *
  * The reason this works is that there is no conversion when you convert to or from BLOB columns.
+ *
  */
 class Version20170717000001 extends AbstractMigration
 {
@@ -74,8 +75,16 @@ class Version20170717000001 extends AbstractMigration
             bb_bt_last_userstat CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
             bb_bt_tor_dl_stat CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+
+        /*
+         * bb_bt_torhelp is getting mediumtext for topic_id_csv if updated from the
+         * new TorrentPier schema
+         */
         $this->addSql('ALTER TABLE
             bb_bt_torhelp CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_bt_torhelp CHANGE topic_id_csv topic_id_csv TEXT NOT NULL');
+
         $this->addSql('ALTER TABLE
             bb_bt_torrents CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
@@ -85,7 +94,7 @@ class Version20170717000001 extends AbstractMigration
         $this->addSql('ALTER TABLE
             bb_bt_tracker DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
-            bb_bt_tracker /* DROP PRIMARY KEY, */
+            bb_bt_tracker ' . ($schema->getTable('bb_bt_tracker')->hasPrimaryKey() ? 'DROP PRIMARY KEY,' : '').'
             MODIFY peer_hash BLOB,
             MODIFY peer_id BLOB,
             MODIFY ip BLOB,
@@ -99,12 +108,21 @@ class Version20170717000001 extends AbstractMigration
             MODIFY client VARCHAR(51) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'Unknown\' NOT NULL,
             ADD PRIMARY KEY (peer_hash)');
         // delayed from Version20170601000000
-        $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
+        if (!$schema->getTable('bb_bt_tracker')->hasIndex('topic_id')) {
+            $this->addSql('CREATE INDEX topic_id ON bb_bt_tracker (topic_id)');
+        }
 
         $this->addSql('ALTER TABLE
             bb_bt_tracker_snap CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+
+        /*
+         * bb_bt_user_settings is getting mediumtext for tor_search_set if updated from the
+         * new TorrentPier schema
+         */
         $this->addSql('ALTER TABLE
             bb_bt_user_settings CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_bt_user_settings CHANGE tor_search_set tor_search_set TEXT NOT NULL');
 
         // bb_bt_users has utf8*_bin columns
         $this->addSql('ALTER TABLE
@@ -130,8 +148,16 @@ class Version20170717000001 extends AbstractMigration
             bb_extensions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
             bb_forums CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+
+        /*
+         * bb_groups is getting mediumtext for group_description and group_signature if
+         * updated from the new TorrentPier schema
+         */
         $this->addSql('ALTER TABLE
             bb_groups CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_groups CHANGE group_description group_description TEXT NOT NULL,
+            CHANGE group_signature group_signature TEXT NOT NULL');
 
         // bb_log has utf8*_bin columns
         $this->addSql('ALTER TABLE
@@ -143,9 +169,9 @@ class Version20170717000001 extends AbstractMigration
             MODIFY log_topic_title_new BLOB,
             MODIFY log_msg BLOB');
         $this->addSql('ALTER TABLE
-            bb_log MODIFY log_user_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT \'0\',
-            MODIFY log_topic_title varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
-            MODIFY log_topic_title_new varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT \'\',
+            bb_log MODIFY log_user_ip varchar(42) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT \'0\' NOT NULL,
+            MODIFY log_topic_title varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY log_topic_title_new varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
             MODIFY log_msg text NOT NULL,
             ADD FULLTEXT KEY log_topic_title (log_topic_title)');
 
@@ -172,10 +198,24 @@ class Version20170717000001 extends AbstractMigration
             MODIFY post_username varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
             MODIFY mc_comment text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL');
 
+        /*
+         * bb_posts_html is getting longtext for post_html if updated from the
+         * new TorrentPier schema
+         */
         $this->addSql('ALTER TABLE
             bb_posts_html CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
+            bb_posts_html CHANGE post_html post_html MEDIUMTEXT NOT NULL');
+
+        /*
+         * bb_posts_search is getting mediumtext for search_words if updated from the
+         * new TorrentPier schema
+         */
+        $this->addSql('ALTER TABLE
             bb_posts_search CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_posts_search CHANGE search_words search_words TEXT NOT NULL');
+
         $this->addSql('ALTER TABLE
             bb_posts_text CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
@@ -202,7 +242,8 @@ class Version20170717000001 extends AbstractMigration
         $this->addSql('ALTER TABLE
             bb_search_results DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $this->addSql('ALTER TABLE
-            bb_search_results /* DROP PRIMARY KEY, */
+            bb_search_results ' . ($schema->getTable('bb_search_results')->hasPrimaryKey() ? 'DROP PRIMARY KEY,' : '') . '
+            ' . ($schema->getTable('bb_search_results')->hasIndex('search_id') ? 'DROP INDEX search_id,' : '') . '
             MODIFY session_id BLOB,
             MODIFY search_id BLOB,
             MODIFY search_settings BLOB,
@@ -284,6 +325,18 @@ class Version20170717000001 extends AbstractMigration
             MODIFY tpl_name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'default\' NOT NULL,
             ADD KEY username (username),
             ADD KEY user_email (user_email)');
+
+        $this->addSql('ALTER TABLE
+            bb_warnings CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        // bb_warnings_text has latin1 column
+        $this->addSql('ALTER TABLE
+            bb_warnings_text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
+        $this->addSql('ALTER TABLE
+            bb_warnings_text MODIFY bbcode_uid BLOB,
+            MODIFY warning_text BLOB');
+        $this->addSql('ALTER TABLE
+            bb_warnings_text MODIFY bbcode_uid varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT \'\' NOT NULL,
+            MODIFY warning_text text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
         $this->addSql('ALTER TABLE
             bb_words CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');

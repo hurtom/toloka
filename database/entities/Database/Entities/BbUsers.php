@@ -15,27 +15,27 @@ class BbUsers
     /**
      * @var boolean
      */
-    private $userActive = '1';
+    private $userActive = true;
 
     /**
      * @var string
      */
-    private $username = '';
+    private $username;
 
     /**
      * @var string
      */
-    private $userPassword = '';
+    private $userPassword;
 
     /**
      * @var integer
      */
-    private $userSessionTime = '0';
+    private $userSessionTime = 0;
 
     /**
      * @var integer
      */
-    private $userLastvisit = '0';
+    private $userLastvisit = 0;
 
     /**
      * @var string
@@ -45,7 +45,7 @@ class BbUsers
     /**
      * @var integer
      */
-    private $userRegdate = '0';
+    private $userRegdate = 0;
 
     /**
      * @var string
@@ -53,14 +53,14 @@ class BbUsers
     private $userRegIp = '0';
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $userLevel = '0';
+    private $userLevel = 0;
 
     /**
      * @var integer
      */
-    private $userPosts = '0';
+    private $userPosts = 0;
 
     /**
      * @var string
@@ -75,27 +75,27 @@ class BbUsers
     /**
      * @var integer
      */
-    private $userNewPrivmsg = '0';
+    private $userNewPrivmsg = 0;
 
     /**
      * @var integer
      */
-    private $userUnreadPrivmsg = '0';
+    private $userUnreadPrivmsg = 0;
 
     /**
      * @var integer
      */
-    private $userLastPrivmsg = '0';
+    private $userLastPrivmsg = 0;
 
     /**
      * @var integer
      */
-    private $userOpt = '0';
+    private $userOpt = 0;
 
     /**
      * @var integer
      */
-    private $userRank = '0';
+    private $userRank = 0;
 
     /**
      * @var boolean
@@ -175,7 +175,7 @@ class BbUsers
     /**
      * @var integer
      */
-    private $userNewestPmId = '0';
+    private $userNewestPmId = 0;
 
     /**
      * @var float
@@ -187,12 +187,6 @@ class BbUsers
      */
     private $tplName = 'default';
 
-
-    /**
-     * @var string
-     */
-    private $userPassword2 = '';
-
     /**
      * @var integer
      */
@@ -201,12 +195,12 @@ class BbUsers
     /**
      * @var integer
      */
-    private $userLoginTries = '0';
+    private $userLoginTries = 0;
 
     /**
      * @var integer
      */
-    private $userLastLoginTry = '0';
+    private $userLastLoginTry = 0;
 
     /**
      * @var boolean
@@ -221,22 +215,22 @@ class BbUsers
     /**
      * @var boolean
      */
-    private $userAllowViewonline = '1';
+    private $userAllowViewonline = true;
 
     /**
      * @var boolean
      */
-    private $userNotify = '1';
+    private $userNotify = true;
 
     /**
      * @var boolean
      */
-    private $userNotifyPm = '0';
+    private $userNotifyPm = false;
 
     /**
      * @var boolean
      */
-    private $userPopupPm = '0';
+    private $userPopupPm = false;
 
     /**
      * @var string
@@ -256,7 +250,7 @@ class BbUsers
     /**
      * @var boolean
      */
-    private $userAllowPasskey = '1';
+    private $userAllowPasskey = true;
 
     /**
      * @var string
@@ -266,7 +260,7 @@ class BbUsers
     /**
      * @var boolean
      */
-    private $userAllowdefaultavatar = '1';
+    private $userAllowdefaultavatar = true;
 
     /**
      * @var boolean
@@ -276,7 +270,7 @@ class BbUsers
     /**
      * @var boolean
      */
-    private $userBanned = '0';
+    private $userBanned = false;
 
     /**
      * @var string
@@ -291,27 +285,27 @@ class BbUsers
     /**
      * @var boolean
      */
-    private $userHideBtStats = '0';
+    private $userHideBtStats = false;
 
     /**
      * @var boolean
      */
-    private $userHideBtHistory = '1';
+    private $userHideBtHistory = true;
 
     /**
      * @var boolean
      */
-    private $userHideBtActivity = '0';
+    private $userHideBtActivity = false;
 
     /**
      * @var boolean
      */
-    private $userHideBtTopics = '0';
+    private $userHideBtTopics = false;
 
     /**
      * @var boolean
      */
-    private $userBtSsl = '0';
+    private $userBtSsl = false;
 
 
 }

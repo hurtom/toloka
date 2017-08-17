@@ -10,27 +10,32 @@ class BbLog
     /**
      * @var integer
      */
-    private $logTypeId = '0';
+    private $id;
 
     /**
      * @var integer
      */
-    private $logUserId = '0';
+    private $logTypeId = 0;
 
     /**
      * @var integer
      */
-    private $logForumId = '0';
+    private $logUserId = 0;
 
     /**
      * @var integer
      */
-    private $logTopicId = '0';
+    private $logForumId = 0;
 
     /**
      * @var integer
      */
-    private $logTime = '0';
+    private $logTopicId = 0;
+
+    /**
+     * @var integer
+     */
+    private $logTime = 0;
 
     /**
      * @var string
@@ -40,12 +45,12 @@ class BbLog
     /**
      * @var integer
      */
-    private $logForumIdNew = '0';
+    private $logForumIdNew = 0;
 
     /**
      * @var integer
      */
-    private $logTopicIdNew = '0';
+    private $logTopicIdNew = 0;
 
     /**
      * @var string
@@ -61,17 +66,6 @@ class BbLog
      * @var string
      */
     private $logMsg;
-
-
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $logUsername = '';
 
 
 }

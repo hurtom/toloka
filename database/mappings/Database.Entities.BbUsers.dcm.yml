@@ -32,7 +32,7 @@ Database\Entities\BbUsers:
             type: boolean
             nullable: false
             options:
-                default: '1'
+                default: true
             column: user_active
         username:
             type: string
@@ -53,20 +53,14 @@ Database\Entities\BbUsers:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_session_time
-        userTimer:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: user_timer
         userLastvisit:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_lastvisit
         userLastIp:
             type: string
@@ -82,7 +76,7 @@ Database\Entities\BbUsers:
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_regdate
         userRegIp:
             type: string
@@ -94,17 +88,18 @@ Database\Entities\BbUsers:
                 collation: utf8mb4_bin
             column: user_reg_ip
         userLevel:
-            type: boolean
+            type: smallint
             nullable: false
             options:
-                default: '0'
+                unsigned: true
+                default: 0
             column: user_level
         userPosts:
             type: integer
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: user_posts
         userTimezone:
             type: decimal
@@ -120,94 +115,49 @@ Database\Entities\BbUsers:
             length: 255
             options:
                 fixed: false
-                default: uk
+                default: 'uk'
             column: user_lang
         userNewPrivmsg:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: user_new_privmsg
         userUnreadPrivmsg:
             type: smallint
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: user_unread_privmsg
         userLastPrivmsg:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_last_privmsg
         userOpt:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_opt
-        userLoginTries:
-            type: smallint
-            nullable: false
-            options:
-                unsigned: false
-                default: '0'
-            column: user_login_tries
-        userLastLoginTry:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-                default: '0'
-            column: user_last_login_try
-        userViewemail:
-            type: boolean
-            nullable: true
-            column: user_viewemail
-        userAttachsig:
-            type: boolean
-            nullable: true
-            column: user_attachsig
-        userAllowViewonline:
-            type: boolean
-            nullable: false
-            options:
-                default: '1'
-            column: user_allow_viewonline
-        userNotify:
-            type: boolean
-            nullable: false
-            options:
-                default: '1'
-            column: user_notify
-        userNotifyPm:
-            type: boolean
-            nullable: false
-            options:
-                default: '0'
-            column: user_notify_pm
-        userPopupPm:
-            type: boolean
-            nullable: false
-            options:
-                default: '0'
-            column: user_popup_pm
         userRank:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
+                default: 0
             column: user_rank
         avatarExtId:
-            type: boolean
+            type: integer
             nullable: false
             options:
-                default: '0'
+                unsigned: false
+                default: 0
             column: avatar_ext_id
         userGender:
             type: boolean
@@ -221,19 +171,6 @@ Database\Entities\BbUsers:
             options:
                 default: '0000-00-00'
             column: user_birthday
-        userAvatar:
-            type: string
-            nullable: true
-            length: 100
-            options:
-                fixed: false
-            column: user_avatar
-        userAvatarType:
-            type: boolean
-            nullable: false
-            options:
-                default: '0'
-            column: user_avatar_type
         userEmail:
             type: string
             nullable: false
@@ -289,13 +226,6 @@ Database\Entities\BbUsers:
             options:
                 fixed: false
             column: user_sig
-        userSigBbcodeUid:
-            type: string
-            nullable: true
-            length: 10
-            options:
-                fixed: false
-            column: user_sig_bbcode_uid
         userOcc:
             type: string
             nullable: false
@@ -344,7 +274,7 @@ Database\Entities\BbUsers:
             nullable: false
             options:
                 unsigned: true
-                default: '0'
+                default: 0
             column: user_newest_pm_id
         userPoints:
             type: float
@@ -360,13 +290,85 @@ Database\Entities\BbUsers:
             length: 255
             options:
                 fixed: false
-                default: default
+                default: 'default'
             column: tpl_name
-        userAllowPasskey:
+        userTimer:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: user_timer
+        userLoginTries:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_login_tries
+        userLastLoginTry:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_last_login_try
+        userViewemail:
+            type: boolean
+            nullable: true
+            column: user_viewemail
+        userAttachsig:
+            type: boolean
+            nullable: true
+            column: user_attachsig
+        userAllowViewonline:
             type: boolean
             nullable: false
             options:
                 default: '1'
+            column: user_allow_viewonline
+        userNotify:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_notify
+        userNotifyPm:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_notify_pm
+        userPopupPm:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_popup_pm
+        userAvatar:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: user_avatar
+        userAvatarType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_avatar_type
+        userSigBbcodeUid:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+            column: user_sig_bbcode_uid
+        userAllowPasskey:
+            type: boolean
+            nullable: false
+            options:
+                default: true
             column: user_allow_passkey
         userFromFlag:
             type: string
@@ -379,7 +381,7 @@ Database\Entities\BbUsers:
             type: boolean
             nullable: false
             options:
-                default: '1'
+                default: true
             column: user_allowdefaultavatar
         userWarnings:
             type: boolean
@@ -391,7 +393,7 @@ Database\Entities\BbUsers:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: user_banned
         btTorBrowseSet:
             type: text
@@ -411,30 +413,30 @@ Database\Entities\BbUsers:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: user_hide_bt_stats
         userHideBtHistory:
             type: boolean
             nullable: false
             options:
-                default: '1'
+                default: true
             column: user_hide_bt_history
         userHideBtActivity:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: user_hide_bt_activity
         userHideBtTopics:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: user_hide_bt_topics
         userBtSsl:
             type: boolean
             nullable: false
             options:
-                default: '0'
+                default: false
             column: user_bt_ssl
     lifecycleCallbacks: {  }

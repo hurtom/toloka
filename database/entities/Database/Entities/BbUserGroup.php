@@ -10,28 +10,27 @@ class BbUserGroup
     /**
      * @var integer
      */
-    private $groupId = '0';
+    private $groupId;
 
     /**
      * @var integer
      */
-    private $userId = '0';
+    private $userId;
 
     /**
      * @var boolean
      */
-    private $userPending = '0';
+    private $userPending = false;
 
     /**
      * @var integer
      */
-    private $userTime = '0';
-
+    private $userTime = 0;
 
     /**
-     * @var boolean
+     * @var integer
      */
-    private $groupModerator;
+    private $groupModerator = 0;
 
 
 }
