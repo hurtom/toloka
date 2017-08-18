@@ -368,7 +368,8 @@ class Ajax
     {
         require AJAX_DIR . '/sitemap.php';
     }
-    public function thanks() {
-  		require AJAX_DIR.'/thanks.php';
-  	}
+    public function thanks()
+    {
+        require AJAX_DIR.'/thanks.php';
+    }
 }

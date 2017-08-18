@@ -95,8 +95,8 @@
 		<td colspan="3">&nbsp;
 		<script type="text/javascript">
 		ajax.callback.change_torrent = function(data) {
-		    if(data.title) alert(data.title);
-		    if(data.url) document.location.href = data.url;
+			if(data.title) alert(data.title);
+			if(data.url) document.location.href = data.url;
 		};
 		</script>
 		<!-- IF TOR_CONTROLS -->
@@ -223,17 +223,16 @@
 		<td>{L_SIZE}:</td>
 		<td>{postrow.attach.tor_reged.TORRENT_SIZE}</td>
 	</tr>
-
 	<tr class="row1">
 		<td>{L_THANKED}:</td>
 		<td>
-			<span id="thanks_count">{postrow.attach.tor_reged.THANKED_COUNT}</span>
+			<span id="thanks_count">{postrow.attach.tor_reged.THANKS_COUNT}</span>
 			<!-- IF postrow.attach.tor_reged.U_CAN_THANK -->
 			<span>
-				<input id="thanks_button" onclick="ajax.thanks('thanks'); return false;" type="button" class="liteoption" name="" value="{L_THANKS}" title="{L_THANK}">
+				<input id="thanks_button" onclick="ajax.thanks('thanks'); return false;" type="button" class="liteoption" name="" value="{L_THANKS}" title="{L_THANKS_TITLE}">
 			</span>
 			<!-- ENDIF -->
-			<!-- IF postrow.attach.tor_reged.THANKED_COUNT -->
+			<!-- IF postrow.attach.tor_reged.THANKS_COUNT -->
 			(<span id="thanks_list"><a onclick="ajax.thanks('list'); return false;"href="#">{L_LIST}</a></span>)
 			<!-- ENDIF -->
 		</td>
@@ -249,7 +248,7 @@
 		ajax.callback.thanks = function(data) {
 			if (data.mode === 'thanks') {
 				document.getElementById("thanks_button").remove();
-				$('#thanks_count').html({postrow.attach.tor_reged.THANKED_COUNT} + 1);
+				$('#thanks_count').html({postrow.attach.tor_reged.THANKS_COUNT} + 1);
 			}
 			if (data.mode === 'list') {
 				$('#thanks_list').html(data.html);

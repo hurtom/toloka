@@ -2834,8 +2834,7 @@ $lang['EMAILER_SUBJECT'] = [
     'USER_WELCOME_INACTIVE' => 'Welcome to %s Forums',
 ];
 
-//Інші мовні коди
-//Вкладення торрент
-$lang['THANKS'] = 'Thanks!'; //button in attach
-$lang['THANKED'] = 'Thanked'; //how many people have been thanked
-$lang['THANK'] = 'Thanks'; //tooltip for THANKS
+// Thanks button
+$lang['THANKS'] = 'Thanks!';      // button in attach
+$lang['THANKED'] = 'Thanked';     // how many people have been thanked
+$lang['THANKS_TITLE'] = 'Thanks'; // tooltip for THANKS

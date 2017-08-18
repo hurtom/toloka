@@ -2072,8 +2072,7 @@ $lang['TRACKER_STATS'] = 'Статистика на трекері';
 $lang['WHOIS_INFO'] = 'Інформація про IP адресу';
 $lang['SHOW_MOD_HOME_PAGE'] = 'Показувати на головній для модераторів';
 $lang['PREMOD_HELP'] = '<h4><span class="tor-icon tor-dup">&#8719;</span> Премодерація</h4> <h6>Якщо у релізера немає роздач із статусом <span class="tor-icon tor-approved">&radic;</span>, <span class="tor-icon tor-approved">#</span> або <span class="tor-icon tor-dup">T</span> в поточному розділі, включаючи підрозділи, то роздача автоматично отримує цей статус</h6>';
-$lang['TOR_COMMENT'] = '<h4>Коментар до статусу роздачі</h4> <h6>Коментар дає змогу вказати релізерам про 
- допущені помилки. Якщо реліз недооформлений, автору доступна форма для його корекції</h6>';
+$lang['TOR_COMMENT'] = '<h4>Коментар до статусу роздачі</h4> <h6>Коментар дає змогу вказати релізерам про допущені помилки. Якщо реліз недооформлений, автору доступна форма для його корекції</h6>';
 $lang['SEED_BONUS_ADD'] = '<h4>Додавання сідбонусу</h4><h6>Кількість роздач, що підтримуються користувачем та розмір нарахування бонусів за них (нарахування раз на годину)</h6>';
 $lang['SEED_BONUS_RELEASE'] = 'до N-числа релізів';
 $lang['SEED_BONUS_POINTS'] = 'бонусів на годину';
@@ -2834,8 +2833,8 @@ $lang['EMAILER_SUBJECT'] = [
     'USER_WELCOME' => 'Ласкаво просимо на сайт %s',
     'USER_WELCOME_INACTIVE' => 'Ласкаво просимо на сайт %s',
 ];
-//Інші мовні коди
-//Вкладення торрент
-$lang['THANKS'] = 'Дякую!';
-$lang['THANKED'] = 'Подякували';
-$lang['THANK'] = 'Подякувати';
+
+// Thanks button
+$lang['THANKS'] = 'Дякую!';           // button in attach
+$lang['THANKED'] = 'Подякували';      // how many people have been thanked
+$lang['THANKS_TITLE'] = 'Подякувати'; // tooltip for THANKS
