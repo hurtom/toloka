@@ -59,6 +59,7 @@ class Ajax
         'user_register' => ['guest'],
         'posts' => ['guest'],
         'index_data' => ['guest'],
+        'thanks' => ['user'],
     ];
 
     public $action;
@@ -366,5 +367,9 @@ class Ajax
     public function sitemap()
     {
         require AJAX_DIR . '/sitemap.php';
+    }
+    public function thanks()
+    {
+        require AJAX_DIR.'/thanks.php';
     }
 }

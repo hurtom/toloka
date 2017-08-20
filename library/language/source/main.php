@@ -2833,3 +2833,8 @@ $lang['EMAILER_SUBJECT'] = [
     'USER_WELCOME' => 'Welcome to %s Forums',
     'USER_WELCOME_INACTIVE' => 'Welcome to %s Forums',
 ];
+
+// Thanks button
+$lang['THANKS'] = 'Thanks!';      // button in attach
+$lang['THANKED'] = 'Thanked';     // how many people have been thanked
+$lang['THANKS_TITLE'] = 'Thanks'; // tooltip for THANKS

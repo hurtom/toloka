@@ -46,6 +46,7 @@ if ($ajax->action != 'manage_admin') {
 
 // Load actions required modules
 switch ($ajax->action) {
+    case 'thanks':
     case 'view_post':
         require INC_DIR . '/bbcode.php';
         break;
