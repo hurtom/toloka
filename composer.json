@@ -43,6 +43,7 @@
     "longman/ip-tools": "^1.2",
     "roave/security-advisories": "dev-master",
     "rych/bencode": "^1.0",
+    "robmorgan/phinx": "^0.8.1",
     "samdark/sitemap": "^2.0",
     "swiftmailer/swiftmailer": "^5.4",
     "symfony/dotenv": "^3.3",
