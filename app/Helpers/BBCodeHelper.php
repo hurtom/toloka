@@ -110,10 +110,11 @@ namespace App\Helpers {
             'auth_download' => AUTH_DOWNLOAD,
         ];
 
-        /**
-         * @var \TorrentPier\Legacy\BBCode $bbCode
-         */
+        /** @var \TorrentPier\Legacy\BBCode $bbCode */
         private $bbCode;
+
+        /** @var array $bbConfig Corresponds to legacy global $bb_cfg */
+        private $bbConfig;
 
         /**
          * Constructor
@@ -121,11 +122,17 @@ namespace App\Helpers {
         public function __construct()
         {
             $this->bbCode = new BBCode();
+            $this->bbConfig = $GLOBALS['bb_cfg'];
         }
 
         public function getBBCode()
         {
             return $this->bbCode;
+        }
+
+        public function getBBConfigValue($key)
+        {
+            return isset($this->bbConfig[$key]) ? $this->bbConfig[$key] : null;
         }
     }
 }

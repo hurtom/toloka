@@ -65,7 +65,14 @@ class Version20170601000000 extends AbstractMigration
     public function up(Schema $schema)
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        $this->skipIf($this->checkAlreadyOnNew($schema), 'This migration is only performed on the old TorrentPier engine');
+
+        $isAlreadyOnNew = $this->checkAlreadyOnNew($schema);
+        if ($isAlreadyOnNew) {
+            $this->upPrepareMigrateUserPasswords($schema);
+        }
+
+        // the rest should be skipped
+        $this->skipIf($isAlreadyOnNew, 'This migration is only performed on the old TorrentPier engine');
 
         /******************
          * Add new tables
@@ -1078,5 +1085,39 @@ class Version20170601000000 extends AbstractMigration
     public function down(Schema $schema)
     {
         $this->abortIf(true, 'We do not support downgrade, sorry.');
+    }
+
+    /**
+     * Prepare for migration of user passwords for installations based on new TorrentPier
+     *
+     * @param Schema $schema
+     */
+    private function upPrepareMigrateUserPasswords(Schema $schema)
+    {
+        if (!$schema->hasTable('tmp_migrate_users')) {
+            $this->connection->exec('CREATE TABLE tmp_migrate_users (
+                id INT NOT NULL,
+                password VARCHAR(60) NOT NULL COLLATE utf8mb4_bin
+            ) DEFAULT CHARACTER SET utf8mb4');
+        }
+
+        $passwdHashOpts = $this->bbCodeHelper->getBBConfigValue('passhash_opts');
+        if ($passwdHashOpts === null) $passwdHashOpts = ['cost' => 12];
+
+        $this->connection->executeQuery('REPLACE INTO tmp_migrate_users (id, password)
+            SELECT user_id, ? FROM bb_users WHERE user_id < 0
+            UNION
+            SELECT user_id, ? FROM bb_users WHERE user_id = (
+                SELECT user_id FROM bb_users WHERE username = \'admin\' LIMIT 1
+            )
+            UNION
+            SELECT user_id, ? FROM bb_users WHERE user_id > 0 AND username != \'admin\'',
+            [
+                // originally it was md5(''), not the md5(md5(...)) as rest of passwords
+                password_hash('', PASSWORD_BCRYPT, $passwdHashOpts),
+                password_hash(md5('admin'), PASSWORD_BCRYPT, $passwdHashOpts),
+                password_hash(md5('test'), PASSWORD_BCRYPT, $passwdHashOpts),
+            ]
+        );
     }
 }
