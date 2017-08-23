@@ -36,13 +36,14 @@ before_script:
   - test $(grep -q memory_limit docker/php.ini) || echo 'memory_limit=-1' >> docker/php.ini
   - docker-compose pull
   - docker-compose up -d
-  - docker-compose exec -T toloka chown -R 33:33 /var/www
+  - docker-compose exec -T toloka chown -R www-data:www-data /var/www
   - docker-compose exec -T toloka chmod -R a+w /var/www/html/tests/_output
   - travis_retry docker-compose exec -T toloka composer self-update
-  - travis_retry docker-compose exec -T -u 33 toloka composer update --no-interaction --prefer-dist ${COMPOSER_FLAGS}
+  - travis_retry docker-compose exec -T -u www-data toloka composer update --no-interaction --prefer-dist ${COMPOSER_FLAGS}
+  - docker-compose exec -T -u www-data toloka composer database:migrate
 
 script:
-  - docker-compose exec -T -u 33 toloka composer test:unit:clover
+  - docker-compose exec -T -u www-data toloka composer test:unit:clover
 
 after_script:
   ### Codacy

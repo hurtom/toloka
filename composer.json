@@ -88,6 +88,9 @@
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "php artisan optimize"
     ],
+    "database:migrate": [
+      "php artisan doctrine:migrations:migrate --force"
+    ],
     "test": [
       "echo 'NOTE: Instead of running <composer test:lint> linting should be done with StyleCI'",
       "composer test:unit",
