@@ -498,6 +498,7 @@ class Version20170701000000 extends AbstractMigration
         $this->addSql('ALTER TABLE bb_topics
             CHANGE topic_id topic_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE forum_id forum_id SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
+            CHANGE topic_type topic_type SMALLINT DEFAULT 0 NOT NULL,
             CHANGE topic_first_post_id topic_first_post_id INT UNSIGNED DEFAULT 0 NOT NULL,
             CHANGE topic_last_post_id topic_last_post_id INT UNSIGNED DEFAULT 0 NOT NULL,
             CHANGE topic_dl_type topic_dl_type SMALLINT UNSIGNED DEFAULT 0 NOT NULL,

@@ -342,12 +342,6 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_forbidden_extensions');
 
         /**
-         * bb_forum_prune
-         * @see https://github.com/hurtom/toloka/issues/102
-         */
-        $this->addSql('DROP TABLE bb_forum_prune');
-
-        /**
          * bb_search_wordlist
          * @see https://github.com/hurtom/toloka/issues/103
          */
@@ -441,7 +435,7 @@ class Version20170601000000 extends AbstractMigration
             ADD PRIMARY KEY (group_id, forum_id),
             ENGINE = InnoDB');
 
-        // migrate permissions
+        // migrate permissions, based on https://github.com/hurtom/toloka/pull/76
         $st = $this->connection->executeQuery('SELECT * FROM bb_auth_access');
         // TODO: better fetch over with iterator
         // $rows = $st->fetchAll();
@@ -454,13 +448,14 @@ class Version20170601000000 extends AbstractMigration
                     $_perm[] = $bit;
                 }
             }
-            $this->addSql('UPDATE bb_auth_access SET forum_perm = ? WHERE group_id = ? AND forum_id = ?',
+            $this->addSql('UPDATE bb_auth_access
+                SET forum_perm = ? WHERE group_id = ? AND forum_id = ?',
                 [bit2dec($_perm), $row['group_id'], $row['forum_id']]);
         }
 
-        $this->addSql("DELETE FROM bb_auth_access_snap");
+        //$this->addSql("DELETE FROM bb_auth_access_snap");
         $this->addSql('
-            INSERT INTO bb_auth_access_snap
+            REPLACE INTO bb_auth_access_snap
                 (user_id, forum_id, forum_perm)
             SELECT
                 ug.user_id, aa.forum_id, BIT_OR(aa.forum_perm)
@@ -581,6 +576,8 @@ class Version20170601000000 extends AbstractMigration
             ENGINE = InnoDB');
         $this->addSql('CREATE INDEX forum_id ON bb_bt_torrents (forum_id)');
         $this->addSql('CREATE INDEX checked_user_id ON bb_bt_torrents (checked_user_id)');
+
+        // based on https://github.com/hurtom/toloka/pull/76/files#diff-7f470f98612f711dde37f79d8ec3448fR971
         $this->addSql('UPDATE bb_bt_torrents, bb_topics
             SET bb_bt_torrents.tor_type = bb_topics.topic_type_gold,
                 bb_bt_torrents.forum_id = bb_topics.forum_id,
@@ -588,19 +585,26 @@ class Version20170601000000 extends AbstractMigration
             WHERE bb_bt_torrents.topic_id = bb_topics.topic_id');
         // </bb_bt_torrents>
 
-        // bb_bt_tor_dl_stat
+        /**
+         * <bb_bt_tor_dl_stat>
+         * @see https://github.com/hurtom/toloka/issues/43
+         * @see https://github.com/hurtom/toloka/issues/42
+         */
         $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
             DROP PRIMARY KEY,
             ADD topic_id INT UNSIGNED NOT NULL FIRST,
             ENGINE=InnoDB ROW_FORMAT=DEFAULT');
+
         $this->addSql('UPDATE bb_bt_tor_dl_stat, tmp_torrents_topics
             SET bb_bt_tor_dl_stat.topic_id = tmp_torrents_topics.topic_id
             WHERE bb_bt_tor_dl_stat.torrent_id = tmp_torrents_topics.torrent_id');
+
         $this->addSql('ALTER TABLE bb_bt_tor_dl_stat
             DROP torrent_id,
             CHANGE user_id user_id INT NOT NULL,
             CHANGE attach_id attach_id INT UNSIGNED DEFAULT 0 NOT NULL,
             ADD PRIMARY KEY (topic_id, user_id)');
+        // </bb_bt_tor_dl_stat>
 
         /**
          * <bb_bt_tracker>
@@ -635,10 +639,12 @@ class Version20170601000000 extends AbstractMigration
             DROP expire_time,
             /* ADD PRIMARY KEY (peer_hash), */
             ENGINE = InnoDB MAX_ROWS = 0 ROW_FORMAT = DEFAULT');
+
         $this->addSql('UPDATE bb_bt_tracker, tmp_torrents_topics
             SET bb_bt_tracker.topic_id = tmp_torrents_topics.topic_id,
                 bb_bt_tracker.peer_hash = tmp_torrents_topics.peer_hash
             WHERE bb_bt_tracker.torrent_id = tmp_torrents_topics.torrent_id');
+
         $this->addSql('ALTER TABLE bb_bt_tracker
             DROP torrent_id');
 
@@ -698,6 +704,7 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('DROP TABLE bb_bt_users_dl_status');
 
         // bb_categories
+        // @see https://github.com/hurtom/toloka/issues/35
         $this->addSql('ALTER TABLE bb_categories
             DROP cat_title_short,
             DROP cat_title_hashtag,
@@ -733,7 +740,10 @@ class Version20170601000000 extends AbstractMigration
             CHANGE comment comment VARCHAR(100) DEFAULT \'\' NOT NULL,
             ENGINE = InnoDB');
 
-        // bb_forums
+        /**
+         * <bb_forums>
+         * @see https://github.com/hurtom/toloka/issues/36
+         */
         $this->addSql('ALTER TABLE bb_forums
             ADD forum_tpl_id SMALLINT DEFAULT 0 NOT NULL AFTER forum_last_post_id,
             ADD prune_days SMALLINT UNSIGNED DEFAULT 0 NOT NULL AFTER forum_tpl_id,
@@ -756,6 +766,16 @@ class Version20170601000000 extends AbstractMigration
             CHANGE forum_parent forum_parent SMALLINT UNSIGNED DEFAULT 0 NOT NULL,
             ENGINE = InnoDB');
 
+        // @see https://github.com/hurtom/toloka/pull/76
+        $this->execute('UPDATE bb_forums, bb_forum_prune
+            SET bb_forums.prune_days = bb_forum_prune.prune_days
+            WHERE bb_forum_prune.forum_id = bb_forums.forum_id');
+
+        // bb_forum_prune
+        // @see https://github.com/hurtom/toloka/issues/102
+        $this->addSql('DROP TABLE bb_forum_prune');
+        // </bb_forums>
+
         // bb_groups
         $this->addSql('ALTER TABLE bb_groups
             ADD avatar_ext_id INT DEFAULT 0 NOT NULL AFTER group_id,
@@ -770,6 +790,10 @@ class Version20170601000000 extends AbstractMigration
             ENGINE = InnoDB');
 
         // bb_posts
+        // @see https://github.com/hurtom/toloka/pull/76/files#diff-7f470f98612f711dde37f79d8ec3448fR1208
+        $this->addSql('UPDATE bb_posts SET post_username = \'\' WHERE post_username IS NULL');
+        $this->addSql('UPDATE bb_posts SET post_edit_time = 0 WHERE post_edit_time IS NULL');
+
         $this->addSql('ALTER TABLE bb_posts
             ADD poster_rg_id INT DEFAULT 0 NOT NULL AFTER poster_ip,
             ADD attach_rg_sig TINYINT(1) DEFAULT \'0\' NOT NULL AFTER poster_rg_id,
@@ -811,6 +835,7 @@ class Version20170601000000 extends AbstractMigration
         /**
          * <bb_posts_text>
          * start logic hurtom bb_posts_text + bb_posts_html migration
+         * @see https://github.com/hurtom/toloka/pull/76/files#diff-7f470f98612f711dde37f79d8ec3448fR924
          */
         $table = $schema->getTable('bb_posts_text');
         $this->addSql('ALTER TABLE bb_posts_text
@@ -818,7 +843,6 @@ class Version20170601000000 extends AbstractMigration
             CHANGE post_text post_text TEXT NOT NULL,
             ENGINE = InnoDB');
 
-        // taken from #76
         $this->addSql("UPDATE bb_posts_text SET post_text = REPLACE(`post_text`, CONCAT(':', `bbcode_uid`), '')");
         if ($table->hasColumn('bbcode_uid')) {
             $table->dropColumn('bbcode_uid');
@@ -830,19 +854,21 @@ class Version20170601000000 extends AbstractMigration
         $bbcode = $this->bbCode;
         $smilies = [];
 
-        $conn = $this->connection;
-        $st = $conn->executeQuery('SELECT * FROM bb_smilies');
+        $smiliesPath = $this->bbCodeHelper->getBBConfigValue('smilies_path');
+        if ($smiliesPath === null) $smiliesPath = 'styles/images/smiles';
+
+        $st = $this->connection->executeQuery('SELECT * FROM bb_smilies');
         // TODO: better fetch over with iterator
         // $rows = $st->fetchAll();
         // foreach ($rows as $smile) {
         while ($smile = $st->fetch()) {
             $smilies['orig'][] = '#(?<=^|\W)' . preg_quote($smile['code'], '#') . '(?=$|\W)#';
-            $smilies['repl'][] = ' <img class="smile" src="' . $bb_cfg['smilies_path'] . '/' . $smile['smile_url'] . '" alt="' . $smile['emoticon'] . '" align="absmiddle" border="0" />';
+            $smilies['repl'][] = ' <img class="smile" src="' . $smiliesPath . '/' . $smile['smile_url'] . '" alt="' . $smile['emoticon'] . '" align="absmiddle" border="0" />';
             $smilies['smile'][] = $smile;
         }
 
         $bbcode->smilies = $smilies;
-        $st = $conn->executeQuery('SELECT * FROM bb_posts_text');
+        $st = $this->connection->executeQuery('SELECT * FROM bb_posts_text');
         // TODO: better not use fetchAll() here - possibly huge amount of rows
         // $rows = $st->fetchAll();
         // foreach ($rows as $row) {
@@ -864,12 +890,17 @@ class Version20170601000000 extends AbstractMigration
             CHANGE privmsgs_subject privmsgs_subject VARCHAR(255) DEFAULT \'0\' NOT NULL,
             ENGINE = InnoDB');
 
-        // bb_privmsgs_text
+        // <bb_privmsgs_text>
+        // based on https://github.com/hurtom/toloka/pull/76/files#diff-7f470f98612f711dde37f79d8ec3448fR1177
+        $this->addSql("UPDATE bb_privmsgs_text
+            SET privmsgs_text = REPLACE(`privmsgs_text`, CONCAT(':', `privmsgs_bbcode_uid`), '')");
+
         $this->addSql('ALTER TABLE bb_privmsgs_text
             DROP privmsgs_bbcode_uid,
             CHANGE privmsgs_text_id privmsgs_text_id INT UNSIGNED NOT NULL,
             CHANGE privmsgs_text privmsgs_text TEXT NOT NULL,
             ENGINE = InnoDB');
+        // </bb_privmsgs_text>
 
         // bb_quota_limits
         $this->addSql('ALTER TABLE bb_quota_limits ENGINE = InnoDB');
@@ -899,13 +930,15 @@ class Version20170601000000 extends AbstractMigration
         // $this->addSql('CREATE INDEX search_id ON bb_search_results (search_id)');
         // $this->addSql('ALTER TABLE bb_search_results ADD PRIMARY KEY (session_id, search_type)');
 
-        // bb_sessions
+        // <bb_sessions>
+        // $this->addSql('TRUNCATE TABLE bb_sessions'); // @see https://github.com/hurtom/toloka/pull/76/files#diff-7f470f98612f711dde37f79d8ec3448fR1321
         $this->addSql('DROP INDEX session_user_id ON bb_sessions');
         $this->addSql('DROP INDEX session_id_ip_user_id ON bb_sessions');
         $this->addSql('DROP INDEX session_time ON bb_sessions');
         $this->addSql('ALTER TABLE bb_sessions
             DROP session_page,
             ENGINE=InnoDB ROW_FORMAT=DEFAULT');
+        // </bb_sessions>
 
         // bb_smilies
         $this->addSql('ALTER TABLE bb_smilies
@@ -945,6 +978,7 @@ class Version20170601000000 extends AbstractMigration
         $this->addSql('ALTER TABLE bb_topics_watch ADD PRIMARY KEY (topic_id, user_id)');
 
         // bb_user_group
+        // @see https://github.com/hurtom/toloka/issues/38
         $this->addSql('DROP INDEX group_id ON bb_user_group');
         $this->addSql('ALTER TABLE bb_user_group
             ADD user_time INT DEFAULT 0 NOT NULL AFTER user_pending,
@@ -955,7 +989,16 @@ class Version20170601000000 extends AbstractMigration
             ADD PRIMARY KEY (group_id, user_id),
             ENGINE = InnoDB');
 
-        // bb_users
+        /**
+         * <bb_users>
+         */
+
+        // @see https://github.com/hurtom/toloka/pull/76/files#diff-7f470f98612f711dde37f79d8ec3448fR1334
+        // Should we really do this? 3 updates on 900k users table?
+        // $this->addSql('UPDATE bb_users SET user_rank = 0 WHERE user_rank IS NULL');
+        // $this->addSql('UPDATE bb_users SET user_skype = \'\' WHERE user_skype IS NULL');
+        // $this->addSql('UPDATE bb_users SET user_newpasswd = \'\' WHERE user_newpasswd IS NULL');
+
         $this->addSql('DROP INDEX user_session_time ON bb_users');
         $this->addSql('ALTER TABLE bb_users
             CHANGE user_id user_id INT AUTO_INCREMENT NOT NULL,
@@ -1023,6 +1066,7 @@ class Version20170601000000 extends AbstractMigration
             CHANGE user_hide_bt_topics user_hide_bt_topics TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_hide_bt_activity,
             CHANGE user_bt_ssl user_bt_ssl TINYINT(1) DEFAULT \'0\' NOT NULL AFTER user_hide_bt_topics,
             ENGINE = InnoDB');
+        // </bb_users>
 
         /**
          * <bb_vote_(desc|results|voters)>
@@ -1062,6 +1106,7 @@ class Version20170601000000 extends AbstractMigration
         // </bb_vote_(desc|results|voters)>
 
         // bb_warnings*
+        // @see https://github.com/hurtom/toloka/issues/41
         $this->addSql('ALTER TABLE bb_warnings
             CHANGE warning_id warning_id INT UNSIGNED AUTO_INCREMENT NOT NULL,
             CHANGE warning_type warning_type TINYINT(1) DEFAULT \'0\' NOT NULL,

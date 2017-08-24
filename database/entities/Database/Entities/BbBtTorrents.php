@@ -63,7 +63,15 @@ class BbBtTorrents
     private $seederLastSeen = 0;
 
     /**
-     * @var integer
+     * Torrent check status:
+     *   0 - not checked;
+     *   1 - processing;
+     *   2 - checked;
+     *   3 - incomplete;
+     *   4 - invalid;
+     *   5 - duplicate.
+     *
+     * @var integer value in [0-5] regex range
      */
     private $torStatus = 0;
 
@@ -92,7 +100,6 @@ class BbBtTorrents
      */
     private $speedDown = 0;
 
-
     /**
      * @var integer
      */
@@ -104,4 +111,14 @@ class BbBtTorrents
     private $topicCheckDupTid = 0;
 
 
+    public function validate()
+    {
+        if (!is_int($this->torStatus)) {
+            throw new \TypeError();
+        }
+
+        if (!($this->torStatus >= 0 && $this->torStatus <= 5)) {
+            throw new \AssertionError('Value should be >= 0 and <= 5');
+        }
+    }
 }

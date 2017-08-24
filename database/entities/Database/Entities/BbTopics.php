@@ -53,7 +53,7 @@ class BbTopics
     private $topicVote = '0';
 
     /**
-     * @var boolean
+     * @var integer
      */
     private $topicType = '0';
 

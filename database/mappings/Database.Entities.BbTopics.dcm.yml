@@ -98,7 +98,7 @@ Database\Entities\BbTopics:
                 default: '0'
             column: topic_vote
         topicType:
-            type: boolean
+            type: smallint
             nullable: false
             options:
                 default: '0'

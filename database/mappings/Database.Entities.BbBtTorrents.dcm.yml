@@ -167,4 +167,6 @@ Database\Entities\BbBtTorrents:
                 unsigned: true
                 default: 0
             column: topic_check_dup_tid
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [ validate ]
+        preUpdate: [ validate ]
