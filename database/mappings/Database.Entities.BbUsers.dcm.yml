@@ -1,0 +1,442 @@
+Database\Entities\BbUsers:
+    type: entity
+    table: bb_users
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        user_level:
+            columns:
+                - user_level
+        user_regdate:
+            columns:
+                - user_regdate
+        username:
+            columns:
+                - username
+        user_email:
+            columns:
+                - user_email
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        userActive:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+            column: user_active
+        username:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+        userPassword:
+            type: string
+            nullable: false
+            length: 60
+            options:
+                fixed: false
+                collation: utf8mb4_bin
+            column: user_password
+        userSessionTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_session_time
+        userLastvisit:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_lastvisit
+        userLastIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: user_last_ip
+        userRegdate:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_regdate
+        userRegIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: user_reg_ip
+        userLevel:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: user_level
+        userPosts:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: user_posts
+        userTimezone:
+            type: decimal
+            nullable: false
+            precision: 5
+            scale: 2
+            options:
+                default: '0.00'
+            column: user_timezone
+        userLang:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: 'uk'
+            column: user_lang
+        userNewPrivmsg:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: user_new_privmsg
+        userUnreadPrivmsg:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: user_unread_privmsg
+        userLastPrivmsg:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_last_privmsg
+        userOpt:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_opt
+        userRank:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_rank
+        avatarExtId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: avatar_ext_id
+        userGender:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_gender
+        userBirthday:
+            type: date
+            nullable: false
+            options:
+                default: '0000-00-00'
+            column: user_birthday
+        userEmail:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: user_email
+        userSkype:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+                default: ''
+            column: user_skype
+        userTwitter:
+            type: string
+            nullable: false
+            length: 15
+            options:
+                fixed: false
+                default: ''
+            column: user_twitter
+        userIcq:
+            type: string
+            nullable: false
+            length: 15
+            options:
+                fixed: false
+                default: ''
+            column: user_icq
+        userWebsite:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+            column: user_website
+        userFrom:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+            column: user_from
+        userSig:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: user_sig
+        userOcc:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+                default: ''
+            column: user_occ
+        userInterests:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: user_interests
+        userActkey:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+                default: ''
+                collation: utf8mb4_bin
+            column: user_actkey
+        userNewpasswd:
+            type: string
+            nullable: false
+            length: 60
+            options:
+                fixed: false
+                default: ''
+                collation: utf8mb4_bin
+            column: user_newpasswd
+        autologinId:
+            type: string
+            nullable: false
+            length: 12
+            options:
+                fixed: false
+                default: ''
+                collation: utf8mb4_bin
+            column: autologin_id
+        userNewestPmId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: user_newest_pm_id
+        userPoints:
+            type: float
+            nullable: false
+            precision: 16
+            scale: 2
+            options:
+                default: '0.00'
+            column: user_points
+        tplName:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: 'default'
+            column: tpl_name
+        userTimer:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: user_timer
+        userLoginTries:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_login_tries
+        userLastLoginTry:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_last_login_try
+        userViewemail:
+            type: boolean
+            nullable: true
+            column: user_viewemail
+        userAttachsig:
+            type: boolean
+            nullable: true
+            column: user_attachsig
+        userAllowViewonline:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_allow_viewonline
+        userNotify:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_notify
+        userNotifyPm:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_notify_pm
+        userPopupPm:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_popup_pm
+        userAvatar:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+            column: user_avatar
+        userAvatarType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_avatar_type
+        userSigBbcodeUid:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: false
+            column: user_sig_bbcode_uid
+        userAllowPasskey:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+            column: user_allow_passkey
+        userFromFlag:
+            type: string
+            nullable: true
+            length: 25
+            options:
+                fixed: false
+            column: user_from_flag
+        userAllowdefaultavatar:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+            column: user_allowdefaultavatar
+        userWarnings:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: user_warnings
+        userBanned:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+            column: user_banned
+        btTorBrowseSet:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: bt_tor_browse_set
+        userUnreadTopics:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: user_unread_topics
+        userHideBtStats:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+            column: user_hide_bt_stats
+        userHideBtHistory:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+            column: user_hide_bt_history
+        userHideBtActivity:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+            column: user_hide_bt_activity
+        userHideBtTopics:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+            column: user_hide_bt_topics
+        userBtSsl:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+            column: user_bt_ssl
+    lifecycleCallbacks: {  }

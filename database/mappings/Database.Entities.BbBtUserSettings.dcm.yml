@@ -1,0 +1,30 @@
+Database\Entities\BbBtUserSettings:
+    type: entity
+    table: bb_bt_user_settings
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+    fields:
+        torSearchSet:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: tor_search_set
+        lastModified:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: last_modified
+    lifecycleCallbacks: {  }

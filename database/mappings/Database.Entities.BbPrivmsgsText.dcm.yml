@@ -1,0 +1,23 @@
+Database\Entities\BbPrivmsgsText:
+    type: entity
+    table: bb_privmsgs_text
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        privmsgsTextId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: privmsgs_text_id
+    fields:
+        privmsgsText:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: privmsgs_text
+    lifecycleCallbacks: {  }

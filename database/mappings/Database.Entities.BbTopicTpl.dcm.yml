@@ -1,0 +1,79 @@
+Database\Entities\BbTopicTpl:
+    type: entity
+    table: bb_topic_tpl
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    uniqueConstraints:
+        tpl_name:
+            columns:
+                - tpl_name
+    id:
+        tplId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: tpl_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        tplName:
+            type: string
+            nullable: false
+            length: 60
+            options:
+                fixed: false
+                default: ''
+            column: tpl_name
+        tplSrcForm:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: tpl_src_form
+        tplSrcTitle:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: tpl_src_title
+        tplSrcMsg:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: tpl_src_msg
+        tplComment:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: tpl_comment
+        tplRulesPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: tpl_rules_post_id
+        tplLastEditTm:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: tpl_last_edit_tm
+        tplLastEditBy:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: tpl_last_edit_by
+    lifecycleCallbacks: {  }

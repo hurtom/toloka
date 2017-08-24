@@ -1,0 +1,34 @@
+Database\Entities\BbAttachmentsRating:
+    type: entity
+    table: bb_attachments_rating
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        attachId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: attach_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+    fields:
+        thanked:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+        rating:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+    lifecycleCallbacks: {  }

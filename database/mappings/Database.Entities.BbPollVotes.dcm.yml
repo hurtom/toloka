@@ -1,0 +1,36 @@
+Database\Entities\BbPollVotes:
+    type: entity
+    table: bb_poll_votes
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: topic_id
+        voteId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: vote_id
+    fields:
+        voteText:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: vote_text
+        voteResult:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            column: vote_result
+    lifecycleCallbacks: {  }

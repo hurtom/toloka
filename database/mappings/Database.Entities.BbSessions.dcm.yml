@@ -1,0 +1,62 @@
+Database\Entities\BbSessions:
+    type: entity
+    table: bb_sessions
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        sessionId:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: true
+                collation: utf8mb4_bin
+            id: true
+            column: session_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        sessionUserId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: session_user_id
+        sessionStart:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: session_start
+        sessionTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: session_time
+        sessionIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: session_ip
+        sessionLoggedIn:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: session_logged_in
+        sessionAdmin:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: session_admin
+    lifecycleCallbacks: {  }

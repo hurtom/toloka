@@ -1,0 +1,150 @@
+Database\Entities\BbPosts:
+    type: entity
+    table: bb_posts
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        topic_id:
+            columns:
+                - topic_id
+        poster_id:
+            columns:
+                - poster_id
+        post_time:
+            columns:
+                - post_time
+        forum_id:
+            columns:
+                - forum_id
+        topic_time:
+            columns:
+                - topic_id
+                - post_time
+        forum_id_post_time:
+            columns:
+                - forum_id
+                - post_time
+    id:
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: post_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_id
+        forumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_id
+        posterId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: poster_id
+        postTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: post_time
+        postCreated:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: post_created
+        posterIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: poster_ip
+        posterRgId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: poster_rg_id
+        attachRgSig:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: attach_rg_sig
+        postUsername:
+            type: string
+            nullable: false
+            length: 25
+            options:
+                fixed: false
+                default: ''
+            column: post_username
+        postEditTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: post_edit_time
+        postEditCount:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: post_edit_count
+        postAttachment:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: post_attachment
+        userPost:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: user_post
+        mcComment:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: mc_comment
+        mcType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: mc_type
+        mcUserId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: mc_user_id
+    lifecycleCallbacks: {  }

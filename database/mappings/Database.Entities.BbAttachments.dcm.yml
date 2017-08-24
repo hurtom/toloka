@@ -1,0 +1,57 @@
+Database\Entities\BbAttachments:
+    type: entity
+    table: bb_attachments
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        attach_id_privmsgs_id:
+            columns:
+                - attach_id
+                - privmsgs_id
+        post_id:
+            columns:
+                - post_id
+        privmsgs_id:
+            columns:
+                - privmsgs_id
+    id:
+        attachId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: attach_id
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            id: true
+            column: post_id
+        privmsgsId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            id: true
+            column: privmsgs_id
+    fields:
+        userId1:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_id_1
+        userId2:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_id_2
+    lifecycleCallbacks: {  }

@@ -1,0 +1,39 @@
+Database\Entities\BbPollUsers:
+    type: entity
+    table: bb_poll_users
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: topic_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+    fields:
+        voteIp:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+            column: vote_ip
+        voteDt:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: vote_dt
+    lifecycleCallbacks: {  }

@@ -1,0 +1,40 @@
+Database\Entities\BbPostsEdit:
+    type: entity
+    table: bb_posts_edit
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        user_id:
+            columns:
+                - user_id
+    id:
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: post_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+    fields:
+        postEditCount:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: post_edit_count
+        postEditTime:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: post_edit_time
+    lifecycleCallbacks: {  }

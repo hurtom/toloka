@@ -1,0 +1,138 @@
+Database\Entities\BbBtUsers:
+    type: entity
+    table: bb_bt_users
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        user_id_down:
+            columns:
+                - user_id
+                - u_down_total
+    uniqueConstraints:
+        auth_key:
+            columns:
+                - auth_key
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+            # generator:
+            #     strategy: IDENTITY
+    fields:
+        authKey:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: true
+                default: ''
+                collation: utf8mb4_bin
+            column: auth_key
+        uUpTotal:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: u_up_total
+        uDownTotal:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: u_down_total
+        uUpRelease:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: u_up_release
+        uUpBonus:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: u_up_bonus
+        upToday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_today
+        downToday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: down_today
+        upReleaseToday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_release_today
+        upBonusToday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_bonus_today
+        pointsToday:
+            type: float
+            nullable: false
+            precision: 16
+            scale: 2
+            options:
+                unsigned: true
+                default: '0.00'
+            column: points_today
+        upYesterday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_yesterday
+        downYesterday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: down_yesterday
+        upReleaseYesterday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_release_yesterday
+        upBonusYesterday:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_bonus_yesterday
+        pointsYesterday:
+            type: float
+            nullable: false
+            precision: 16
+            scale: 2
+            options:
+                unsigned: true
+                default: '0.00'
+            column: points_yesterday
+    lifecycleCallbacks: {  }

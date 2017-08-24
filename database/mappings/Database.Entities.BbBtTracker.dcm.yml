@@ -1,0 +1,160 @@
+Database\Entities\BbBtTracker:
+    type: entity
+    table: bb_bt_tracker
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        topic_id:
+            columns:
+                - topic_id
+        user_id:
+            columns:
+                - user_id
+    id:
+        peerHash:
+            type: string
+            nullable: false
+            length: 32
+            options:
+                fixed: false
+                collation: utf8mb4_bin
+            id: true
+            column: peer_hash
+            generator:
+                strategy: IDENTITY
+    fields:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_id
+        peerId:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+                default: '0'
+            column: peer_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: user_id
+        ip:
+            type: string
+            nullable: false
+            length: 42
+            options:
+                fixed: false
+                default: '0'
+                collation: utf8mb4_bin
+        ipv6:
+            type: string
+            nullable: true
+            length: 42
+            options:
+                fixed: false
+                collation: utf8mb4_bin
+        port:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+        client:
+            type: string
+            nullable: false
+            length: 51
+            options:
+                fixed: false
+                default: Unknown
+        seeder:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        releaser:
+            type: boolean
+            nullable: false
+            options:
+                default: 0
+        torType:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: tor_type
+        uploaded:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+        downloaded:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+        remain:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+        speedUp:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: speed_up
+        speedDown:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: speed_down
+        upAdd:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: up_add
+        downAdd:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: down_add
+        updateTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: update_time
+        completePercent:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: complete_percent
+        complete:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+    lifecycleCallbacks: {  }

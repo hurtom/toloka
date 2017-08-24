@@ -1,0 +1,23 @@
+Database\Entities\BufLastSeeder:
+    type: entity
+    table: buf_last_seeder
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: topic_id
+    fields:
+        seederLastSeen:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: seeder_last_seen
+    lifecycleCallbacks: {  }

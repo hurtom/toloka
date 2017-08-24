@@ -1,0 +1,26 @@
+Database\Entities\BbConfig:
+    type: entity
+    table: bb_config
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        configName:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            id: true
+            column: config_name
+            generator:
+                strategy: IDENTITY
+    fields:
+        configValue:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: config_value
+    lifecycleCallbacks: {  }

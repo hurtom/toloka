@@ -1,0 +1,154 @@
+Database\Entities\BbTopics:
+    type: entity
+    table: bb_topics
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        forum_id:
+            columns:
+                - forum_id
+        topic_type:
+            columns:
+                - topic_type
+        topic_status:
+            columns:
+                - topic_status
+        topic_moved_id:
+            columns:
+                - topic_moved_id
+        topic_poster:
+            columns:
+                - topic_poster
+        topic_last_post_time:
+            columns:
+                - topic_last_post_time
+        topic_title:
+            columns:
+                - topic_title
+            flags: fulltext
+    uniqueConstraints:
+        topic_last_post_id:
+            columns:
+                - topic_last_post_id
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: topic_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        forumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_id
+        topicTitle:
+            type: string
+            nullable: false
+            length: 250
+            options:
+                fixed: false
+                default: ''
+            column: topic_title
+        topicPoster:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: topic_poster
+        topicTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: topic_time
+        topicViews:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_views
+        topicReplies:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_replies
+        topicStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: topic_status
+        topicVote:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: topic_vote
+        topicType:
+            type: smallint
+            nullable: false
+            options:
+                default: '0'
+            column: topic_type
+        topicFirstPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_first_post_id
+        topicLastPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_last_post_id
+        topicMovedId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_moved_id
+        topicAttachment:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: topic_attachment
+        topicDlType:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_dl_type
+        topicLastPostTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: topic_last_post_time
+        topicShowFirstPost:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_show_first_post
+    lifecycleCallbacks: {  }

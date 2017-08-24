@@ -1,0 +1,27 @@
+Database\Entities\BbAttachmentsConfig:
+    type: entity
+    table: bb_attachments_config
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        configName:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            id: true
+            column: config_name
+            generator:
+                strategy: IDENTITY
+    fields:
+        configValue:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+                default: ''
+            column: config_value
+    lifecycleCallbacks: {  }

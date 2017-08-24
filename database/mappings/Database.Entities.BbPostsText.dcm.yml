@@ -1,0 +1,23 @@
+Database\Entities\BbPostsText:
+    type: entity
+    table: bb_posts_text
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: post_id
+    fields:
+        postText:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: post_text
+    lifecycleCallbacks: {  }

@@ -1,0 +1,88 @@
+Database\Entities\BbSearchRebuild:
+    type: entity
+    table: bb_search_rebuild
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        rebuildSessionId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: rebuild_session_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        startPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: start_post_id
+        endPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: end_post_id
+        startTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: start_time
+        endTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: end_time
+        lastCycleTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: last_cycle_time
+        sessionTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: session_time
+        sessionPosts:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: session_posts
+        sessionCycles:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: session_cycles
+        searchSize:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: search_size
+        rebuildSessionStatus:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: rebuild_session_status
+    lifecycleCallbacks: {  }

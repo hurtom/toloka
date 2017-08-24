@@ -1,0 +1,50 @@
+Database\Entities\BbBtDlstatus:
+    type: entity
+    table: bb_bt_dlstatus
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        topic_id:
+            columns:
+                - topic_id
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: topic_id
+    fields:
+        userStatus:
+            type: smallint
+            nullable: false
+            options:
+                default: '0'
+            column: user_status
+        complCount:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: compl_count
+        lastModifiedDlstatus:
+            type: datetime
+            version: true
+            gedmo:
+                timestampable:
+                    on: update
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: last_modified_dlstatus
+    lifecycleCallbacks: {  }

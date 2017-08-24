@@ -1,0 +1,172 @@
+Database\Entities\BbBtTorrents:
+    type: entity
+    table: bb_bt_torrents
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        reg_time:
+            columns:
+                - reg_time
+        forum_id:
+            columns:
+                - forum_id
+        poster_id:
+            columns:
+                - poster_id
+        size:
+            columns:
+                - size
+        checked_user_id:
+            columns:
+                - checked_user_id
+    uniqueConstraints:
+        post_id:
+            columns:
+                - post_id
+        topic_id:
+            columns:
+                - topic_id
+        attach_id:
+            columns:
+                - attach_id
+    id:
+        infoHash:
+            type: binary
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+            id: true
+            column: info_hash
+            generator:
+                strategy: IDENTITY
+    fields:
+        postId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: post_id
+        posterId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: poster_id
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_id
+        forumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_id
+        attachId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: attach_id
+        size:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+        regTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: reg_time
+        callSeedTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: call_seed_time
+        completeCount:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: complete_count
+        seederLastSeen:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: seeder_last_seen
+        torStatus:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: tor_status
+        checkedUserId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: checked_user_id
+        checkedTime:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: checked_time
+        torType:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: tor_type
+        speedUp:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: speed_up
+        speedDown:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: speed_down
+        topicCheckOrigFid:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_check_orig_fid
+        topicCheckDupTid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: topic_check_dup_tid
+    lifecycleCallbacks:
+        prePersist: [ validate ]
+        preUpdate: [ validate ]

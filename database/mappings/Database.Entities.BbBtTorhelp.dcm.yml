@@ -1,0 +1,23 @@
+Database\Entities\BbBtTorhelp:
+    type: entity
+    table: bb_bt_torhelp
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+    fields:
+        topicIdCsv:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: topic_id_csv
+    lifecycleCallbacks: {  }

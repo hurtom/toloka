@@ -1,0 +1,69 @@
+Database\Entities\BbWarnings:
+    type: entity
+    table: bb_warnings
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        warning_user_id:
+            columns:
+                - warning_user_id
+    id:
+        warningId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: warning_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        warningType:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: warning_type
+        warningPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: warning_post_id
+        warningUserId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: warning_user_id
+        warningPosterId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: warning_poster_id
+        warningPosted:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: warning_posted
+        warningExpires:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: warning_expires
+        warningProceed:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: warning_proceed
+    lifecycleCallbacks: {  }

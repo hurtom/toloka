@@ -1,0 +1,38 @@
+Database\Entities\BbBtTorstat:
+    type: entity
+    table: bb_bt_torstat
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        topicId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: topic_id
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: user_id
+    fields:
+        lastModifiedTorstat:
+            type: datetime
+            version: true
+            gedmo:
+                timestampable:
+                    on: update
+            nullable: false
+            options:
+                default: CURRENT_TIMESTAMP
+            column: last_modified_torstat
+        completed:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+    lifecycleCallbacks: {  }

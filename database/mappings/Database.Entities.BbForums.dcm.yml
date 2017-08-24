@@ -1,0 +1,223 @@
+Database\Entities\BbForums:
+    type: entity
+    table: bb_forums
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        forums_order:
+            columns:
+                - forum_order
+        cat_id:
+            columns:
+                - cat_id
+        forum_last_post_id:
+            columns:
+                - forum_last_post_id
+        forum_parent:
+            columns:
+                - forum_parent
+        auth_view:
+            columns:
+                - auth_view
+        auth_read:
+            columns:
+                - auth_read
+    id:
+        forumId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: forum_id
+            generator:
+                strategy: IDENTITY
+    fields:
+        catId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: cat_id
+        forumName:
+            type: string
+            nullable: false
+            length: 150
+            options:
+                fixed: false
+                default: ''
+            column: forum_name
+        forumDesc:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: forum_desc
+        forumStatus:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: forum_status
+        forumOrder:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 1
+            column: forum_order
+        forumPosts:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_posts
+        forumTopics:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_topics
+        forumLastPostId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_last_post_id
+        forumTplId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: forum_tpl_id
+        pruneDays:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: prune_days
+        authView:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_view
+        authRead:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_read
+        authPost:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_post
+        authReply:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_reply
+        authEdit:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_edit
+        authDelete:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_delete
+        authSticky:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_sticky
+        authAnnounce:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_announce
+        authVote:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_vote
+        authPollcreate:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_pollcreate
+        authAttachments:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_attachments
+        authDownload:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: auth_download
+        allowRegTracker:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: allow_reg_tracker
+        allowPornoTopic:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: allow_porno_topic
+        selfModerated:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: self_moderated
+        forumParent:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+                default: 0
+            column: forum_parent
+        showOnIndex:
+            type: boolean
+            nullable: false
+            options:
+                default: '1'
+            column: show_on_index
+        forumDisplaySort:
+            type: boolean
+            nullable: false
+            options:
+                default: '0'
+            column: forum_display_sort
+        forumDisplayOrder:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: 0
+            column: forum_display_order
+    lifecycleCallbacks: {  }

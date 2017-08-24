@@ -1,0 +1,31 @@
+Database\Entities\BbWarningsText:
+    type: entity
+    table: bb_warnings_text
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    id:
+        warningId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: warning_id
+    fields:
+        bbcodeUid:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: false
+                default: ''
+            column: bbcode_uid
+        warningText:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+            column: warning_text
+    lifecycleCallbacks: {  }

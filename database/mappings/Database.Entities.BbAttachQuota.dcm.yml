@@ -1,0 +1,43 @@
+Database\Entities\BbAttachQuota:
+    type: entity
+    table: bb_attach_quota
+    options:
+        charset: utf8mb4
+        collate: utf8mb4_unicode_ci
+    indexes:
+        quota_type:
+            columns:
+                - quota_type
+    id:
+        quotaLimitId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            column: quota_limit_id
+            #generator:
+            #    strategy: IDENTITY
+    fields:
+        userId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: user_id
+        groupId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+                default: '0'
+            column: group_id
+        quotaType:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            column: quota_type
+    lifecycleCallbacks: {  }
