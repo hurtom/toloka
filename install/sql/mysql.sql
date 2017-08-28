@@ -1104,7 +1104,7 @@ CREATE TABLE `bb_users` (
   `user_rank` int(11) NOT NULL DEFAULT 0,
   `avatar_ext_id` tinyint(4) NOT NULL DEFAULT 0,
   `user_gender` tinyint(1) NOT NULL DEFAULT 0,
-  `user_birthday` date NOT NULL DEFAULT '0000-00-00',
+  `user_birthday` date DEFAULT NULL,
   `user_email` varchar(255) NOT NULL DEFAULT '',
   `user_skype` varchar(32) NOT NULL DEFAULT '',
   `user_twitter` varchar(15) NOT NULL DEFAULT '',
