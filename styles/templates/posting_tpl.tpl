@@ -48,7 +48,7 @@ $(function(){
 	});
 	$('#msg-attr-list').html( ls.join(', ') );
 
-	// конструктор элементов
+	// конструктор елементів
 	// #tpl-row-src - строка, из которой строится #tpl-row-preview (текущая строка #tpl-src-form либо произвольная)
 	$('#tpl-row-src').bind('keypress', function(e, keyCode){
 		var k = keyCode || e.keyCode;
@@ -62,7 +62,7 @@ $(function(){
 		}
 	});
 
-	// подстановка текущей строки в #tpl-row-src и обновление предпросмора элемента
+	// подстановка текущей строки в #tpl-row-src и обновление предпросмора елемента
 	$('#tpl-src-form').bind('mouseup keyup focus', function(e){
 		if (!$('#rel-preview:visible')[0]) return;
 		if (e.keyCode) {
@@ -76,7 +76,7 @@ $(function(){
 		$('#tpl-row-src').val(v).trigger('keypress', [13]);
 	});
 
-	// select для выбора TPL.attr_el элементов в конструкторе
+	// select для выбора TPL.attr_el елементов в конструкторе
 	var $attr_el_sel = $( TPL.build_el_attr_select() );
 
 	$attr_el_sel.bind('change', function(){
@@ -95,7 +95,7 @@ $(function(){
 	});
 	$('#tpl-el_attr-sel').append($attr_el_sel);
 
-	// select для выбора TPL.el_id элементов в конструкторе и других (BR и т.д.)
+	// select для выбора TPL.el_id елементов в конструкторе и других (BR и т.д.)
 	var $el_id_sel = $( TPL.build_el_id_select() );
 
 	$el_id_sel.bind('change', function(){
@@ -165,7 +165,7 @@ var TPL = {
 		$.each(TPL.rows, function(i,row){
 			var mr = TPL.match_cols(row);
 			if (mr[2] === null) return true; // continue
-			var title_id = mr[1];    // id элемента для подстановки его названия или {произвольное название}
+			var title_id = mr[1];    // id елемента для подстановки его названия или {произвольное название}
 			var input_els = mr[2];
 			var row_title = (TPL.el_attr[title_id] !== null) ? TPL.el_attr[title_id][1] : TPL.trim_brackets(title_id);
 			var $tr = $('<tr><td class="rel-title">'+ row_title +':</td><td class="rel-inputs"></td></tr>');
@@ -175,7 +175,7 @@ var TPL = {
 				if (!(el = TPL.trim_brackets(el))) return true; // continue
 				var el_html = '';
 				var me = TPL.match_el_attrs(el);
-				// вставка шаблонного элемента типа TYPE[attr]
+				// вставка шаблонного елемента типа TYPE[attr]
 				if (me[2] !== null) {
 					var at = me[2].split(',');
 					var nm = at[0];
@@ -185,7 +185,7 @@ var TPL = {
 					case 'E':
 						if ( $('#'+ nm +'-hid').length ) {
 							if (res_id === 'tpl-row-preview') {
-								el_html = '<span class="rel-el hid-el">'+ $('#'+ nm +'-hid').html() +'</span>'; // скрытый элемент
+								el_html = '<span class="rel-el hid-el">'+ $('#'+ nm +'-hid').html() +'</span>'; // скрытый елемент
 							}
 						}
 						else {
@@ -215,7 +215,7 @@ var TPL = {
 						break;
 					}
 				}
-				// вставка нешаблонного элемента
+				// вставка нешаблонного елемента
 				else {
 					if (el === 'BR') {
 						el_html = '<br />';
@@ -224,7 +224,7 @@ var TPL = {
 						el_html = '<span class="rel-el rel-free-el">'+ escHTML(el) +'</span>';
 					}
 				}
-				// добавление элемента в td.rel-inputs
+				// добавление елемента в td.rel-inputs
 				if (el_html !== '') {
 					$td.append(el_html);
 				}
@@ -268,13 +268,13 @@ var TPL = {
 		var s = '<select class="rel-el rel-input" id="'+sel_id+'">';
 		var q = /"/g;  //"
 		$.each(TPL.selects[sel_id], function(i,v){
-			s += '<option value="'+(i===0 ? '' : v.replace(q, '&quot;'))+'">'+(v==='' ? '&raquo; Выбрать' : v)+'</option>';
+			s += '<option value="'+(i===0 ? '' : v.replace(q, '&quot;'))+'">'+(v==='' ? '&raquo; Обрати' : v)+'</option>';
 		});
 		s += '</select>';
 		return s;
 	},
 
-	// возвращает все элементы формата el[atr1,atr2] в виде
+	// возвращает все елементи формата el[atr1,atr2] в виде
 	// { el: 'el[attr]' }  для parse_attr == false
 	// { el: [atr1,atr2] } для parse_attr == true
 	get_msg_els: function(str, parse_attr) {
@@ -319,16 +319,16 @@ var TPL = {
 		$('#tpl-src-msg').val(new_txt);
 	},
 
-	// количество найденных ошибок при заполнении формы
+	// количество найденных помилок при заполнении формы
 	f_errors_cnt: 0,
-	// удаление подсветки ошибок, сброс счетчика
+	// удаление подсветки помилок, сброс счетчика
 	reset_f_errors: function() {
 		TPL.f_errors_cnt = 0;
 		$('tr.tpl-err-hl-tr').removeClass('tpl-err-hl-tr');
 		$('.tpl-err-hl-input').removeClass('tpl-err-hl-input');
 		$('div.tpl-err-hint').remove();
 	},
-	// подсветка ошибок
+	// подсветка помилок
 	hl_form_err: function(el, hint_id) {
 		if (TPL.el_attr[el] !== null) {
 			var el_id = el;
@@ -451,14 +451,14 @@ var TPL = {
 				msg_body.push( TPL.build_inline(el_id, el_val) );
 				return true; // continue
 			}
-			// только в заголовке
+			// лише в заголовке
 			if ($.inArray('headonly', at) !== -1) {
 				return true; // continue
 			}
-			// обычный элемент
+			// обычный елемент
 			msg_body.push( TPL.build_msg_el(el_id, el_val) );
 
-			// новая строка после элемента
+			// новая строка после елемента
 			if ($.inArray('BR', at) !== -1) {
 				msg_body.push('\n');
 			}
@@ -480,12 +480,12 @@ var TPL = {
 
 	normalize_val: function(el, val) {
 		switch (el) {
-			// 2000 г.
+			// 2000 р.
 			case 'year':
-				val += ' г.';
+				val += ' р.';
 				break;
 
-			// "Имя / Name /" -> "Имя / Name"
+			// "Ім'я / Name /" -> "Ім'я / Name"
 			case 'director':
 			case 'studio':
 				val = val.replace(/[\s\/]+$/, '');
@@ -517,7 +517,7 @@ var TPL = {
 		var title = [];
 		var trim_after_chars = {};
 		var trim_before_chars = {};
-		var g;                                                   // группа элементов <-el1 el2->[,]
+		var g;                                                   // группа елементов <-el1 el2->[,]
 		var t = $('#tpl-src-title').val().replace(/\n/g, ' ');   // формат
 		var r = /<-([^>]+)->(\S*)/g;
 		while((g = r.exec(t)) !== null) {
@@ -578,287 +578,287 @@ var TPL = {
 */
 TPL.el_attr = {
 	/*
-    код_элемента = ID элемента в форме
-    все элементы имеют class "rel-input"
+    код_елемента = ID елемента в форме
+    все елементи имеют class "rel-input"
     формат el_attr
-      код_элемента: [
+      код_елемента: [
         [0] - тип
         [1] - название
-        [2] - атрибуты элемента типа size,rows.. по умолчанию (в том же порядке как и опциональные для элемента)
+        [2] - атрибуты елемента типа size,rows.. по умолчанию (в том же порядке как и опциональные для елемента)
         [3] - атрибуты типа HEAD,req.. по умолчанию для формата сообщения
       ]
-    формат элементов в #tpl-src-form (включая все опциональные атрибуты типа maxlength..)
+    формат елементов в #tpl-src-form (включая все опциональные атрибуты типа maxlength..)
       INP - input[name,maxlength,size]
       TXT - textarea[name,rows]
       SEL - select[name]               -- значения для селектов находятся в TPL.selects
   */
-	poster_size: ['INP', 'максимальный 500х500 пикселей', '200,80', ''],
-	audio_codec: ['SEL', 'Аудио кодек', '', ''],
-	audio: ['INP', 'Аудио', '200,80', ''],
-	audio_bitrate: ['SEL', 'Битрейт аудио', '', ''],
-	casting: ['TXT', 'В ролях', '3', 'BR'],
-	game_version: ['SEL', 'Версия игры', '', ''],
-	video_codec: ['SEL', 'Видео кодек', '', ''],
-	video: ['INP', 'Видео', '200,80', ''],
-	game_age: ['SEL', 'Возраст', '', ''],
-	year: ['INP', 'Год выпуска', '4,5', 'num'],
-	moreinfo: ['TXT', 'Доп. информация', '3', 'BR'],
+	poster_size: ['INP', 'максимум 500х500 пікселів', '200,80', ''],
+	audio_codec: ['SEL', 'Аудіокодек', '', ''],
+	audio: ['INP', 'Аудіо', '200,80', ''],
+	audio_bitrate: ['SEL', 'Бітрейт аудіо', '', ''],
+	casting: ['TXT', 'У ролях', '3', 'BR'],
+	game_version: ['SEL', 'Версія гри', '', ''],
+	video_codec: ['SEL', 'Відеокодек', '', ''],
+	video: ['INP', 'Відео', '200,80', ''],
+	game_age: ['SEL', 'Вік', '', ''],
+	year: ['INP', 'Рік випуску', '4,5', 'num'],
+	moreinfo: ['TXT', 'Дод. інформація', '3', 'BR'],
 	genre: ['INP', 'Жанр', '200,40', ''],
-	video_quality: ['SEL', 'Качество видео', '', ''],
-	video_quality_new: ['SEL', 'Качество видео', '', ''],
-	book_quality: ['SEL', 'Качество', '', ''],
-	game_multiplay: ['SEL', 'Мультиплейер игры', '', ''],
-	title_rus: ['INP', 'Название', '90,80', 'HEAD,req'],
-	description: ['TXT', 'Описание', '6', 'BR'],
-	title_eng: ['INP', 'Оригинальное название', '90,80', 'HEAD'],
-	translation: ['SEL', 'Перевод', '', ''],
-	translation2: ['SEL', 'Перевод 2', '', ''],
-	translation3: ['SEL', 'Перевод 3', '', ''],
-	translation4: ['SEL', 'Перевод 4', '', ''],
+	video_quality: ['SEL', 'Якість відео', '', ''],
+	video_quality_new: ['SEL', 'Якість відео', '', ''],
+	book_quality: ['SEL', 'Якість', '', ''],
+	game_multiplay: ['SEL', 'Мультиплеєр гри', '', ''],
+	title_ukr: ['INP', 'Назва', '90,80', 'HEAD,req'],
+	description: ['TXT', 'Опис', '6', 'BR'],
+	title_eng: ['INP', 'Оригінальна назва', '90,80', 'HEAD'],
+	translation: ['SEL', 'Переклад', '', ''],
+	translation2: ['SEL', 'Переклад 2', '', ''],
+	translation3: ['SEL', 'Переклад 3', '', ''],
+	translation4: ['SEL', 'Переклад 4', '', ''],
 	game_plat_wii: ['SEL', 'Платформа Wii', '', ''],
-	game_platform: ['SEL', 'Платформа игры', '', ''],
+	game_platform: ['SEL', 'Платформа гри', '', ''],
 	poster: ['INP', 'Постер', '200,80', 'img,POSTER'],
-	playtime: ['INP', 'Продолжительность', '200,30', ''],
+	playtime: ['INP', 'Тривалість', '200,30', ''],
 	game_firmware: ['SEL', 'Прошивка', '', ''],
-	game_region: ['SEL', 'Регион игры', '', ''],
-	game_region_def: ['SEL', 'Регион игры', '', ''],
-	director: ['INP', 'Режиссер', '200,50', ''],
-	rus_sub: ['SEL', 'Русские субтитры', '', ''],
-	sub_all: ['SEL', 'Cубтитры', '', ''],
-	sub_all_new: ['SEL', 'Cубтитры', '', ''],
-	screenshots: ['TXT', 'Скриншоты', '3', 'spoiler'],
-	screenshots_about: ['TXT', 'Скриншоты окна About', '3', 'spoiler'],
-	vista_compat: ['SEL', 'Совместимость с Vista', '', ''],
-	vista_compat_new: ['SEL', 'Совместимость с Vista', '', ''],
-	windows7_compat: ['SEL', 'Совместимость с Windows 7', '', ''],
-	country: ['INP', 'Страна', '200,50', ''],
-	crack_exists: ['SEL', 'Таблэтка', '', ''],
-	//в аудиокнигах, огрызке (apple)
-	abook_type: ['SEL', 'Тип аудиокниги', '', ''],
-	publishing_type: ['SEL', 'Тип издания', '', ''],
-	game_trans_type: ['SEL', 'Тип перевода игры', '', ''],
-	video_format: ['SEL', 'Формат видео', '', ''],
-	video_format_new: ['SEL', 'Формат видео', '', ''],
+	game_region: ['SEL', 'Регіон гри', '', ''],
+	game_region_def: ['SEL', 'Регіон гри', '', ''],
+	director: ['INP', 'Режисер', '200,50', ''],
+	ukr_sub: ['SEL', 'Українські субтитри', '', ''],
+	sub_all: ['SEL', 'Cубтитри', '', ''],
+	sub_all_new: ['SEL', 'Cубтитри', '', ''],
+	screenshots: ['TXT', 'Скріншоти', '3', 'spoiler'],
+	screenshots_about: ['TXT', 'Скріншоти вікна About', '3', 'spoiler'],
+	vista_compat: ['SEL', 'Сумісність із Vista', '', ''],
+	vista_compat_new: ['SEL', 'Сумісність із Vista', '', ''],
+	windows7_compat: ['SEL', 'Сумісність із Windows 7', '', ''],
+	country: ['INP', 'Країна', '200,50', ''],
+	crack_exists: ['SEL', 'Ліки', '', ''],
+	//в аудіокнигах, огрызке (apple)
+	abook_type: ['SEL', 'Тип аудіокниги', '', ''],
+	publishing_type: ['SEL', 'Тип видання', '', ''],
+	game_trans_type: ['SEL', 'Тип перекладу гри', '', ''],
+	video_format: ['SEL', 'Формат відео', '', ''],
+	video_format_new: ['SEL', 'Формат відео', '', ''],
 	book_format: ['SEL', 'Формат', '', ''],
-	game_lang_psp: ['SEL', 'Язык интерфейса игры', '', ''],
-	gui_lang: ['SEL', 'Язык интерфейса', '', ''],
-	book_lang: ['SEL', 'Язык', '', ''],
-	maps_lang: ['SEL', 'Язык интерфейса', '', ''],
-	gui_lang_new: ['SEL', 'Язык интерфейса', '', ''],
-	tabletka_new: ['SEL', 'Таблэтка', '', ''],
-	cpu_bits: ['SEL', 'Разрядность', '', ''],
+	game_lang_psp: ['SEL', 'Мова інтерфейсу гри', '', ''],
+	gui_lang: ['SEL', 'Мова інтерфейсу', '', ''],
+	book_lang: ['SEL', 'Мова', '', ''],
+	maps_lang: ['SEL', 'Мова інтерфейсу', '', ''],
+	gui_lang_new: ['SEL', 'Мова інтерфейсу', '', ''],
+	tabletka_new: ['SEL', 'Ліки', '', ''],
+	cpu_bits: ['SEL', 'Розрядність', '', ''],
 	maps_format: ['SEL', 'Формат ', '', ''],
-	atlas_type: ['SEL', 'Тип атласа ', '', ''],
-	lang_book_avto: ['SEL', 'Язык авто-книги ', '', ''],
-	lang_book_med: ['SEL', 'Язык мед-книги ', '', ''],
-	product_milestone: ['SEL', 'Стадия разработки ', '', ''],
-	apple_ios_sysreq: ['SEL', 'Системные требования ', '', ''],
-	apple_ios_lang: ['SEL', 'Язык интерфейса', '', ''],
-	apple_ios_dev: ['SEL', 'Совместимые устройства', '', ''],
-	apple_ios_def: ['SEL', 'Поддерживаемые разрешения', '', ''],
-	apple_ios_format: ['SEL', 'Формат файлов', '', ''],
+	atlas_type: ['SEL', 'Тип атласу ', '', ''],
+	lang_book_avto: ['SEL', 'Мова авто-книги ', '', ''],
+	lang_book_med: ['SEL', 'Мова мед-книги ', '', ''],
+	product_milestone: ['SEL', 'Стадія розробки ', '', ''],
+	apple_ios_sysreq: ['SEL', 'Системні вимоги ', '', ''],
+	apple_ios_lang: ['SEL', 'Мова інтерфейсу', '', ''],
+	apple_ios_dev: ['SEL', 'Сумісні пристрої', '', ''],
+	apple_ios_def: ['SEL', 'Роздільні здатності', '', ''],
+	apple_ios_format: ['SEL', 'Формат файлів', '', ''],
 	//авто мультимедийки
-	avto_mm_type: ['SEL', 'Тип мультимедиа ', '', ''],
+	avto_mm_type: ['SEL', 'Тип мультимедіа ', '', ''],
 	manga_type: ['SEL', 'Тип', '', ''],
-	manga_completeness_with_header: ['SEL', 'Завершенность релиза', '', ''],
-	sub_format: ['SEL', 'Формат субтитров', '', ''],
-	orig_audio: ['SEL', 'Оригинальная аудиодорожка', '', ''],
-	orig_audio_serial: ['SEL', 'Оригинальная аудиодорожка', '', ''],
-	flang_lang: ['SEL', 'Язык курса', '', ''],
-	anime_release_type: ['SEL', 'Тип релиза', '', ''],
-	anime_hwp: ['SEL', 'Совместимость с бытовыми плеерами', '', ''],
+	manga_completeness_with_header: ['SEL', 'Завершеність релизу', '', ''],
+	sub_format: ['SEL', 'Формат субтитрів', '', ''],
+	orig_audio: ['SEL', 'Оригінальна аудіодоріжка', '', ''],
+	orig_audio_serial: ['SEL', 'Оригінальна аудіодоріжка', '', ''],
+	flang_lang: ['SEL', 'Мова курсу', '', ''],
+	anime_release_type: ['SEL', 'Тип релізу', '', ''],
+	anime_hwp: ['SEL', 'Сумісніть із побутовими програвачами', '', ''],
 	//для dorama и Live-action
-	transl_dorama: ['SEL', 'Перевод', '', ''],
-	sub_dorama: ['SEL', 'Неотключаемые субтитры', '', ''],
-	lang_dorama: ['SEL', 'Язык', '', ''],
-	lang_dorama_2: ['SEL', 'Язык', '', ''],
-	video_codec_2: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_2: ['SEL', 'Аудио кодек', '', ''],
+	transl_dorama: ['SEL', 'Переклад', '', ''],
+	sub_dorama: ['SEL', 'Жорсткі субтитри', '', ''],
+	lang_dorama: ['SEL', 'Мова', '', ''],
+	lang_dorama_2: ['SEL', 'Мова', '', ''],
+	video_codec_2: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_2: ['SEL', 'Аудіокодек', '', ''],
 	video_format_dorama: ['SEL', 'Формат', '', ''],
-	game_type_edition: ['SEL', 'Тип издания', '', ''],
-	game_lang: ['SEL', 'Язык интерфейса', '', ''],
-	game_lang_sound: ['SEL', 'Язык озвучки', '', ''],
-	game_tabletka: ['SEL', 'Таблэтка', '', ''],
-	lang_psp: ['SEL', 'Язык интерфейса', '', ''],
-	lang_sound_psp: ['SEL', 'Язык озвучки', '', ''],
-	sub_psp: ['SEL', 'Cубтитры', '', ''],
-	funct_psp: ['SEL', 'Работоспособность проверена', '', ''],
-	multiplayer_psp: ['SEL', 'Мультиплеер', '', ''],
-	popsloader_psp: ['SEL', 'Рекомендуемый POP"s', '', ''],
-	lang_mob: ['SEL', 'Язык интерфейса', '', ''],
-	format_clipart: ['SEL', 'Формат изображений', '', ''],
-	format_photostocks: ['SEL', 'Формат изображений', '', ''],
-	format_photo: ['SEL', 'Формат изображений', '', ''],
-	suit_type: ['SEL', 'Тип костюмов', '', ''],
-	format_vector_clipart: ['SEL', 'Формат изображений', '', ''],
+	game_type_edition: ['SEL', 'Тип видання', '', ''],
+	game_lang: ['SEL', 'Мова інтерфейсу', '', ''],
+	game_lang_sound: ['SEL', 'Мова озвучки', '', ''],
+	game_tabletka: ['SEL', 'Ліки', '', ''],
+	lang_psp: ['SEL', 'Мова інтерфейсу', '', ''],
+	lang_sound_psp: ['SEL', 'Мова озвучення', '', ''],
+	sub_psp: ['SEL', 'Cубтитри', '', ''],
+	funct_psp: ['SEL', 'Дієздатність перевірено', '', ''],
+	multiplayer_psp: ['SEL', 'Мультиплеєр', '', ''],
+	popsloader_psp: ['SEL', 'Рекомендований POP"s', '', ''],
+	lang_mob: ['SEL', 'Мова інтерфейсу', '', ''],
+	format_clipart: ['SEL', 'Формат зображень', '', ''],
+	format_photostocks: ['SEL', 'Формат зображень', '', ''],
+	format_photo: ['SEL', 'Формат зображень', '', ''],
+	suit_type: ['SEL', 'Тип костюмів', '', ''],
+	format_vector_clipart: ['SEL', 'Формат зображень', '', ''],
 	format_3d_model: ['SEL', 'Формат моделей', '', ''],
-	format_3d: ['SEL', 'Формат файлов', '', ''],
-	material: ['SEL', 'Материалы', '', ''],
-	texture: ['SEL', 'Текстуры', '', ''],
-	light_source: ['SEL', 'Источники света', '', ''],
+	format_3d: ['SEL', 'Формат файлів', '', ''],
+	material: ['SEL', 'Матеріали', '', ''],
+	texture: ['SEL', 'Текстури', '', ''],
+	light_source: ['SEL', 'Джерела світла', '', ''],
 	folder_pdf: ['SEL', 'Каталог PDF', '', ''],
-	video_footage: ['SEL', 'Видеоформат', '', ''],
-	frame_rate: ['SEL', 'Частота кадров FPS', '', ''],
-	def_footage: ['SEL', 'Разрешение', '', ''],
-	video_format_footage: ['SEL', 'Формат видеофайла', '', ''],
-	lang_anime: ['SEL', 'Язык', '', ''],
-	lang_anime_2: ['SEL', 'Язык', '', ''],
-	lang_anime_3: ['SEL', 'Язык', '', ''],
-	disk_number_psn: ['SEL', 'Количество дисков', '', ''],
-	change_disk_psn: ['SEL', 'Переход с диска на диск во время игры', '', ''],
+	video_footage: ['SEL', 'Відеоформат', '', ''],
+	frame_rate: ['SEL', 'Частота кадрів FPS', '', ''],
+	def_footage: ['SEL', 'Роздільна здатність', '', ''],
+	video_format_footage: ['SEL', 'Формат відеофайлу', '', ''],
+	lang_anime: ['SEL', 'Мова', '', ''],
+	lang_anime_2: ['SEL', 'Мова', '', ''],
+	lang_anime_3: ['SEL', 'Мова', '', ''],
+	disk_number_psn: ['SEL', 'Кількість дисків', '', ''],
+	change_disk_psn: ['SEL', 'Перехід із диска на диск під час гри', '', ''],
 	genre_game_dvd: ['SEL', 'Жанр', '', ''],
 	platform_game_dvd: ['SEL', 'Платформа', '', ''],
-	tabletka_game_dvd: ['SEL', 'Таблэтка', '', ''],
-	format_disk_game_dvd: ['SEL', 'Формат игрового диска', '', ''],
-	format_video_game_dvd: ['SEL', 'Формат видео', '', ''],
-	sub_game_video: ['SEL', 'Субтитры', '', ''],
-	lang_game_video: ['SEL', 'Язык озвучки ', '', ''],
+	tabletka_game_dvd: ['SEL', 'Ліки', '', ''],
+	format_disk_game_dvd: ['SEL', 'Формат ігрового диска', '', ''],
+	format_video_game_dvd: ['SEL', 'Формат відео', '', ''],
+	sub_game_video: ['SEL', 'Субтитри', '', ''],
+	lang_game_video: ['SEL', 'Мова озвучення ', '', ''],
 	format_game_video: ['SEL', 'Формат', '', ''],
 	//трейлеры
-	material_trailer: ['SEL', 'Тип раздаваемого материала', '', ''],
-	transl_trailer: ['SEL', 'Перевод', '', ''],
-	video_quality_trailer: ['SEL', 'Качество', '', ''],
-	video_format_trailer: ['SEL', 'Формат видео', '', ''],
-	video_codec_trailer: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_trailer: ['SEL', 'Аудио кодек', '', ''],
-	lang_old_game: ['SEL', 'Язык', '', ''],
+	material_trailer: ['SEL', 'Тип матеріалу', '', ''],
+	transl_trailer: ['SEL', 'Переклад', '', ''],
+	video_quality_trailer: ['SEL', 'Якість', '', ''],
+	video_format_trailer: ['SEL', 'Формат відео', '', ''],
+	video_codec_trailer: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_trailer: ['SEL', 'Аудіокодек', '', ''],
+	lang_old_game: ['SEL', 'Мова', '', ''],
 	//Apple: iPhone, iOS, Mac и проч.
-	audio_bitrate_iphone_los: ['SEL', 'Битрейт', '', ''],
-	rip_prog_iphone: ['SEL', 'Программа-риповщик ', '', ''],
-	words_iphone: ['SEL', 'Тексты', '', ''],
-	edition_type_iphone: ['SEL', 'Тип издания', '', ''],
-	transl_iphone: ['SEL', 'Перевод ', '', ''],
+	audio_bitrate_iphone_los: ['SEL', 'Бітрейт', '', ''],
+	rip_prog_iphone: ['SEL', 'Програма для створення ріпу ', '', ''],
+	words_iphone: ['SEL', 'Тексти', '', ''],
+	edition_type_iphone: ['SEL', 'Тип видання', '', ''],
+	transl_iphone: ['SEL', 'Переклад ', '', ''],
 	video_format_iphone: ['SEL', 'Формат', '', ''],
-	video_codec_iphone: ['SEL', 'Видео кодек', '', ''],
-	cover_iphone: ['SEL', 'Вшитая обложка', '', ''],
-	tag_iphone: ['SEL', 'Доп. теги (режиссер, актеры и т.д.)', '', ''],
-	show_iphone: ['SEL', 'Телешоу/видеоклип ', '', ''],
-	chapter_iphone: ['SEL', 'Главы', '', ''],
-	series_iphone: ['SEL', 'Серия/сезон', '', ''],
-	audio_codec_iphone: ['SEL', 'аудио кодек', '', ''],
-	audio_bitrate_iphone: ['SEL', 'Битрейт', '', ''],
-	audio_chapters_iphone: ['SEL', 'Разбитие на главы', '', ''],
+	video_codec_iphone: ['SEL', 'Відеокодек', '', ''],
+	cover_iphone: ['SEL', 'Вшита обкладинка', '', ''],
+	tag_iphone: ['SEL', 'Дод. теги (режисер, акторы тощо)', '', ''],
+	show_iphone: ['SEL', 'Телешоу/відеокліп ', '', ''],
+	chapter_iphone: ['SEL', 'Розділи', '', ''],
+	series_iphone: ['SEL', 'Серія/сезон', '', ''],
+	audio_codec_iphone: ['SEL', 'Аудіокодек', '', ''],
+	audio_bitrate_iphone: ['SEL', 'Бітрейт', '', ''],
+	audio_chapters_iphone: ['SEL', 'Розбиття на розділи', '', ''],
 	platform_mob: ['SEL', 'Платформа', '', ''],
-	mus_loss_performer: ['SEL', 'Исполнитель', '', ''],
-	audiobook_label: ['SEL', 'Издательство', '', ''],
+	mus_loss_performer: ['SEL', 'Виконавець', '', ''],
+	audiobook_label: ['SEL', 'Видавництво', '', ''],
 	platform_mac_prog: ['SEL', 'Платформа', '', ''],
-	lang_mac_prog: ['SEL', 'Язык интерфейса', '', ''],
-	tablet_mac_prog: ['SEL', 'Таблетка', '', ''],
+	lang_mac_prog: ['SEL', 'Мова інтерфейсу', '', ''],
+	tablet_mac_prog: ['SEL', 'Ліки', '', ''],
 	//спорт
-	video_quality_sport: ['SEL', 'Качество', '', ''],
+	video_quality_sport: ['SEL', 'Якість', '', ''],
 	//Музыкальные библиотеки и Звуковые эффекты
-	audio_codec_music_lib: ['SEL', 'Аудио кодек', '', ''],
-	bit_music_lib: ['SEL', 'Качество', '', ''],
-	bitrate_music_lib: ['SEL', 'Битрейт', '', ''],
+	audio_codec_music_lib: ['SEL', 'Аудіокодек', '', ''],
+	bit_music_lib: ['SEL', 'Якість', '', ''],
+	bitrate_music_lib: ['SEL', 'Бітрейт', '', ''],
 	rate_music_lib: ['SEL', 'Частота', '', ''],
-	canales_music_lib: ['SEL', 'Каналы', '', ''],
+	canales_music_lib: ['SEL', 'Канали', '', ''],
 	//Ноты и т.п.
 	mus_edit: ['SEL', 'Редакция', '', ''],
-	mus_lang: ['SEL', 'Язык', '', ''],
+	mus_lang: ['SEL', 'Мова', '', ''],
 	//мульты и сериалы?
-	transl_cartoons_0: ['SEL', 'Перевод', '', ''],
-	transl_cartoons_1: ['SEL', 'Перевод 2', '', ''],
-	transl_cartoons_2: ['SEL', 'Перевод 3', '', ''],
+	transl_cartoons_0: ['SEL', 'Переклад', '', ''],
+	transl_cartoons_1: ['SEL', 'Переклад 2', '', ''],
+	transl_cartoons_2: ['SEL', 'Переклад 3', '', ''],
 	format_cartoons_dvd: ['SEL', 'Формат', '', ''],
-	type_cartoons: ['SEL', 'Качество', '', ''],
-	screen_cartoons: ['SEL', 'Формат экрана', '', ''],
-	def_cartoons: ['SEL', 'Система / Разрешение', '', ''],
-	video_quality_cartoons: ['SEL', 'Качество', '', ''],
+	type_cartoons: ['SEL', 'Якість', '', ''],
+	screen_cartoons: ['SEL', 'Формат екрану', '', ''],
+	def_cartoons: ['SEL', 'Система / Роздільна здатність', '', ''],
+	video_quality_cartoons: ['SEL', 'Якість', '', ''],
 	format_cartoons: ['SEL', 'Формат', '', ''],
-	video_quality_cartoons_hd: ['SEL', 'Качество', '', ''],
+	video_quality_cartoons_hd: ['SEL', 'Якість', '', ''],
 	format_cartoons_hd: ['SEL', 'Формат', '', ''],
-	video_quality_cart_serial: ['SEL', 'Качество', '', ''],
+	video_quality_cart_serial: ['SEL', 'Якість', '', ''],
 	format_cart_serial: ['SEL', 'Формат', '', ''],
-	video_codec_serials: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_serials: ['SEL', 'Аудио кодек', '', ''],
+	video_codec_serials: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_serials: ['SEL', 'Аудіокодек', '', ''],
 	//разное - аватарки
-	type_avatar: ['SEL', 'Тип раздаваемого материала', '', ''],
+	type_avatar: ['SEL', 'Тип матеріалу', '', ''],
 	//темы кпк
-	type_theme_kpk: ['SEL', 'Тип раздаваемого материала', '', ''],
-	type_3d_model: ['SEL', 'Количество', '', ''],
-	video_quality_vlesson: ['SEL', 'Качество', '', ''],
+	type_theme_kpk: ['SEL', 'Тип матеріалу', '', ''],
+	type_3d_model: ['SEL', 'Кількість', '', ''],
+	video_quality_vlesson: ['SEL', 'Якість', '', ''],
 	format_vlesson: ['SEL', 'Формат', '', ''],
-	video_codec_vlesson: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_vlesson: ['SEL', 'Аудио кодек', '', ''],
-	transl_doc_film: ['SEL', 'Перевод', '', ''],
-	chapters_music_dvd: ['SEL', 'Разбивка на главы по трекам', '', ''],
-	video_quality_music_dvd: ['SEL', 'Качество ', '', ''],
+	video_codec_vlesson: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_vlesson: ['SEL', 'Аудіокодек', '', ''],
+	transl_doc_film: ['SEL', 'Переклад', '', ''],
+	chapters_music_dvd: ['SEL', 'Розбиття на розділи за треками', '', ''],
+	video_quality_music_dvd: ['SEL', 'Якість ', '', ''],
 	format_music_dvd: ['SEL', 'Формат', '', ''],
-	video_codec_music_dvd: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_music_dvd: ['SEL', 'Аудио кодек', '', ''],
-	audio_codec_mus_loss: ['SEL', 'Аудиокодек', '', ''],
-	rip_type_mus_loss: ['SEL', 'Тип рипа', '', ''],
-	scan_mus_loss: ['SEL', 'Наличие сканов в содержимом раздачи', '', ''],
-	scan_mus_loss_apple: ['SEL', 'Наличие сканов в содержимом раздачи', '', ''],
-	source_mus_loss: ['SEL', 'Источник', '', ''],
+	video_codec_music_dvd: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_music_dvd: ['SEL', 'Аудіокодек', '', ''],
+	audio_codec_mus_loss: ['SEL', 'Аудіокодек', '', ''],
+	rip_type_mus_loss: ['SEL', 'Тип ріпу', '', ''],
+	scan_mus_loss: ['SEL', 'Наявність сканів у роздачі', '', ''],
+	scan_mus_loss_apple: ['SEL', 'Наявність сканів у роздачі', '', ''],
+	source_mus_loss: ['SEL', 'Джерело', '', ''],
 	genre_soundtrack_mus: ['SEL', 'Жанр', '', ''],
-	audio_codec_digit_mus: ['SEL', 'Аудио кодек', '', ''],
-	source_digit_mus: ['SEL', 'Источник оцифровки', '', ''],
-	vinyl_digit_mus: ['SEL', 'Код класса состояния винила', '', ''],
-	perfotmer_mus_lossy: ['SEL', 'Исполнитель', '', ''],
-	audio_codec_mus_lossy: ['SEL', 'Аудиокодек', '', ''],
-	rip_type_mus_lossy: ['SEL', 'Тип рипа', '', ''],
-	bitrate_mus_lossy: ['SEL', 'Битрейт аудио', '', ''],
+	audio_codec_digit_mus: ['SEL', 'Аудіокодек', '', ''],
+	source_digit_mus: ['SEL', 'Джерело оцифрування', '', ''],
+	vinyl_digit_mus: ['SEL', 'Код класу стану вінілу', '', ''],
+	perfotmer_mus_lossy: ['SEL', 'Виконавець', '', ''],
+	audio_codec_mus_lossy: ['SEL', 'Аудіокодек', '', ''],
+	rip_type_mus_lossy: ['SEL', 'Тип ріпу', '', ''],
+	bitrate_mus_lossy: ['SEL', 'Бітрейт аудіо', '', ''],
 	tag_mus_lossy: ['SEL', 'ID3-теги', '', ''],
 	//тестовые диски
-	rip_type_test: ['SEL', 'Тип рипа', '', ''],
-	audio_codec_test: ['SEL', 'Аудио кодек', '', ''],
-	video_codec_test: ['SEL', 'Видео кодек', '', ''],
+	rip_type_test: ['SEL', 'Тип ріпу', '', ''],
+	audio_codec_test: ['SEL', 'Аудіокодек', '', ''],
+	video_codec_test: ['SEL', 'Відеокодек', '', ''],
 	//linux - ось и программы.
-	arch_linux: ['SEL', 'Архитектура', '', ''],
-	channel_sound: ['SEL', 'Каналы', '', ''],
-	lang_game_dvd_pleer: ['SEL', 'Язык интерфейса', '', ''],
-	audio_codec_film: ['SEL', 'Аудио кодек', '', ''],
-	video_quality_serials: ['SEL', 'Качество', '', ''],
-	video_quality_serial: ['SEL', 'Качество', '', ''],
-	loss_bit: ['SEL', 'Битрейт аудио', '', ''],
+	arch_linux: ['SEL', 'Архітектура', '', ''],
+	channel_sound: ['SEL', 'Канали', '', ''],
+	lang_game_dvd_pleer: ['SEL', 'Мова інтерфейсу', '', ''],
+	audio_codec_film: ['SEL', 'Аудіокодек', '', ''],
+	video_quality_serials: ['SEL', 'Якість', '', ''],
+	video_quality_serial: ['SEL', 'Якість', '', ''],
+	loss_bit: ['SEL', 'Бітрейт аудіо', '', ''],
 	type_homebrewe: ['SEL', 'Тип', '', ''],
 	console_type: ['SEL', 'Консоль', '', ''],
 	anime_type: ['SEL', 'Тип', '', ''],
-	sub_all_anime: ['SEL', 'Язык субтитров', '', ''],
-	sub_all_anime_2: ['SEL', 'Язык субтитров', '', ''],
-	sub_all_anime_3: ['SEL', 'Язык субтитров', '', ''],
-	transl_lat_setial: ['SEL', 'Перевод', '', ''],
-	transl_lat_setial_1: ['SEL', 'Перевод', '', ''],
-	transl_lat_setial_2: ['SEL', 'Перевод', '', ''],
+	sub_all_anime: ['SEL', 'Мова субтитрів', '', ''],
+	sub_all_anime_2: ['SEL', 'Мова субтитрів', '', ''],
+	sub_all_anime_3: ['SEL', 'Мова субтитрів', '', ''],
+	transl_lat_setial: ['SEL', 'Переклад', '', ''],
+	transl_lat_setial_1: ['SEL', 'Переклад', '', ''],
+	transl_lat_setial_2: ['SEL', 'Переклад', '', ''],
 	format_lat_serial: ['SEL', 'Формат', '', ''],
-	game_lang_nds: ['SEL', 'Язык:', '', ''],
-	lang_comp_vlesson: ['SEL', 'Язык', '', ''],
-	type_comp_vlesson: ['SEL', 'Тип раздаваемого материала', '', ''],
-	source_mus_lossy: ['SEL', 'Источник', '', ''],
-	lang_notes: ['SEL', 'Язык', '', ''],
-	licence_old_game: ['SEL', 'Лицензия?', '', ''],
-	lang_video_les: ['SEL', 'Язык', '', ''],
-	type_vlesson: ['SEL', 'Тип раздаваемого материала', '', ''],
-	type_game: ['SEL', 'Тип раздачи', '', ''],
-	lang_other_game: ['SEL', 'Требуемый язык игры', '', ''],
+	game_lang_nds: ['SEL', 'Мова:', '', ''],
+	lang_comp_vlesson: ['SEL', 'Мова', '', ''],
+	type_comp_vlesson: ['SEL', 'Тип матеріалу', '', ''],
+	source_mus_lossy: ['SEL', 'Джерело', '', ''],
+	lang_notes: ['SEL', 'Мова', '', ''],
+	licence_old_game: ['SEL', 'Ліцензія?', '', ''],
+	lang_video_les: ['SEL', 'Мова', '', ''],
+	type_vlesson: ['SEL', 'Тип матеріалу', '', ''],
+	type_game: ['SEL', 'Тип роздачі', '', ''],
+	lang_other_game: ['SEL', 'Необхідна мова гри', '', ''],
 	//кпк
 	format_smart: ['SEL', 'Формат', '', ''],
-	def_smart: ['SEL', 'Разрешение', '', ''],
-	video_quality_smart: ['SEL', 'Качество', '', ''],
-	video_codec_smart: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_smart: ['SEL', 'Аудио кодек', '', ''],
-	prefix_kpk: ['SEL', 'Префикс', '', ''],
+	def_smart: ['SEL', 'Роздільна здатність', '', ''],
+	video_quality_smart: ['SEL', 'Якість', '', ''],
+	video_codec_smart: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_smart: ['SEL', 'Аудіокодек', '', ''],
+	prefix_kpk: ['SEL', 'Префікс', '', ''],
 	format_mob: ['SEL', 'Формат', '', ''],
-	def_mob: ['SEL', 'Разрешение', '', ''],
-	publishing_type_mob: ['SEL', 'Тип издания', '', ''],
+	def_mob: ['SEL', 'Роздільна здатність', '', ''],
+	publishing_type_mob: ['SEL', 'Тип видання', '', ''],
 	platform_symb: ['SEL', 'Платформа', '', ''],
-	launch_xbox: ['SEL', 'Возможность запуска на xbox 360', '', ''],
-	launch_pc: ['SEL', 'Возможность запуска на PC', '', ''],
-	video_codec_3d: ['SEL', 'Видео кодек', '', ''],
-	audio_codec_3d: ['SEL', 'Аудио кодек', '', ''],
-	video_quality_3d_1: ['SEL', 'Качество', '', ''],
-	video_quality_3d_2: ['SEL', 'Качество', '', ''],
+	launch_xbox: ['SEL', 'Можливість запуску на Xbox 360', '', ''],
+	launch_pc: ['SEL', 'Можливість запуску на PC', '', ''],
+	video_codec_3d: ['SEL', 'Відеокодек', '', ''],
+	audio_codec_3d: ['SEL', 'Аудіокодек', '', ''],
+	video_quality_3d_1: ['SEL', 'Якість', '', ''],
+	video_quality_3d_2: ['SEL', 'Якість', '', ''],
 	container_3d: ['SEL', 'Контейнер', '', ''],
 	format_3d: ['SEL', 'Формат 3D', '', ''],
-	angle_3d: ['SEL', 'Порядок ракурсов', '', ''],
-	update_game: ['SEL', 'Обновление раздачи', '', ''],
-	audio_codec_anime_loss: ['SEL', 'Аудио кодек', '', ''],
-	lang_anime_transl: ['SEL', 'Язык', '', ''],
-	lang_anime_transl_2: ['SEL', 'Язык', '', ''],
-	lang_anime_transl_3: ['SEL', 'Язык', '', ''],
-	country_anime: ['SEL', 'Страна', '', ''],
-	//видео для PSP
+	angle_3d: ['SEL', 'Порядок ракурсів', '', ''],
+	update_game: ['SEL', 'Оновлення роздачі', '', ''],
+	audio_codec_anime_loss: ['SEL', 'Аудіокодек', '', ''],
+	lang_anime_transl: ['SEL', 'Мова', '', ''],
+	lang_anime_transl_2: ['SEL', 'Мова', '', ''],
+	lang_anime_transl_3: ['SEL', 'Мова', '', ''],
+	country_anime: ['SEL', 'Країна', '', ''],
+	//відео для PSP
 	psp_video_type: ['SEL', 'Тип', '', ''],
 	// dummy
 	dummy: ['', '', '', '']
@@ -870,123 +870,123 @@ TPL.el_attr = {
   -------------------------------------------------------------------------------------------------
 */
 TPL.el_id = {
-	// ID контейнеров содержащих html элементов
-	load_pic_btn: 'Кнопка "Загрузить картинку"',
-	load_pic_faq_url: 'Ссылка на FAQ "Как залить картинку на бесплатный хост"',
-	manga_type_faq_url: 'Ссылка на FAQ "Подробнее о типах манги"',
-	test_dash: 'Статический элемент "-" для заголовка',
-	make_screenlist_faq_url: 'Как сделать скриншот / скринлист',
-	translation_rules_faq_url: 'Правила обозначения переводов',
-	make_sample_faq_url: 'Как сделать сэмпл видео',
-	dvd_reqs_faq_url: 'Требования и примеры для DVD',
-	hd_reqs_faq_url: 'Требования и примеры для HD',
-	videofile_info_faq_url: 'Как получить информацию о видео файле',
+	// ID контейнеров содержащих html елементов
+	load_pic_btn: 'Кнопка "Додати зображення"',
+	load_pic_faq_url: 'Посилання на FAQ "Як залити зображення на безкоштовний хостинг"',
+	manga_type_faq_url: 'Посилання на FAQ "Детальніше про типи манги"',
+	test_dash: 'Статичний елемент "-" для заголовку',
+	make_screenlist_faq_url: 'Як зробити скріншот / скрінліст',
+	translation_rules_faq_url: 'Правила позначення перекладів',
+	make_sample_faq_url: 'Як зробити семпл відео',
+	dvd_reqs_faq_url: 'Вимоги та приклади для DVD',
+	hd_reqs_faq_url: 'Вимоги та приклади для HD',
+	videofile_info_faq_url: 'Як отримати інформацію про відеофайл',
 	bdinfo_faq_url: 'BDInfo',
 	dvdinfo_faq_url: 'DVDInfo',
-	make_poster_faq_url: 'Инструкция по изготовлению постера',
-	pred_alt1_faq_url: 'О ссылках на предыдущие и альтернативные раздачи',
-	quality_decl_faq_url: 'о обозначениях качества',
-	pred_alt2_faq_url: 'О ссылках на предыдущие и альтернативные раздачи',
-	pred_alt3_faq_url: 'О ссылках на предыдущие и альтернативные раздачи',
-	pred_alt4_faq_url: 'О ссылках на предыдущие и альтернативные раздачи',
-	dvdinfo_faq_url: 'Как получить информацию о DVD-Video',
+	make_poster_faq_url: 'Інструкція з виготовлення постера',
+	pred_alt1_faq_url: 'Про посилання на попередні та альтернативні роздачі',
+	quality_decl_faq_url: 'Про позначення якості',
+	pred_alt2_faq_url: 'Про посилання на попередні та альтернативні роздачі',
+	pred_alt3_faq_url: 'Про посилання на попередні та альтернативні роздачі',
+	pred_alt4_faq_url: 'Про посилання на попередні та альтернативні роздачі',
+	dvdinfo_faq_url: 'Як отримати інформацію про DVD-Video',
 	tyt_faq_url: 'тут',
-	wtf_faq_url: 'Что это значит?',
+	wtf_faq_url: 'Що це означає?',
 	DVD_PG: 'DVD-PG',
-	faq_catalog: 'инструкция',
+	faq_catalog: 'інструкція',
 	psp_psx: 'PSP-PSX',
-	faq_pops: 'Что такое Popsloader?',
-	faq_code: 'Как узнать код диcка?',
-	faq_code_PS: 'Как узнать код диcка?',
+	faq_pops: 'Що таке Popsloader?',
+	faq_code: 'Як дізнатися код диcка?',
+	faq_code_PS: 'Як дізнатися код диcка?',
 	faq_pegi: 'PEGI',
-	faq_screen_psp: 'Как сделать скриншоты с PSP',
-	series: 'Серии:',
+	faq_screen_psp: 'Як зробити скріншоти з PSP',
+	series: 'Серії:',
 	season: 'Сезон:',
-	series_of: 'из',
+	series_of: 'з',
 	point: ',',
-	d_rus: 'в 3Д /',
+	d_ukr: 'у 3Д /',
 	d_eng: '3D',
-	genre_faq_url: 'Как определить жанр?',
-	quality_faq: 'Обозначение качества видео',
-	file_list: 'Как создать список файлов?',
-	comparison_anime: 'Сравнения с другими раздачами.',
-	faq_game: 'Превью(игры)',
+	genre_faq_url: 'Як визначити жанр?',
+	quality_faq: 'Позначення якості відео',
+	file_list: 'Як створити список файлів?',
+	comparison_anime: 'Порівняння з іншими роздачами.',
+	faq_game: 'Прев\'ю (гри)',
 	nds: '[NDS]',
 	Dreamcast: '[DC]',
-	faq_traclist: 'Как быстро создать треклист с указанием битрейта',
+	faq_traclist: 'Як швидко створити трекліст із зазначенням бітрейту',
 	number: '№',
-	faq_isbn: 'Что такое ISBN/ISSN?',
-	faq_scrn_books: 'Как сделать примеры страниц (скриншоты) для раздачи?',
-	faq_ps_image: 'FAQ по снятию образа для Ps1',
-	faq_mac_scrn: 'Создание скриншотов в Mac OS',
-	// ID элементов, для которых нужно создать скрытые элементы, содержащие аббревиатуры для подстановки в название
-	// Каждый элемент el_abr должен точно соответствовать el (translation_abr -> translation)
-	translation_abr: '[ABR] Перевод',
-	translation2_abr: '[ABR] Перевод',
-	translation3_abr: '[ABR] Перевод',
-	translation4_abr: '[ABR] Перевод',
-	maps_lang_abr: '[ABR] Язык интерфейса (карты)',
-	gui_lang_new_abr: '[ABR] Язык интерфейса (новый список)',
-	transl_cartoons_0_abr: '[ABR] Перевод',
-	transl_cartoons_1_abr: '[ABR] Перевод',
-	transl_cartoons_2_abr: '[ABR] Перевод',
-	cpu_bits_abr: '[ABR]Разрядность',
-	maps_format_abr: '[ABR]Формат',
-	lang_book_avto_abr: '[ABR]Язык авто-книги',
-	lang_book_med_abr: '[ABR]Язык мед-книги',
-	book_lang_abr: '[ABR]Язык книги',
-	orig_audio_abr: '[ABR]Язык дорожки',
-	orig_audio_serial_abr: '[ABR]Оригинальная аудиодорожка',
-	translation_abr: '[ABR]Перевод',
-	flang_lang_abr: '[ABR]Язык книги',
-	sub_all_new_abr: '[ABR]Cубтитры',
-	lang_dorama_abr: '[ABR]Язык',
-	game_lang_abr: '[ABR] Язык интерфейса',
-	game_lang_sound_abr: '[ABR] Язык озвучки',
-	lang_psp_abr: '[ABR] Язык интерфейса',
-	lang_mob_abr: '[ABR] Язык интерфейса',
-	game_type_edition_abr: '[ABR] Тип издания',
-	lang_anime_abr: '[ABR] Язык',
-	lang_anime_2_abr: '[ABR] Язык',
-	lang_anime_3_abr: '[ABR] Язык',
-	anime_hwp_abr: '[ABR] Совместимость с бытовыми плеерами',
-	publishing_type_abr: '[ABR] Тип издания',
-	lang_old_game_abr: '[ABR] Язык',
-	mus_lang_abr: '[ABR] Язык',
-	perfotmer_mus_lossy_abr: '[ABR] Исполнитель',
-	lang_game_dvd_pleer_abr: '[ABR] Язык',
-	video_format_new_abr: '[ABR] Формат видео',
-	audio_codec_mus_loss_abr: '[ABR] Аудио кодек',
-	lang_dorama_2_abr: '[ABR] Язык',
+	faq_isbn: 'Що таке ISBN/ISSN?',
+	faq_scrn_books: 'Як зробити приклади сторінок (скріншоти) для роздачі?',
+	faq_ps_image: 'FAQ зі зняття образу для Ps1',
+	faq_mac_scrn: 'Створення скріншотів у Mac OS',
+	// ID елементів, для яких треба створити приховані елементи, що містять абревіатури для підстановки у назву
+	// Кожен елемент el_abr повинен точно відповідати el (translation_abr -> translation)
+	translation_abr: '[ABR] Переклад',
+	translation2_abr: '[ABR] Переклад',
+	translation3_abr: '[ABR] Переклад',
+	translation4_abr: '[ABR] Переклад',
+	maps_lang_abr: '[ABR] Мова інтерфейсу (карти)',
+	gui_lang_new_abr: '[ABR] Мова інтерфейсу (новий список)',
+	transl_cartoons_0_abr: '[ABR] Переклад',
+	transl_cartoons_1_abr: '[ABR] Переклад',
+	transl_cartoons_2_abr: '[ABR] Переклад',
+	cpu_bits_abr: '[ABR] Розрядність',
+	maps_format_abr: '[ABR] Формат',
+	lang_book_avto_abr: '[ABR] Мова авто-книги',
+	lang_book_med_abr: '[ABR] Мова мед-книги',
+	book_lang_abr: '[ABR] Мова книги',
+	orig_audio_abr: '[ABR] Мова доріжки',
+	orig_audio_serial_abr: '[ABR] Оригінальна аудіодорожка',
+	translation_abr: '[ABR] Переклад',
+	flang_lang_abr: '[ABR] Мова книги',
+	sub_all_new_abr: '[ABR] Субтитри',
+	lang_dorama_abr: '[ABR] Мова',
+	game_lang_abr: '[ABR] Мова інтерфейсу',
+	game_lang_sound_abr: '[ABR] Мова озвучки',
+	lang_psp_abr: '[ABR] Мова інтерфейсу',
+	lang_mob_abr: '[ABR] Мова інтерфейсу',
+	game_type_edition_abr: '[ABR] Тип видання',
+	lang_anime_abr: '[ABR] Мова',
+	lang_anime_2_abr: '[ABR] Мова',
+	lang_anime_3_abr: '[ABR] Мова',
+	anime_hwp_abr: '[ABR] Сумісність із побутовими програвачами',
+	publishing_type_abr: '[ABR] Тип видання',
+	lang_old_game_abr: '[ABR] Мова',
+	mus_lang_abr: '[ABR] Мова',
+	perfotmer_mus_lossy_abr: '[ABR] Виконавець',
+	lang_game_dvd_pleer_abr: '[ABR] Мова',
+	video_format_new_abr: '[ABR] Формат відео',
+	audio_codec_mus_loss_abr: '[ABR] Аудіокодек',
+	lang_dorama_2_abr: '[ABR] Мова',
 	type_homebrewe_abr: '[ABR] Тип',
 	console_type_abr: '[ABR] Консоль',
-	sub_all_anime_abr: '[ABR] Язык',
-	sub_all_anime_2_abr: '[ABR] Язык',
-	sub_all_anime_3_abr: '[ABR] Язык',
-	lang_game_video_abr: '[ABR] Язык',
-	sub_game_video_abr: '[ABR] Язык',
-	publishing_type_old_abr: '[ABR] Тип издания',
-	lang_comp_vlesson_abr: '[ABR] Язык',
-	type_comp_vlesson_abr: '[ABR] Тип раздаваемого материала',
-	lang_notes_abr: '[ABR] Язык',
-	rus_sub_abr: '[ABR] Русские субтитры',
-	lang_video_les_abr: '[ABR] Язык',
-	type_vlesson_abr: '[ABR] Тип раздаваемого материала',
-	publishing_type_mob_abr: '[ABR] Тип издания',
+	sub_all_anime_abr: '[ABR] Мова',
+	sub_all_anime_2_abr: '[ABR] Мова',
+	sub_all_anime_3_abr: '[ABR] Мова',
+	lang_game_video_abr: '[ABR] Мова',
+	sub_game_video_abr: '[ABR] Мова',
+	publishing_type_old_abr: '[ABR] Тип видання',
+	lang_comp_vlesson_abr: '[ABR] Мова',
+	type_comp_vlesson_abr: '[ABR] Тип матеріалу',
+	lang_notes_abr: '[ABR] Мова',
+	ukr_sub_abr: '[ABR] Українські субтитри',
+	lang_video_les_abr: '[ABR] Мова',
+	type_vlesson_abr: '[ABR] Тип матеріалу',
+	publishing_type_mob_abr: '[ABR] Тип видання',
 	format_3d_abr: '[ABR] Формат 3D',
-	audio_codec_anime_loss_abr: '[ABR] Аудио кодек',
-	lang_anime_transl_abr: '[ABR] Язык',
-	lang_anime_transl_2_abr: '[ABR] Язык',
-	lang_anime_transl_3_abr: '[ABR] Язык',
+	audio_codec_anime_loss_abr: '[ABR] Аудіокодек',
+	lang_anime_transl_abr: '[ABR] Мова',
+	lang_anime_transl_2_abr: '[ABR] Мова',
+	lang_anime_transl_3_abr: '[ABR] Мова',
 	psp_video_type_abr: '[ABR] Тип',
-	apple_ios_sysreq_abr: '[ABR] Системные требования',
-	apple_ios_lang_abr: '[ABR] Язык интерфейса',
-	apple_ios_format_abr: '[ABR] Формат файлов',
-	apple_ios_def_abr: '[ABR] Поддерживаемые разрешения',
-	mus_loss_performer_abr: '[ABR] Исполнитель',
+	apple_ios_sysreq_abr: '[ABR] Системні вимоги',
+	apple_ios_lang_abr: '[ABR] Мова інтерфейсу',
+	apple_ios_format_abr: '[ABR] Формат файлів',
+	apple_ios_def_abr: '[ABR] Підтримувана роздільна здатність',
+	mus_loss_performer_abr: '[ABR] Виконавець',
 	platform_mac_prog_abr: '[ABR] Платформа',
-	lang_mac_prog_abr: '[ABR] Язык интерфейса',
-	tablet_mac_prog_abr: '[ABR] Таблетка',
+	lang_mac_prog_abr: '[ABR] Мова інтерфейсу',
+	tablet_mac_prog_abr: '[ABR] Ліки',
 	// dummy
 	dummy_abr: '[ABR] '
 };
@@ -997,22 +997,22 @@ TPL.el_id = {
   -------------------------------------------------------------------------------------------------
 */
 TPL.selects = {
-	// [0] всегда имеет value='' и если задан как '' (пустая строка) заменяется на "&raquo; Выбрать"
+	// [0] всегда имеет value='' и если задан как '' (пустая строка) заменяется на "&raquo; Обрати"
 	//фильмы зарубежка, наше и т.д. авто, медицина.
 	translation: [
 		'',
-		'Профессиональный (дублированный)',
-		'Профессиональный (многоголосый закадровый)',
-		'Профессиональный (двухголосый закадровый)',
-		'Любительский (дублированный)',
-		'Любительский (многоголосый закадровый)',
-		'Любительский (двухголосый закадровый)',
-		'Студийный (одноголосый закадровый)',
-		'Авторский (одноголосый закадровый)',
-		'Одноголосый закадровый',
-		'Субтитры',
-		'Не требуется',
-		'Отсутствует'
+		'Професійний (дубльований)',
+		'Професійний (багатоголосий закадровий)',
+		'Професійний (двоголосий закадровий)',
+		'Любительский (дубльований)',
+		'Любительский (багатоголосий закадровий)',
+		'Любительский (двоголосий закадровий)',
+		'Студійний (одноголосий закадровий)',
+		'Авторський (одноголосий закадровий)',
+		'Одноголосий закадровий',
+		'Субтитри',
+		'Не потрібен',
+		'Відсутній'
 	],
 
 	translation_abr: [
@@ -1033,18 +1033,18 @@ TPL.selects = {
 
 	translation2: [
 		'',
-		'Профессиональный (дублированный)',
-		'Профессиональный (многоголосый закадровый)',
-		'Профессиональный (двухголосый закадровый)',
-		'Любительский (дублированный)',
-		'Любительский (многоголосый закадровый)',
-		'Любительский (двухголосый закадровый)',
-		'Студийный (одноголосый закадровый)',
-		'Авторский (одноголосый закадровый)',
-		'Одноголосый закадровый',
-		'Субтитры',
-		'Не требуется',
-		'Отсутствует'
+		'Професійний (дубльований)',
+		'Професійний (багатоголосий закадровий)',
+		'Професійний (двоголосий закадровий)',
+		'Любительский (дубльований)',
+		'Любительский (багатоголосий закадровий)',
+		'Любительский (двоголосий закадровий)',
+		'Студійний (одноголосий закадровий)',
+		'Авторський (одноголосий закадровий)',
+		'Одноголосий закадровий',
+		'Субтитри',
+		'Не потрібен',
+		'Відсутній'
 	],
 
 	translation2_abr: [
@@ -1065,18 +1065,18 @@ TPL.selects = {
 
 	translation3: [
 		'',
-		'Профессиональный (дублированный)',
-		'Профессиональный (многоголосый закадровый)',
-		'Профессиональный (двухголосый закадровый)',
-		'Любительский (дублированный)',
-		'Любительский (многоголосый закадровый)',
-		'Любительский (двухголосый закадровый)',
-		'Студийный (одноголосый закадровый)',
-		'Авторский (одноголосый закадровый)',
-		'Одноголосый закадровый',
-		'Субтитры',
-		'Не требуется',
-		'Отсутствует'
+		'Професійний (дубльований)',
+		'Професійний (багатоголосий закадровий)',
+		'Професійний (двоголосий закадровий)',
+		'Любительский (дубльований)',
+		'Любительский (багатоголосий закадровий)',
+		'Любительский (двоголосий закадровий)',
+		'Студійний (одноголосий закадровий)',
+		'Авторський (одноголосий закадровий)',
+		'Одноголосий закадровий',
+		'Субтитри',
+		'Не потрібен',
+		'Відсутній'
 	],
 
 	translation3_abr: [
@@ -1097,18 +1097,18 @@ TPL.selects = {
 
 	translation4: [
 		'',
-		'Профессиональный (дублированный)',
-		'Профессиональный (многоголосый закадровый)',
-		'Профессиональный (двухголосый закадровый)',
-		'Любительский (дублированный)',
-		'Любительский (многоголосый закадровый)',
-		'Любительский (двухголосый закадровый)',
-		'Студийный (одноголосый закадровый)',
-		'Авторский (одноголосый закадровый)',
-		'Одноголосый закадровый',
-		'Субтитры',
-		'Не требуется',
-		'Отсутствует'
+		'Професійний (дубльований)',
+		'Професійний (багатоголосий закадровий)',
+		'Професійний (двоголосий закадровий)',
+		'Любительский (дубльований)',
+		'Любительский (багатоголосий закадровий)',
+		'Любительский (двоголосий закадровий)',
+		'Студійний (одноголосий закадровий)',
+		'Авторський (одноголосий закадровий)',
+		'Одноголосий закадровий',
+		'Субтитри',
+		'Не потрібен',
+		'Відсутній'
 	],
 
 	translation4_abr: [
@@ -1129,28 +1129,28 @@ TPL.selects = {
 
 	book_lang: [
 		'',
-		'Русский',
-		'Русский (дореформенный)',
-		'Украинский',
-		'Белорусский',
-		'Польский',
-		'Английский',
-		'Немецкий',
-		'Французский',
-		'Итальянский',
-		'Испанский',
-		'Португальский',
-		'Китайский',
-		'Японский',
-		'Болгарский',
-		'Другой'
+		'Українська',
+		'Російська',
+		'Російська (дореволюційна)',
+		'Білоруська',
+		'Польська',
+		'Англійська',
+		'Німецька',
+		'Французька',
+		'Італійська',
+		'Іспанська',
+		'Португальська',
+		'Китайська',
+		'Японська',
+		'Болгарська',
+		'Інша'
 	],
 
 	book_lang_abr: [
 		'',
-		'RUS',
-		'RUS',
 		'UKR',
+		'RUS',
+		'RUS',
 		'BLR',
 		'POL',
 		'ENG',
@@ -1167,26 +1167,26 @@ TPL.selects = {
 
 	flang_lang: [
 		'',
-		'Русский',
-		'Украинский',
-		'Белорусский',
-		'Польский',
-		'Английский',
-		'Немецкий',
-		'Французский',
-		'Итальянский',
-		'Испанский',
-		'Португальский',
-		'Китайский',
-		'Японский',
-		'Арабский',
-		'Другой'
+		'Українська',
+		'Російська',
+		'Білоруська',
+		'Польська',
+		'Англійська',
+		'Німецька',
+		'Французька',
+		'Італійська',
+		'Іспанська',
+		'Португальська',
+		'Китайська',
+		'Японська',
+		'Арабська',
+		'Інша'
 	],
 
 	flang_lang_abr: [
 		'',
-		'RUS',
 		'UKR',
+		'RUS',
 		'BLR',
 		'POL',
 		'ENG',
@@ -1206,44 +1206,44 @@ TPL.selects = {
 		'softsub (SRT)',
 		'softsub (SSA/ASS)',
 		'prerendered (IDX+SUB)',
-		'hardsub (неотключаемые)'
+		'hardsub (вшиті)'
 	],
 
-	//видео iphone
-	rus_sub: [
+	//відео iphone
+	ukr_sub: [
 		'',
-		'есть',
-		'нет'
+		'є',
+		'немає'
 	],
 
-	rus_sub_abr: [
+	ukr_sub_abr: [
 		'',
-		'rus sub',
+		'ukr sub',
 		''
 	],
 
 	sub_all: [
 		'',
-		'русские',
-		'английские'
+		'українські',
+		'англійські'
 	],
 
-	//видео для PSP
+	//відео для PSP
 	psp_video_type: [
 		'',
-		'Фильм',
-		'Аниме',
-		'Музыкальный клип',
-		'Мультфильм',
-		'Мультсериал',
-		'Сериал',
-		'UMD Видео',
+		'Фільм',
+		'Аніме',
+		'Музичний кліп',
+		'Мультфільм',
+		'Мультсеріал',
+		'Серіал',
+		'UMD Відео',
 		'Спорт',
-		'Разное',
-		'ТВ Передача',
-		'Документальный фильм',
+		'Різне',
+		'Телепередача',
+		'Документальний фільм',
 		'Дорама',
-		'Онгоинг (аниме)'
+		'Онгоінг (аніме)'
 	],
 
 	psp_video_type_abr: [
@@ -1265,8 +1265,8 @@ TPL.selects = {
 
 	orig_audio_serial: [
 		'',
-		'есть',
-		'нет'
+		'є',
+		'немає'
 	],
 
 	orig_audio_serial_abr: [
@@ -1277,36 +1277,37 @@ TPL.selects = {
 
 	//фильмы зарубежка, наше и т.д.
 	orig_audio: [
-		'нет',
-		'русский',
-		'английский',
-		'немецкий',
-		'французский',
-		'испанский',
-		'итальянский',
-		'польский',
-		'чешский',
-		'словацкий',
-		'украинский',
-		'белорусский',
-		'литовский',
-		'латышский',
-		'датский',
-		'норвежский',
-		'шведский',
-		'нидерландский',
-		'финский',
-		'иврит',
-		'румынский',
-		'молдавский',
-		'португальский',
-		'Другой'
+		'немає',
+		'українська',
+		'англійська',
+		'російська',
+		'німецька',
+		'французька',
+		'іспанська',
+		'італійська',
+		'польська',
+		'чеська',
+		'словацька',
+		'білоруська',
+		'литовська',
+		'латвійська',
+		'дацька',
+		'норвезька',
+		'шведська',
+		'голландська',
+		'фінська',
+		'іврит',
+		'румунська',
+		'молдавська',
+		'португальська',
+		'інша'
 	],
 
 	orig_audio_abr: [
 		'',
-		'Original Rus',
+		'Original Ukr',
 		'Original Eng',
+		'Original Rus',
 		'Original Ger',
 		'Original Fre',
 		'Original Spa',
@@ -1314,7 +1315,6 @@ TPL.selects = {
 		'Original Pol',
 		'Original Cze',
 		'Original Slo',
-		'Original Ukr',
 		'Original Bel',
 		'Original Lit',
 		'Original Lav',
@@ -1331,10 +1331,10 @@ TPL.selects = {
 	],
 
 	video_quality: [
-		'&raquo; Качество видео',
+		'&raquo; Якість відео',
 		'DVDRip',
 		'DVD5',
-		'DVD5 (сжатый)',
+		'DVD5 (стиснутий)',
 		'DVD9',
 		'HDTV',
 		'HDTVRip',
@@ -1353,7 +1353,7 @@ TPL.selects = {
 
 	//фильмы зарубежка, наше и т.д.
 	video_quality_new: [
-		'» Выберите качество',
+		'» Вкажіть якість',
 		'DVDRip',
 		'HDRip',
 		'HDTVRip',
@@ -1377,7 +1377,7 @@ TPL.selects = {
 	],
 
 	video_format: [
-		'&raquo; Формат видео',
+		'&raquo; Формат відео',
 		'AVI',
 		'DVD Video',
 		'OGM',
@@ -1392,10 +1392,10 @@ TPL.selects = {
 	],
 
 	video_codec: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'DivX',
 		'XviD',
-		"Другой MPEG4",
+		"Інший MPEG4",
 		'VPx',
 		'MPEG1',
 		'MPEG2',
@@ -1406,10 +1406,10 @@ TPL.selects = {
 	],
 
 	video_codec_2: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'DivX',
 		'XviD',
-		"Другой MPEG4",
+		"Інший MPEG4",
 		'VPx',
 		'MPEG1',
 		'MPEG2',
@@ -1420,7 +1420,7 @@ TPL.selects = {
 	],
 
 	audio_codec: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'MP3',
 		'APE',
 		'FLAC',
@@ -1437,7 +1437,7 @@ TPL.selects = {
 	],
 
 	audio_codec_2: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'MP3',
 		'APE',
 		'FLAC',
@@ -1454,7 +1454,7 @@ TPL.selects = {
 	],
 
 	audio_bitrate: [
-		'&raquo; Битрейт аудио',
+		'&raquo; Бітрейт аудіо',
 		'lossless',
 		'64 kbps',
 		'128 kbps',
@@ -1469,15 +1469,15 @@ TPL.selects = {
 
 	abook_type: [
 		'&raquo; Тип',
-		'аудиокнига',
-		'аудиоспектакль',
-		'модель для сборки'
+		'аудіокнига',
+		'аудіоспектакль',
+		'модель для збірки'
 	],
 
 	publishing_type: [
-		'&raquo; Тип издания',
-		'лицензия',
-		'пиратка'
+		'&raquo; Тип видання',
+		'ліцензія',
+		'піратка'
 	],
 
 	publishing_type_abr: [
@@ -1487,19 +1487,19 @@ TPL.selects = {
 	],
 
 	crack_exists: [
-		'&raquo; Таблэтка',
-		'не требуется',
-		'присутствует',
-		'отсутствует'
+		'&raquo; Ліки',
+		'не потрібні',
+		'присутні',
+		'відсутні'
 	],
 
 	gui_lang: [
 		'',
-		'английский + русский',
-		'только английский',
-		'только русский',
-		'немецкий',
-		'Другой'
+		'українська + англійська',
+		'лише українська',
+		'лише англійська',
+		'російська',
+		'інша'
 	],
 
 	game_platform: [
@@ -1509,14 +1509,14 @@ TPL.selects = {
 	],
 
 	game_region_def: [
-		'&raquo; Регион',
+		'&raquo; Регіон',
 		'PAL',
 		'NTSC',
-		'Другой'
+		'Інший'
 	],
 
 	game_region: [
-		'&raquo; Регион',
+		'&raquo; Регіон',
 		'Europe',
 		'US',
 		'Japan'
@@ -1527,7 +1527,7 @@ TPL.selects = {
 		'',
 		'FULL',
 		'RIP',
-		'Другой'
+		'Інша'
 	],
 
 	game_firmware: [
@@ -1537,27 +1537,27 @@ TPL.selects = {
 	],
 
 	game_age: [
-		'&raquo; Возраст',
-		'EC - Для детей младшего возраста',
-		'E - Для всех',
-		'E10+ - Для всех старше 10 лет',
-		'T - Подросткам 13-19 лет',
-		'M - От 17 лет',
-		'AO - Только для взрослых',
-		'RP - Рейтинг ожидается',
-		'Другой'
+		'&raquo; Вік',
+		'EC - Для дітей молодшого віку',
+		'E - Для всіх',
+		'E10+ - Для дітей, старших 10 років',
+		'T - Для підлітків 13-19 років',
+		'M - Від 17 років',
+		'AO - Лише для дорослих',
+		'RP - Рейтинг очікується',
+		'Інший'
 	],
 
 	game_multiplay: [
 		'',
-		'нет',
-		'2х',
-		'4х',
-		'более 4x'
+		'немає',
+		'2 гравці',
+		'4 гравці',
+		'більше 4 гравців'
 	],
 
 	game_lang_psp: [
-		'&raquo; Язык интерфейса',
+		'&raquo; Мова інтерфейсу',
 		'JAP',
 		'ENG',
 		'RUS',
@@ -1565,10 +1565,10 @@ TPL.selects = {
 	],
 
 	game_trans_type: [
-		'&raquo; Тип перевода',
+		'&raquo; Тип перекладу',
 		'текст',
-		'текст +  звук',
-		'нет'
+		'текст + звук',
+		'немає'
 	],
 
 	book_format: [
@@ -1590,25 +1590,25 @@ TPL.selects = {
 		'RB',
 		'PDF/DjVu',
 		'FB2/RTF/PDF',
-		'Другой'
+		'Інший'
 	],
 
 	book_quality: [
 		'',
-		'Отсканированные страницы',
-		'Отсканированные страницы + слой распознанного текста',
-		'Распознанный текст с ошибками (OCR)',
-		'Распознанный текст без ошибок (OCR)',
-		'Изначально компьютерное (eBook)',
-		'Сфотографированные страницы'
+		'Відскановані сторінки',
+		'Відскановані сторінки + шар розпізнаного тексту',
+		'Розпізнаний текст із помилками (OCR)',
+		'Розпізнаний текст без помилок (OCR)',
+		'Електронна книга (eBook)',
+		'Сфотографовані сторінки'
 	],
 
 	vista_compat: [
-		'&raquo; Совместимость с Vista',
-		'полная',
-		'да',
-		'нет',
-		'неизвестно'
+		'&raquo; Сумісність із Vista',
+		'повна',
+		'є',
+		'немає',
+		'невідомо'
 	],
 
 	game_plat_wii: [
@@ -1619,45 +1619,49 @@ TPL.selects = {
 
 	maps_lang: [
 		'',
-		'Английский + Русский',
-		'Английский',
-		'Русский',
-		'Немецкий',
-		'Мультиязычный (русский присутствует)',
-		'Мультиязычный (русский отсутствует)',
-		'Другой'
+		'Українська + англійська',
+		'Українська',
+		'Англійська',
+		'Російська',
+		'Німецька',
+		'Багатомовна (українська присутня)',
+		'Багатомовна (українська відсутня)',
+		'Інша'
 	],
 
 	maps_lang_abr: [
 		'',
-		'ENG + RUS', // Английский + Русский
-		'ENG', // Английский
-		'RUS', // Русский
-		'GER', // Немецкий
-		'MULTILANG +RUS', // Мультиязычный (русский присутствует)
-		'MULTILANG -RUS', // Мультиязычный (русский отсутствует)
+		'UKR + ENG', // Українська + англійська
+		'UKR', // Українська
+		'ENG', // Англійська
+		'RUS', // Російська
+		'GER', // Німецька
+		'MULTILANG +UKR', // Багатомовна (українська присутня)
+		'MULTILANG -UKR', // Багатомовна (українська відсутня)
 		''
 	],
 
 	gui_lang_new: [
 		'',
-		'Английский + Русский',
-		'Английский',
-		'Русский',
-		'Многоязычный (русский присутствует)',
-		'Многоязычный (русский отсутствует)',
-		'Немецкий',
-		'Японский',
-		'Другой'
+		'Українська + англійська',
+		'Українська',
+		'Англійська',
+		'Російська',
+		'Багатомовний (українська присутня)',
+		'Багатомовний (українська відсутня)',
+		'Німецька',
+		'Японська',
+		'Інша'
 	],
 
 	gui_lang_new_abr: [
 		'',
-		'ENG + RUS',
+		'UKR + ENG',
+		'UKR',
 		'ENG',
 		'RUS',
-		'Multi + RUS',
-		'Multi, NO RUS',
+		'Multi + UKR',
+		'Multi, NO UKR',
 		'DEU',
 		'JAP',
 		''
@@ -1665,10 +1669,10 @@ TPL.selects = {
 
 	tabletka_new: [
 		'',
-		'Присутствует',
-		'Отсутствует',
-		'Вылечено',
-		'Не требуется'
+		'Присутні',
+		'Відсутні',
+		'Вилікувано',
+		'Не потрібні'
 	],
 
 	cpu_bits: [
@@ -1686,21 +1690,21 @@ TPL.selects = {
 	],
 
 	vista_compat_new: [
-		'&raquo; Совместимость с Vista',
-		'полная',
-		'только с х86 (32-бит)',
-		'только с х64 (64-бит)',
-		'нет',
-		'неизвестно'
+		'&raquo; Сумісність із Vista',
+		'повна',
+		'лише з х86 (32-біт)',
+		'лише з х64 (64-біт)',
+		'немає',
+		'невідомо'
 	],
 
 	windows7_compat: [
-		'&raquo; Совместимость с Windows 7',
-		'полная',
-		'только с х86 (32-бит)',
-		'только с х64 (64-бит)',
-		'нет',
-		'неизвестно'
+		'&raquo; Сумісність із Windows 7',
+		'повна',
+		'лише з х86 (32-біт)',
+		'лише з х64 (64-біт)',
+		'немає',
+		'невідомо'
 	],
 
 	maps_format: [
@@ -1738,43 +1742,45 @@ TPL.selects = {
 	atlas_type: [
 		'',
 		'Атлас',
-		'Топографические карты',
-		'Карты'
+		'Топографічні карти',
+		'Карти'
 	],
 
 	lang_book_avto: [
 		'',
-		'Русский',
-		'Английский',
-		'Немецкий',
-		'Японский',
-		'Другой'
+		'Українська',
+		'Англійська',
+		'Російська',
+		'Німецька',
+		'Японська',
+		'Інша'
 	],
 
 	lang_book_avto_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'ENG',
-		'Deu',
-		'Jap',
+		'RUS',
+		'DEU',
+		'JAP',
 		''
 	],
 
 	lang_book_med: [
 		'',
-		'Русский',
-		'Украинский',
-		'Английский',
-		'Немецкий',
-		'Французский',
-		'Другой'
+		'Українська',
+		'Англійська',
+		'Російська',
+		'Німецька',
+		'Французька',
+		'Інша'
 	],
 
 	lang_book_med_abr: [
 		'',
-		'RUS',
 		'UKR',
 		'ENG',
+		'RUS',
 		'DEU',
 		'FRA'
 	],
@@ -1804,13 +1810,13 @@ TPL.selects = {
 	],
 
 	manga_completeness_with_header: [
-		'&raquo; Завершенность',
+		'&raquo; Завершеність',
 		'complete',
 		'incomplete'
 	],
 
 	video_format_new: [
-		'» Выберите формат видео',
+		'» Вкажіть формат відео',
 		'AVI',
 		'MKV',
 		'MP4',
@@ -1827,37 +1833,38 @@ TPL.selects = {
 
 	sub_all_new: [
 		'',
-		'нет',
-		'русские',
-		'английские',
-		'немецкие',
-		'французские',
-		'испанские',
-		'итальянские',
-		'польские',
-		'чешские',
-		'словацкие',
-		'украинские',
-		'белорусские',
-		'литовские',
-		'латышские',
-		'датские',
-		'норвежские',
-		'шведские',
-		'нидерландские',
-		'финские',
-		'иврит',
-		'румынские',
-		'молдавские',
-		'португальские',
-		'Другие'
+		'немає',
+		'українські',
+		'англійські',
+		'російські',
+		'німецькі',
+		'французькі',
+		'іспанські',
+		'італійські',
+		'польські',
+		'чеські',
+		'словацькі',
+		'білоруські',
+		'литовські',
+		'латвійські',
+		'датські',
+		'норвезькі',
+		'шведські',
+		'голландські',
+		'фінські',
+		'іврит',
+		'румунські',
+		'молдавські',
+		'португальські',
+		'інші'
 	],
 
-	sub_all_new_abr: [ // Перевод языков для субтитров и оригинальной дорожки в тэги для заголовка
+	sub_all_new_abr: [ // Переклад языков для субтитрів и оригинальной доріжки в тэги для заголовку
 		'',
 		'',
-		'Sub Rus',
+		'Sub Ukr',
 		'Sub Eng',
+		'Sub Rus',
 		'Sub Ger',
 		'Sub Fre',
 		'Sub Spa',
@@ -1865,7 +1872,6 @@ TPL.selects = {
 		'Sub Pol',
 		'Sub Cze',
 		'Sub Slo',
-		'Sub Ukr',
 		'Sub Bel',
 		'Sub Lit',
 		'Sub Lav',
@@ -1882,16 +1888,16 @@ TPL.selects = {
 	],
 
 	anime_release_type: [
-		'&raquo; Тип релиза',
+		'&raquo; Тип релізу',
 		'Хардсаб',
-		'Без хардсаба',
-		'Полухардсаб'
+		'Без хардсабу',
+		'Напівхардсаб'
 	],
 
 	anime_hwp: [
-		'&raquo; Совместимость с бытовыми плеерами',
-		'Да',
-		'Нет'
+		'&raquo; Сумісність із побутовими програвачами',
+		'Є',
+		'Немає'
 	],
 
 	anime_hwp_abr: [
@@ -1902,72 +1908,76 @@ TPL.selects = {
 
 	transl_dorama: [
 		'',
-		'Русские субтитры',
-		'Одноголосая озвучка',
-		'Двухголосая озвучка',
-		'Многоголосая озвучка',
+		'Українські субтитри',
+		'Одноголосе озвучення',
+		'Двоголосе озвучення',
+		'Багатоголосе озвучення',
 		'Дубляж',
-		'Отсутствует'
+		'Відсутній'
 	],
 
 	sub_dorama: [
 		'',
 		'Хардсаб',
-		'Полухардсаб',
-		'Без хардсаба'
+		'Напівхардсаб',
+		'Без хардсабу'
 	],
 
 	lang_dorama: [
-		'&raquo; Язык',
-		'Русский (внешним файлом)',
-		'Русский (в составе контейнера)',
-		'Японский',
-		'Китайский',
-		'Корейский',
-		'Тайваньский',
-		'Английский'
+		'&raquo; Мова',
+		'Українська (окремим файлом)',
+		'Українська (у складі контейнера)',
+		'Японська',
+		'Китайська',
+		'Корейська',
+		'Тайванська',
+		'Англійська',
+		'Російська'
 	],
 
 	lang_dorama_2: [
-		'&raquo; Язык',
-		'Русский (внешним файлом)',
-		'Русский (в составе контейнера)',
-		'Японский',
-		'Китайский',
-		'Корейский',
-		'Тайваньский',
-		'Английский'
+		'&raquo; Мова',
+		'Українська (окремим файлом)',
+		'Українська (у складі контейнера)',
+		'Японська',
+		'Китайська',
+		'Корейська',
+		'Тайванська',
+		'Англійська',
+		'Російська'
 	],
 
 	lang_dorama_abr: [
 		'',
-		'RUS(ext)',
-		'RUS(int)',
+		'UKR(ext)',
+		'UKR(int)',
 		'JAP',
 		'CHI',
 		'KOR',
 		'TW',
-		'ENG'
+		'ENG',
+		'RUS'
 	],
 
 	lang_dorama_2_abr: [
 		'',
-		'RUS(ext)',
-		'RUS(int)',
+		'UKR(ext)',
+		'UKR(int)',
 		'JAP',
 		'CHI',
 		'KOR',
 		'TW',
-		'ENG'
+		'ENG',
+		'RUS'
 	],
 
 	game_type_edition: [
 		'',
-		'Лицензия',
-		'Неофициальный',
+		'Ліцензія',
+		'Неофіційне',
 		'RePack',
 		'RiP',
-		'Демо-версия',
+		'Демо-версія',
 		'Trial'
 	],
 
@@ -1983,18 +1993,20 @@ TPL.selects = {
 
 	game_lang: [
 		'',
-		'русский',
-		'английский',
-		'русский + английский',
-		'немецкий',
+		'українська',
+		'українська + англійська',
+		'англійська',
+		'російська',
+		'німецька',
 		'многоязычный',
-		'отсутствует / не требуется',
-		'Другой'
+		'відсутня / не требуется',
+		'інша'
 	],
 
 	game_lang_abr: [
 		'',
-		'RUS',
+		'UKR',
+		'UKR + ENG',
 		'ENG',
 		'RUS',
 		'DEU',
@@ -2005,17 +2017,19 @@ TPL.selects = {
 
 	game_lang_sound: [
 		'',
-		'русский',
-		'английский',
-		'русский + английский',
-		'немецкий',
-		'отсутствует/не требуется',
+		'українська',
+		'українська + англійська',
+		'англійська',
+		'російська',
+		'німецька',
+		'відсутня/не требуется',
 		'Другая'
 	],
 
 	game_lang_sound_abr: [
 		'',
-		'RUS',
+		'UKR',
+		'UKR + ENG',
 		'ENG',
 		'RUS',
 		'DEU',
@@ -2025,26 +2039,28 @@ TPL.selects = {
 
 	game_tabletka: [
 		'',
-		'Присутствует',
-		'Отсутствует',
-		'Эмуляция образа',
-		'Не требуется'
+		'Присутні',
+		'Відсутні',
+		'Емуляція образу',
+		'Не потрібні'
 	],
 
 	lang_psp: [
 		'',
-		'Японский',
-		'Английский',
-		'Русский',
+		'Українська',
+		'Японська',
+		'Англійська',
+		'Російська',
 		'Multi2',
 		'Multi3',
 		'Multi4',
 		'Multi5',
-		'Другой'
+		'Інша'
 	],
 
 	lang_psp_abr: [
 		'',
+		'UKR',
 		'JAP',
 		'ENG',
 		'RUS',
@@ -2057,33 +2073,34 @@ TPL.selects = {
 
 	lang_sound_psp: [
 		'',
-		'Отсутствует',
-		'Японская',
-		'Английская',
-		'Русская',
-		'Другая'
+		'Відсутня',
+		'Українська',
+		'Японська',
+		'Англійська',
+		'Російська',
+		'Інша'
 	],
 
 	sub_psp: [
 		'',
-		'Отсутствуют',
-		'Японские',
-		'Английские',
-		'Русские',
-		'Другие'
+		'Немає',
+		'Японські',
+		'Англійські',
+		'Українські',
+		'Інші'
 	],
 
 	funct_psp: [
 		'',
-		'Да',
-		'Нет'
+		'Так',
+		'Ні'
 	],
 
 	multiplayer_psp: [
 		'',
-		'2x',
-		'4x',
-		'Нет'
+		'2 гравці',
+		'4 гравців',
+		'Немає'
 	],
 
 	popsloader_psp: [
@@ -2105,23 +2122,25 @@ TPL.selects = {
 		'4.01',
 		'5.00 - original from flash',
 		'PSN',
-		'Другой'
+		'Інший'
 	],
 
 	//для кпк, мобильных и т.п.
 	lang_mob: [
-		'&raquo; Язык интерфейса',
-		'Английский',
-		'Русский',
-		'Русский + Английский ',
-		'Многоязычный'
+		'&raquo; Мова інтерфейсу',
+		'Українська',
+		'Українська + англійська',
+		'Англійська',
+		'Російська',
+		'Багатомовний'
 	],
 
 	lang_mob_abr: [
 		'',
+		'UKR',
+		'UKR + ENG',
 		'ENG',
 		'RUS',
-		'RUS + ENG',
 		'Multi'
 	],
 
@@ -2155,10 +2174,10 @@ TPL.selects = {
 	//Костюмы для фотомонтажа
 	suit_type: [
 		'',
-		'Женские костюмы',
-		'Мужские костюмы',
-		'Детские костюмы',
-		'Групповые костюмы'
+		'Жіночі костюми',
+		'Чоловічі костюми',
+		'Дитячі костюми',
+		'Групові костюми'
 	],
 
 	//векторные клипарты
@@ -2174,7 +2193,7 @@ TPL.selects = {
 		'3D Studio Max',
 		'Cinema4D',
 		'Poser',
-		'Другое'
+		'Інший'
 	],
 
 	format_3d: [
@@ -2184,31 +2203,31 @@ TPL.selects = {
 		'c4d',
 		'pos',
 		'obj',
-		'Другое'
+		'Інший'
 	],
 
 	material: [
 		'',
-		'Да',
-		'Нет'
+		'Так',
+		'Ні'
 	],
 
 	texture: [
 		'',
-		'Да',
-		'Нет'
+		'Так',
+		'Ні'
 	],
 
 	light_source: [
 		'',
-		'Да',
-		'Нет'
+		'Так',
+		'Ні'
 	],
 
 	folder_pdf: [
 		'',
-		'Да',
-		'Нет'
+		'Так',
+		'Ні'
 	],
 
 	//футажи
@@ -2217,7 +2236,7 @@ TPL.selects = {
 		'PAL',
 		'NTSC',
 		'HD',
-		'Другой'
+		'Інший'
 	],
 
 	def_footage: [
@@ -2225,7 +2244,7 @@ TPL.selects = {
 		'720x480',
 		'720x576',
 		'1280x720',
-		'Другой'
+		'Інша'
 	],
 
 	frame_rate: [
@@ -2233,34 +2252,35 @@ TPL.selects = {
 		'25',
 		'30',
 		'60',
-		'Другой'
+		'Інша'
 	],
 
 	video_format_footage: [
 		'',
 		'MOV',
 		'AVI',
-		'Другой'
+		'Інший'
 	],
 
 	lang_anime: [
-		'&raquo; Язык',
-		'Русский (внешним файлом)',
-		'Русский (в составе контейнера)',
-		'Японский',
-		'Английский',
-		'Корейский',
-		'Китайский',
-		'Испанский',
-		'Итальянский',
-		'Немецкий',
-		'Другой'
+		'&raquo; Мова',
+		'Українська (окремим файлом)',
+		'Українська (у складі контейнера)',
+		'Японська',
+		'Англійська',
+		'Корейська',
+		'Китайська',
+		'Іспанська',
+		'Італійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_anime_abr: [
 		'',
-		'RUS(ext)',
-		'RUS(int)',
+		'UKR(ext)',
+		'UKR(int)',
 		'JAP',
 		'ENG',
 		'KOR',
@@ -2268,27 +2288,29 @@ TPL.selects = {
 		'ESP',
 		'ITA',
 		'GER',
+		'RUS',
 		''
 	],
 
 	lang_anime_2: [
-		'&raquo; Язык',
-		'Русский (внешним файлом)',
-		'Русский (в составе контейнера)',
-		'Японский',
-		'Английский',
-		'Корейский',
-		'Китайский',
-		'Испанский',
-		'Итальянский',
-		'Немецкий',
-		'Другой'
+		'&raquo; Мова',
+		'Українська (окремим файлом)',
+		'Українська (у складі контейнера)',
+		'Японська',
+		'Англійська',
+		'Корейська',
+		'Китайська',
+		'Іспанська',
+		'Італійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_anime_2_abr: [
-		'&raquo; Язык',
-		'RUS(ext)',
-		'RUS(int)',
+		'&raquo; Мова',
+		'UKR(ext)',
+		'UKR(int)',
 		'JAP',
 		'ENG',
 		'KOR',
@@ -2296,27 +2318,29 @@ TPL.selects = {
 		'ESP',
 		'ITA',
 		'GER',
+		'RUS',
 		''
 	],
 
 	lang_anime_3: [
-		'&raquo; Язык',
-		'Русский (внешним файлом)',
-		'Русский (в составе контейнера)',
-		'Японский',
-		'Английский',
-		'Корейский',
-		'Китайский',
-		'Испанский',
-		'Итальянский',
-		'Немецкий',
-		'Другой'
+		'&raquo; Мова',
+		'Українська (окремим файлом)',
+		'Українська (у складі контейнера)',
+		'Японська',
+		'Англійська',
+		'Корейська',
+		'Китайська',
+		'Іспанська',
+		'Італійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_anime_3_abr: [
 		'',
-		'RUS(ext)',
-		'RUS(int)',
+		'UKR(ext)',
+		'UKR(int)',
 		'JAP',
 		'ENG',
 		'KOR',
@@ -2324,6 +2348,7 @@ TPL.selects = {
 		'ESP',
 		'ITA',
 		'GER',
+		'RUS',
 		''
 	],
 
@@ -2338,14 +2363,14 @@ TPL.selects = {
 
 	//psp=psx
 	change_disk_psn: [
-		'&raquo; Выбрать/ Диск всего один',
-		'Есть',
-		'Нет'
+		'Диск лише один',
+		'Є',
+		'Немає'
 	],
 
 	genre_game_dvd: [
 		'',
-		'Interactive Movie ',
+		'Interactive Movie',
 		'Adventure'
 	],
 
@@ -2357,11 +2382,11 @@ TPL.selects = {
 		'XBOX-360',
 		'PS2',
 		'PS3',
-		'Другой'
+		'Інша'
 	],
 
 	tabletka_game_dvd: [
-		'Не требуется'
+		'Не потрібні'
 	],
 
 	format_disk_game_dvd: [
@@ -2380,36 +2405,38 @@ TPL.selects = {
 	],
 
 	sub_game_video: [
-		'',
-		'русские',
-		'английские',
-		'немецкие',
-		'нет',
-		'Другие'
+		'немає',
+		'українські',
+		'англійські',
+		'російські',
+		'німецькі',
+		'інші'
 	],
 
 	sub_game_video_abr: [
 		'',
-		'Sub-RUS',
+		'Sub-UKR',
 		'Sub-ENG',
+		'Sub-RUS',
 		'Sub-DEU',
-		'',
 		''
 	],
 
 	lang_game_video: [
 		'',
-		'русский',
-		'английский',
-		'немецкий',
-		'нет',
-		'Другой'
+		'українська',
+		'англійська',
+		'російська',
+		'німецька',
+		'інша',
+		'немає'
 	],
 
 	lang_game_video_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'ENG',
+		'RUS',
 		'DEU',
 		'',
 		''
@@ -2426,35 +2453,35 @@ TPL.selects = {
 		'MPEG',
 		'3GP',
 		'TS',
-		'Другой'
+		'Інший'
 	],
 
 	material_trailer: [
 		'',
 		'трейлер',
 		'тизер',
-		'фильм о фильме',
-		'дополнительные материалы',
-		'интервью с актерами',
-		'сюжет из фильма',
-		'удаленные сцены'
+		'фільм про фільм',
+		'додаткові матеріали',
+		'інтерв\'ю з акторами',
+		'сюжет із фільму',
+		'вирізані сцени'
 	],
 
-	//для трейлеров, видео (разное) и спорта!!!
+	//для трейлеров, відео (разное) и спорта!!!
 	transl_trailer: [
 		'',
-		'Профессиональный (одноголосый закадровый)',
-		'Любительский (одноголосый закадровый)',
-		'Двухголосый закадровый',
-		'Многоголосый закадровый',
-		'Полное дублированние',
-		'Субтитры',
-		'Не требуется'
+		'Професійний (одноголосий закадровий)',
+		'Любительский (одноголосий закадровий)',
+		'Двоголосий закадровий',
+		'Багатоголосий закадровий',
+		'Повний дубляж',
+		'Субтитри',
+		'Не потрібно'
 	],
 
-	//для трейлеров, видео (разное) и спорта!!!
+	//для трейлеров, відео (разное) и спорта!!!
 	video_quality_trailer: [
-		'&raquo; Качество видео',
+		'&raquo; Якість відео',
 		'DVDRip',
 		'HDRip',
 		'HDTVRip',
@@ -2468,7 +2495,7 @@ TPL.selects = {
 		'BluRay'
 	],
 
-	//для трейлеров, видео (разное) и спорта!!!
+	//для трейлеров, відео (разное) и спорта!!!
 	video_format_trailer: [
 		'',
 		'AVI',
@@ -2479,7 +2506,7 @@ TPL.selects = {
 		'DVD Video'
 	],
 
-	//для трейлеров, видео (разное) и спорта!!!
+	//для трейлеров, відео (разное) и спорта!!!
 	video_codec_trailer: [
 		'',
 		'DivX',
@@ -2488,7 +2515,7 @@ TPL.selects = {
 		'MPEG2'
 	],
 
-	//для трейлеров, видео (разное) и спорта!!!
+	//для трейлеров, відео (разное) и спорта!!!
 	audio_codec_trailer: [
 		'',
 		'MP3',
@@ -2499,21 +2526,21 @@ TPL.selects = {
 	],
 
 	lang_old_game: [
-		'&raquo; Язык интерфейса',
-		'только английский',
-		'только русский',
-		'английский и русский',
-		'английский + русский',
-		'многоязычный',
-		'Другой'
+		'&raquo; Мова інтерфейсу',
+		'українська',
+		'українська + англійська',
+		'англійська',
+		'російська',
+		'багатомовна',
+		'інша'
 	],
 
 	lang_old_game_abr: [
 		'',
+		'[UKR]',
+		'[UKR + ENG]',
 		'[ENG]',
 		'[RUS]',
-		'[ENG] [RUS]',
-		'[ENG + RUS]',
 		'[Multi]',
 		''
 	],
@@ -2521,20 +2548,20 @@ TPL.selects = {
 	//apple
 	edition_type_iphone: [
 		'',
-		'оригинал',
-		'переиздание',
-		'ремастер',
-		'ремикс',
-		'сборник',
-		'сингл'
+		'оригінал',
+		'перевидання',
+		'ремайстер',
+		'ремікс',
+		'збірник',
+		'синґл'
 	],
 
 	words_iphone: [
 		'',
-		'вшиты',
-		'вшиты частично',
-		'отсутствуют',
-		'не требуются'
+		'вбудовані',
+		'вбудовані частково',
+		'відсутні',
+		'не потрібні'
 	],
 
 	rip_prog_iphone: [
@@ -2542,29 +2569,29 @@ TPL.selects = {
 		'iTunes (диск)',
 		'EAC (диск)',
 		'foobar2000 + iTunes (lossless)',
-		'Сторонняя программа (lossless)',
+		'Стороння програма (lossless)',
 		'XLD (lossless)'
 	],
 
 	audio_bitrate_iphone_los: [
-		'&raquo; Битрейт аудио',
+		'&raquo; Бітрейт аудіо',
 		'lossless',
 		'lossless CBR (1411)'
 	],
 
 	transl_iphone: [
 		'',
-		'Любительский одноголосый',
-		'Любительский многоголосый',
-		'Любительский Гоблина',
-		'Профессиональный (одноголосый)',
-		'Профессиональный (двухголосый)',
-		'Профессиональный (дублированный)',
-		'Профессиональный (многоголосый закадровый)',
-		'Профессиональный (многоголосый, полное дублирование)',
-		'Субтитры',
-		'Отсутствует',
-		'Не требуется'
+		'Любительский одноголосий',
+		'Любительский багатоголосий',
+		'Любительский Гобліна',
+		'Професійний (одноголосий)',
+		'Професійний (двоголосий)',
+		'Професійний (дубльований)',
+		'Професійний (багатоголосий закадровий)',
+		'Професійний (дубляж)',
+		'Субтитри',
+		'Відсутній',
+		'Не потрібен'
 	],
 
 	video_format_iphone: [
@@ -2575,14 +2602,14 @@ TPL.selects = {
 	],
 
 	video_codec_iphone: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'H.264',
 		'XviD',
-		'Другой MPEG4'
+		'Інший MPEG4'
 	],
 
 	audio_codec_iphone: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'ААС',
 		'ALAC',
 		'AAC + AC3'
@@ -2590,39 +2617,39 @@ TPL.selects = {
 
 	cover_iphone: [
 		'',
-		'есть',
-		'нет'
+		'є',
+		'немає'
 	],
 
 	tag_iphone: [
 		'',
-		'прописаны',
-		'нет',
-		'частично'
+		'прописані',
+		'немає',
+		'частково'
 	],
 
 	show_iphone: [
 		'',
-		'прописан',
-		'нет',
-		'не требуется'
+		'прописані',
+		'немає',
+		'не потрібні'
 	],
 
 	chapter_iphone: [
 		'',
-		'прописаны',
-		'нет'
+		'прописані',
+		'немає'
 	],
 
 	series_iphone: [
 		'',
-		'прописан',
-		'нет',
-		'не требуется'
+		'прописані',
+		'немає',
+		'не потрібні'
 	],
 
 	audio_bitrate_iphone: [
-		'&raquo; Битрейт',
+		'&raquo; Бітрейт',
 		'16 kbps',
 		'32 kbps',
 		'64 kbps',
@@ -2643,19 +2670,19 @@ TPL.selects = {
 		'VBR 224 kbps',
 		'VBR 256 kbps',
 		'VBR 320 kbps',
-		'Другой'
+		'Інший'
 	],
 
 	audio_chapters_iphone: [
 		'',
-		'есть',
-		'нет'
+		'є',
+		'немає'
 	],
 
 	audiobook_label: [
-		'Официальное издание (заполнить соседнее поле)',
-		'Аудиокнига своими руками',
-		'Нигде не купишь'
+		'Офіційне видання (заповнити сусіднє поле)',
+		'Аудіокнига своїми руками',
+		'Ніде не купиш'
 	],
 
 	// -apple
@@ -2690,26 +2717,28 @@ TPL.selects = {
 
 	lang_mac_prog: [
 		'',
-		'русский + английский',
-		'английский',
-		'немецкий'
+		'українська + англійська',
+		'англійська',
+		'німецька',
+		'російська'
 	],
 
 	lang_mac_prog_abr: [
 		'',
-		'RUS',
-		'',
-		''
+		'UKR + ENG',
+		'ENG',
+		'DEU',
+		'RUS'
 	],
 
 	tablet_mac_prog: [
 		'',
-		'Серийный номер',
-		'Программа пролечена (не требует введения данных/вводим любые данные)',
-		'Файл лицензии',
-		'Кейген',
-		'Кейген (требуется эмулятор Windows)',
-		'Нет таблетки'
+		'Серійний номер',
+		'Програма вилікувана (не потребує введення даних/вводимо будь-які дані)',
+		'Файл ліцензії',
+		'Кейґен',
+		'Кейґен (необхідний емулятор Windows)',
+		'Немає'
 	],
 
 	tablet_mac_prog_abr: [
@@ -2723,7 +2752,7 @@ TPL.selects = {
 	],
 
 	video_format_dorama: [
-		'&raquo; Формат видео',
+		'&raquo; Формат відео',
 		'AVI',
 		'DVD Video',
 		'OGM',
@@ -2739,10 +2768,10 @@ TPL.selects = {
 	],
 
 	video_quality_sport: [
-		'&raquo; Качество видео',
+		'&raquo; Якість відео',
 		'DVDRip',
 		'DVD5',
-		'DVD5 (сжатый)',
+		'DVD5 (стиснутий)',
 		'DVD9',
 		'HDTV',
 		'HDTVRip',
@@ -2761,7 +2790,7 @@ TPL.selects = {
 	],
 
 	audio_codec_music_lib: [
-		'&raquo; аудио кодек',
+		'&raquo; Аудіокодек',
 		'WAV',
 		'MP3',
 		'AIFF',
@@ -2773,8 +2802,8 @@ TPL.selects = {
 
 	mus_loss_performer: [
 		'',
-		'Исполнитель (группа)',
-		'Сборник композиций разных исполнителей',
+		'Виконавець/гурт',
+		'Збірник композицій різних виконавців',
 		'Саундтрек'
 	],
 
@@ -2785,17 +2814,17 @@ TPL.selects = {
 		''
 	],
 
-	//Библиотеки сэмплов
+	//Библиотеки семплов
 	bit_music_lib: [
-		'&raquo; битность',
+		'&raquo; Бітність',
 		'8 bit',
 		'16 bit',
 		'24 bit',
-		'Другой'
+		'Інша'
 	],
 
 	bitrate_music_lib: [
-		'&raquo; Битрейт',
+		'&raquo; Бітрейт',
 		'64 kbps',
 		'96 kbps',
 		'128 kbps',
@@ -2808,7 +2837,7 @@ TPL.selects = {
 		'VBR 192-320 kbps',
 		'705 kbps',
 		'1411 kbps',
-		'Другой'
+		'Інший'
 	],
 
 	rate_music_lib: [
@@ -2820,44 +2849,44 @@ TPL.selects = {
 	],
 
 	canales_music_lib: [
-		'&raquo; Каналы',
+		'&raquo; Канали',
 		'mono',
 		'stereo',
 		'5.1'
 	],
 
 	channel_sound: [
-		'&raquo; Каналы',
+		'&raquo; Канали',
 		'mono',
 		'stereo'
 	],
 
 	//Ноты
 	mus_edit: [
-		'Фамилия редактора (заполнить соседнее поле)',
+		'Прізвище редактора (заповнити сусіднє поле)',
 		'Уртекст',
-		'Не известно/не указано.'
+		'Невідомо/не вказано'
 	],
 
 	mus_lang: [
 		'',
-		'Русский',
-		'Украинский',
-		'Английский',
-		'Немецкий',
-		'Французский',
-		'Итальянский',
-		'Испанский',
-		'Китайский',
-		'Японский',
-		'Другой'
+		'Українська',
+		'Англійська',
+		'Російська',
+		'Німецька',
+		'Французька',
+		'Італійська',
+		'Іспанська',
+		'Китайська',
+		'Японська',
+		'Інша'
 	],
 
 	mus_lang_abr: [
 		'',
-		'RUS',
 		'UKR',
 		'ENG',
+		'RUS',
 		'DEU',
 		'FRA',
 		'ITA',
@@ -2868,43 +2897,43 @@ TPL.selects = {
 	],
 
 	transl_cartoons_0: [
-		'&raquo; Перевод',
-		'Полное дублирование',
-		'Профессиональный многоголосый закадровый',
-		'Профессиональный двухголосый закадровый',
-		'Профессиональный одноголосый закадровый',
-		'Любительский многоголосый закадровый',
-		'Любительский двухголосый закадровый',
-		'Любительский одноголосый закадровый (автор)',
-		'Авторский одноголосый закадровый (автор)',
-		'Не требуется',
-		'Отсутствует'
+		'&raquo; Переклад',
+		'Повний дубляж',
+		'Професійний багатоголосий закадровий',
+		'Професійний двоголосий закадровий',
+		'Професійний одноголосий закадровий',
+		'Любительский багатоголосий закадровий',
+		'Любительский двоголосий закадровий',
+		'Любительский одноголосий закадровий (автор)',
+		'Авторський одноголосий закадровий (автор)',
+		'Не потрібен',
+		'Відсутній'
 	],
 
 	transl_cartoons_1: [
-		'&raquo; Перевод 2',
-		'Полное дублирование',
-		'Профессиональный многоголосый закадровый',
-		'Профессиональный двухголосый закадровый',
-		'Профессиональный одноголосый закадровый',
-		'Любительский многоголосый закадровый',
-		'Любительский двухголосый закадровый',
-		'Любительский одноголосый закадровый (автор)',
-		'Авторский одноголосый закадровый (автор)',
-		'Не требуется'
+		'&raquo; Переклад 2',
+		'Повний дубляж',
+		'Професійний багатоголосий закадровий',
+		'Професійний двоголосий закадровий',
+		'Професійний одноголосий закадровий',
+		'Любительский багатоголосий закадровий',
+		'Любительский двоголосий закадровий',
+		'Любительский одноголосий закадровий (автор)',
+		'Авторський одноголосий закадровий (автор)',
+		'Не потрібен'
 	],
 
 	transl_cartoons_2: [
-		'&raquo; Перевод 3',
-		'Полное дублирование',
-		'Профессиональный многоголосый закадровый',
-		'Профессиональный двухголосый закадровый',
-		'Профессиональный одноголосый закадровый',
-		'Любительский многоголосый закадровый',
-		'Любительский двухголосый закадровый',
-		'Любительский одноголосый закадровый (автор)',
-		'Авторский одноголосый закадровый (автор)',
-		'Не требуется'
+		'&raquo; Переклад 3',
+		'Повний дубляж',
+		'Професійний багатоголосий закадровий',
+		'Професійний двоголосий закадровий',
+		'Професійний одноголосий закадровий',
+		'Любительский багатоголосий закадровий',
+		'Любительский двоголосий закадровий',
+		'Любительский одноголосий закадровий (автор)',
+		'Авторський одноголосий закадровий (автор)',
+		'Не потрібен'
 	],
 
 	transl_cartoons_0_abr: [
@@ -2953,23 +2982,23 @@ TPL.selects = {
 	],
 
 	type_cartoons: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVD5',
 		'DVD9',
 		'DVD5 (Custom)',
-		'DVD5 (сжатый)',
+		'DVD5 (стиснутий)',
 		'DVD9 (Custom)',
-		'DVD9 (Сжатый)'
+		'DVD9 (стиснутий)'
 	],
 
 	screen_cartoons: [
-		'&raquo; Формат экрана',
+		'&raquo; Формат екрану',
 		'16:9',
 		'4:3'
 	],
 
 	def_cartoons: [
-		'&raquo; Система / Разрешение',
+		'&raquo; Система / Роздільна здатність',
 		'PAL (720х576)',
 		'NTSC (720x480)',
 		'PAL (704x576)',
@@ -2981,7 +3010,7 @@ TPL.selects = {
 	],
 
 	video_quality_cartoons: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVDRip',
 		'HDRip',
 		'HDTVRip',
@@ -3002,9 +3031,9 @@ TPL.selects = {
 		'DVD5',
 		'DVD9',
 		'DVD5 (Custom)',
-		'DVD5 (Сжатый)',
+		'DVD5 (стиснутий)',
 		'DVD9 (Custom)',
-		'DVD9 (Сжатый)'
+		'DVD9 (стиснутий)'
 	],
 
 	format_cartoons: [
@@ -3016,7 +3045,7 @@ TPL.selects = {
 	],
 
 	video_quality_cartoons_hd: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'BDRip 720p',
 		'BDRip 1080p',
 		'BDRemux',
@@ -3037,7 +3066,7 @@ TPL.selects = {
 	],
 
 	video_quality_cart_serial: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVDRip',
 		'HDRip',
 		'HDTVRip',
@@ -3056,9 +3085,9 @@ TPL.selects = {
 		'DVD5',
 		'DVD9',
 		'DVD5 (Custom)',
-		'DVD5 (Сжатый)',
+		'DVD5 (стиснутий)',
 		'DVD9 (Custom)',
-		'DVD9 (Сжатый)',
+		'DVD9 (стиснутий)',
 		' ',
 		'BDRip 720p',
 		'BDRip 1080p',
@@ -3073,7 +3102,7 @@ TPL.selects = {
 	],
 
 	video_quality_serial: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVDRip',
 		'HDRip',
 		'HDTVRip',
@@ -3096,7 +3125,7 @@ TPL.selects = {
 		'BDRemux',
 		'Blu-Ray',
 		'DVB',
-		'Другое'
+		'Інша'
 	],
 
 	format_cart_serial: [
@@ -3116,18 +3145,18 @@ TPL.selects = {
 	//apple >> iOS
 	apple_ios_sysreq: [
 		'',
-		'iOS 3.0 и выше',
-		'iOS 3.1 и выше',
-		'iOS 3.1.2 и выше',
-		'iOS 3.1.3 и выше',
-		'iOS 3.2 и выше',
-		'iOS 4.0 и выше',
-		'iOS 4.1 и выше',
-		'iOS 4.2 и выше',
-		'iOS 4.3 и выше',
-		'iOS 5.0 и выше',
-		'iOS 5.1 и выше',
-		'Другое'
+		'iOS 3.0 і вище',
+		'iOS 3.1 і вище',
+		'iOS 3.1.2 і вище',
+		'iOS 3.1.3 і вище',
+		'iOS 3.2 і вище',
+		'iOS 4.0 і вище',
+		'iOS 4.1 і вище',
+		'iOS 4.2 і вище',
+		'iOS 4.3 і вище',
+		'iOS 5.0 і вище',
+		'iOS 5.1 і вище',
+		'Інші'
 	],
 
 	apple_ios_sysreq_abr: [
@@ -3148,36 +3177,38 @@ TPL.selects = {
 
 	apple_ios_lang: [
 		'',
-		'русский',
-		'английский',
+		'українська',
+		'англійська',
 		'японский',
 		'китайский',
-		'немецкий',
-		'французский',
-		'испанский',
-		'другой'
+		'німецька',
+		'французька',
+		'іспанська',
+		'російська',
+		'інша'
 	],
 
 	apple_ios_lang_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'ENG',
 		'JAP',
 		'CHI',
 		'GER',
-		'FR',
+		'FRA',
 		'ESP',
+		'RUS',
 		''
 	],
 
 	apple_ios_dev: [
 		'',
-		'iPhone, iPod Touch, iPad (все поколения)',
-		'iPad (все поколения)',
-		'SD версия для iPhone, iPod Touch + HD версия для iPad',
-		'iPhone 3Gs, 4, 4s; iPod Touch 3-го и 4-го поколения; iPad (все поколения)',
+		'iPhone, iPod Touch, iPad (усі покоління)',
+		'iPad (усі покоління)',
+		'SD версія для iPhone, iPod Touch + HD версія для iPad',
+		'iPhone 3Gs, 4, 4s; iPod Touch 3-го та 4-го покоління; iPad (усі покоління)',
 		'iPhone 4s, iPad 2, iPad new',
-		'Другое'
+		'Інші'
 	],
 
 	apple_ios_def: [
@@ -3215,8 +3246,8 @@ TPL.selects = {
 		'.jpg / .png',
 		'.jpg',
 		'.png',
-		'разные (темы)',
-		'другой'
+		'різні (теми)',
+		'інший'
 	],
 
 	apple_ios_format_abr: [
@@ -3224,31 +3255,31 @@ TPL.selects = {
 		'',
 		'',
 		'',
-		'Рингтоны',
+		'Рінгтони',
 		'',
 		'',
-		'Обои',
-		'Обои',
-		'Обои',
-		'Темы',
+		'Шпалери',
+		'Шпалери',
+		'Шпалери',
+		'Теми',
 		''
 	],
 
 	//фильмы, сериалы.
 	video_codec_serials: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'DivX',
 		'XviD',
 		'H.264',
 		'MPEG2',
-		'Другой'
+		'Інший'
 	],
 
 	audio_codec_serials: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'MP3',
 		'AC3',
-		'Другой'
+		'Інший'
 	],
 
 	type_avatar: [
@@ -3267,21 +3298,21 @@ TPL.selects = {
 
 	//3D модели, сцены и материалы
 	type_3d_model: [
-		'&raquo; Количество',
+		'&raquo; Кількість',
 		'моделей',
 		'сцен',
 		'текстур',
 		'HDRI',
-		'материалов',
-		'Другое'
+		'матеріалів',
+		'Інше'
 	],
 
 	video_quality_vlesson: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVDRip',
 		'DVD5',
 		'DVD9',
-		'DVD5 (сжатый)',
+		'DVD5 (стиснутий)',
 		'HDTVRip',
 		'HDRip',
 		'BDRip',
@@ -3310,7 +3341,7 @@ TPL.selects = {
 	],
 
 	video_codec_vlesson: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'XviD',
 		'DivX',
 		'MPEG1',
@@ -3323,7 +3354,7 @@ TPL.selects = {
 	],
 
 	audio_codec_vlesson: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'MP3',
 		'AC3',
 		'AAC',
@@ -3337,29 +3368,29 @@ TPL.selects = {
 
 	transl_doc_film: [
 		'',
-		'Любительcкий (одноголосый)',
-		'Любительский (двухголосый)',
-		'Авторский (одноголосый)',
-		'Профессиональный (одноголосый)',
-		'Профессиональный (двухголосый)',
-		'Профессиональный (многоголосый, закадровый)',
-		'Профессиональный (полное дублирование)',
-		'Субтитры',
-		'Не требуется',
-		'Отсутствует'
+		'Любительcкий (одноголосий)',
+		'Любительский (двоголосий)',
+		'Авторський (одноголосий)',
+		'Професійний (одноголосий)',
+		'Професійний (двоголосий)',
+		'Професійний (багатоголосий, закадровий)',
+		'Професійний (дубляж)',
+		'Субтитри',
+		'Не потрібен',
+		'Відсутній'
 	],
 
 	chapters_music_dvd: [
-		'&raquo; Главы (разбивка по трекам)',
-		'есть',
-		'нет'
+		'&raquo; Розділи (розбиття за треками)',
+		'є',
+		'немає'
 	],
 
 	video_quality_music_dvd: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVD5',
 		'DVD9',
-		'DVD5 (сжатый)',
+		'DVD5 (стиснутий)',
 		'HDTVRip',
 		'HDRip',
 		'BDRip',
@@ -3378,12 +3409,12 @@ TPL.selects = {
 	],
 
 	video_codec_music_dvd: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'MPEG2'
 	],
 
 	audio_codec_music_dvd: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'AC3',
 		'PCM',
 		'DTS',
@@ -3391,7 +3422,7 @@ TPL.selects = {
 	],
 
 	audio_codec_mus_loss: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'FLAC (*.flac) ',
 		'APE (*.ape)',
 		'WavPack (*.wv)'
@@ -3414,17 +3445,17 @@ TPL.selects = {
 
 	scan_mus_loss_apple: [
 		'',
-		'есть',
-		'нет',
+		'є',
+		'немає',
 		'Digital Booklet'
 	],
 
 	source_mus_loss: [
 		'',
-		'собственный рип',
-		'скачано с',
-		'релизер',
-		'Другое'
+		'власний ріп',
+		'завантажено з',
+		'релізер',
+		'інше'
 	],
 
 	genre_soundtrack_mus: [
@@ -3438,14 +3469,14 @@ TPL.selects = {
 		'APE',
 		'FLAC',
 		'WavPack ',
-		'Другое'
+		'інше'
 	],
 
 	source_digit_mus: [
 		'',
-		'автором раздачи ',
-		'третьим лицом',
-		'Другое'
+		'автором роздачі',
+		'третьою особою',
+		'інше'
 	],
 
 	vinyl_digit_mus: [
@@ -3462,8 +3493,8 @@ TPL.selects = {
 
 	perfotmer_mus_lossy: [
 		'',
-		'Исполнитель (группа)',
-		'сборник композиций разных исполнителей'
+		'Виконавець (группа)',
+		'Збірка композицій різних виконавців'
 	],
 
 	perfotmer_mus_lossy_abr: [
@@ -3484,14 +3515,14 @@ TPL.selects = {
 	],
 
 	rip_type_mus_lossy: [
-		'&raquo; Тип рипа',
+		'&raquo; Тип ріпу',
 		'tracks',
 		'image+.cue',
 		'image'
 	],
 
 	bitrate_mus_lossy: [
-		'&raquo; Битрейт аудио',
+		'&raquo; Бітрейт аудіо',
 		'64 kbps',
 		'128 kbps',
 		'192 kbps',
@@ -3516,19 +3547,19 @@ TPL.selects = {
 
 	scan_mus_loss: [
 		'',
-		'да',
-		'нет'
+		'так',
+		'ні'
 	],
 
 	tag_mus_lossy: [
 		'',
-		'да',
-		'нет'
+		'так',
+		'ні'
 	],
 
 	//программы - тестовые диски
 	rip_type_test: [
-		'&raquo; Тип рипа',
+		'&raquo; Тип ріпу',
 		'tracks',
 		'image + .cue',
 		'tracks + .cue',
@@ -3539,7 +3570,7 @@ TPL.selects = {
 	],
 
 	audio_codec_test: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'WAV',
 		'MP3',
 		'APE',
@@ -3557,7 +3588,7 @@ TPL.selects = {
 	],
 
 	video_codec_test: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'DivX',
 		'XviD',
 		'MPEG4',
@@ -3568,7 +3599,7 @@ TPL.selects = {
 		'QuickTime',
 		'H.264',
 		'Flash',
-		'Другой'
+		'Інший'
 	],
 
 	arch_linux: [
@@ -3576,19 +3607,21 @@ TPL.selects = {
 		'x86',
 		'amd64',
 		'x86, amd64',
-		'Другая'
+		'Інша'
 	],
 
 	lang_game_dvd_pleer: [
 		'',
-		'английский',
-		'японский',
-		'русский',
+		'українська',
+		'англійська',
+		'японська',
+		'російська',
 		'multi'
 	],
 
 	lang_game_dvd_pleer_abr: [
 		'',
+		'UKR',
 		'ENG',
 		'JAP',
 		'RUS',
@@ -3596,7 +3629,7 @@ TPL.selects = {
 	],
 
 	audio_codec_film: [
-		'» Выберите кодек аудио',
+		'» Вкажіть кодек аудіо',
 		'MP3',
 		'AC3',
 		'DTS',
@@ -3606,7 +3639,7 @@ TPL.selects = {
 	],
 
 	video_quality_serials: [
-		'» Качество',
+		'» Якість',
 		'DVDRip',
 		'HDRip',
 		'HDTVRip',
@@ -3625,7 +3658,7 @@ TPL.selects = {
 		'DTheater',
 		'BDRemux',
 		'Blu-Ray',
-		'Другое'
+		'Інше'
 	],
 
 	loss_bit: [
@@ -3636,18 +3669,18 @@ TPL.selects = {
 	type_homebrewe: [
 		'',
 		'Прошивка',
-		'Homebrew программа',
-		'PC программа',
-		'CTF тема',
-		'PTF тема',
-		'Эмулятор',
-		'Hombrew-игра',
-		'Дополнение или руководство для игры',
-		'Flash-программа или игр',
-		'Карта местности',
-		'Сохранение игры',
-		'Обои',
-		'Прочее'
+		'Homebrew-програма',
+		'PC-програма',
+		'CTF-тема',
+		'PTF-тема',
+		'Емулятор',
+		'Hombrew-гра',
+		'Доповнення або посібник до гри',
+		'Flash-програма або гра',
+		'Карта місцевості',
+		'Збереження гри',
+		'Шпалери',
+		'Інше'
 	],
 
 	type_homebrewe_abr: [
@@ -3679,13 +3712,13 @@ TPL.selects = {
 		'Sega Mega Drive Genesis',
 		'Sega Saturn',
 		'Sega GameGear',
-		'Игровой автомат',
+		'Ігровий автомат',
 		'MAME',
 		'Atari 2600',
 		'Atari 5200',
 		'PC Engine',
 		'Neo-Geo',
-		'Другая'
+		'Інша'
 	],
 
 	console_type_abr: [
@@ -3719,13 +3752,14 @@ TPL.selects = {
 	],
 
 	sub_all_anime: [
-		'» Язык',
-		'русский',
-		'английский',
-		'немецкий',
-		'французский',
-		'китайский',
-		'Другой'
+		'» Мова',
+		'українська',
+		'англійська',
+		'німецька',
+		'французька',
+		'китайська',
+		'російська',
+		'інша'
 	],
 
 	sub_all_anime_abr: [
@@ -3735,17 +3769,19 @@ TPL.selects = {
 		'',
 		'',
 		'',
+		'',
 		''
 	],
 
 	sub_all_anime_2: [
-		'» Язык',
-		'русский',
-		'английский',
-		'немецкий',
-		'французский',
-		'китайский',
-		'Другой'
+		'» Мова',
+		'українська',
+		'англійська',
+		'німецька',
+		'французька',
+		'китайська',
+		'російська',
+		'інша'
 	],
 
 	sub_all_anime_2_abr: [
@@ -3755,17 +3791,19 @@ TPL.selects = {
 		'',
 		'',
 		'',
+		'',
 		''
 	],
 
 	sub_all_anime_3: [
-		'» Язык',
-		'русский',
-		'английский',
-		'немецкий',
-		'французский',
-		'китайский',
-		'Другой'
+		'» Мова',
+		'українська',
+		'англійська',
+		'німецька',
+		'французька',
+		'китайська',
+		'російська',
+		'інша'
 	],
 
 	sub_all_anime_3_abr: [
@@ -3779,43 +3817,43 @@ TPL.selects = {
 	],
 
 	transl_lat_setial: [
-		'&raquo; Перевод 1',
-		'полное дублирование',
-		'профессиональный многоголосый закадровый',
-		'профессиональный двухголосый закадровый',
-		'профессиональный одноголосый закадровый',
-		'любительский двухголосый закадровый',
-		'любительский одноголосый закадровый (автор)',
-		'авторский одноголосый закадровый (автор)',
-		'не требуется',
-		'отсутствует',
-		'Другой'
+		'&raquo; Переклад 1',
+		'дубляж',
+		'професійний багатоголосий закадровий',
+		'професійний двоголосий закадровий',
+		'професійний одноголосий закадровий',
+		'любительский двоголосий закадровий',
+		'любительский одноголосий закадровий (автор)',
+		'авторський одноголосий закадровий (автор)',
+		'не потрібен',
+		'відсутній',
+		'інший'
 	],
 
 	transl_lat_setial_1: [
-		'&raquo; Перевод 2',
-		'полное дублирование',
-		'профессиональный многоголосый закадровый',
-		'профессиональный двухголосый закадровый',
-		'профессиональный одноголосый закадровый',
-		'любительский двухголосый закадровый',
-		'любительский одноголосый закадровый (автор)',
-		'авторский одноголосый закадровый (автор)',
-		'не требуется',
-		'Другой'
+		'&raquo; Переклад 2',
+		'дубляж',
+		'професійний багатоголосий закадровий',
+		'професійний двоголосий закадровий',
+		'професійний одноголосий закадровий',
+		'любительский двоголосий закадровий',
+		'любительский одноголосий закадровий (автор)',
+		'авторський одноголосий закадровий (автор)',
+		'не потрібен',
+		'інший'
 	],
 
 	transl_lat_setial_2: [
-		'&raquo; Перевод 3',
-		'полное дублирование',
-		'профессиональный многоголосый закадровый',
-		'профессиональный двухголосый закадровый',
-		'профессиональный одноголосый закадровый',
-		'любительский двухголосый закадровый',
-		'любительский одноголосый закадровый (автор)',
-		'авторский одноголосый закадровый (автор)',
-		'не требуется',
-		'Другой'
+		'&raquo; Переклад 3',
+		'дубляж',
+		'професійний багатоголосий закадровий',
+		'професійний двоголосий закадровий',
+		'професійний одноголосий закадровий',
+		'любительский двоголосий закадровий',
+		'любительский одноголосий закадровий (автор)',
+		'авторський одноголосий закадровий (автор)',
+		'не потрібен',
+		'інший'
 	],
 
 	format_lat_serial: [
@@ -3830,11 +3868,12 @@ TPL.selects = {
 		'M2TS',
 		'BDMV',
 		'BDAV',
-		'Другой'
+		'Інший'
 	],
 
 	game_lang_nds: [
-		'&raquo; Язык',
+		'&raquo; Мова',
+		'UKR',
 		'JAP',
 		'ENG',
 		'RUS',
@@ -3843,26 +3882,28 @@ TPL.selects = {
 
 	lang_comp_vlesson: [
 		'',
-		'Русский',
-		'Английский',
-		'Немецкий',
-		'Другой'
+		'Українська',
+		'Англійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_comp_vlesson_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'ENG',
 		'DEU',
+		'RUS',
 		''
 	],
 
 	type_comp_vlesson: [
 		'',
-		'Видеоурок',
-		'Мультимедийный диск',
-		'Интерактивный диск',
-		'Видеоклипы'
+		'Відеоурок',
+		'Мультимедійний диск',
+		'Інтерактивний диск',
+		'Відеокліпи'
 	],
 
 	type_comp_vlesson_abr: [
@@ -3875,62 +3916,62 @@ TPL.selects = {
 
 	lang_notes: [
 		'',
-		'Русский',
-		'Английский',
-		'Немецкий',
-		'Испанский',
-		'Китайский',
-		'Украинский',
-		'Другой'
+		'Українська',
+		'Англійська',
+		'Німецька',
+		'Іспанська',
+		'Китайська',
+		'Російська',
+		'Інша'
 	],
 
 	lang_notes_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'ENG',
 		'DEU',
 		'ITA',
 		'CHN',
-		'UKR',
+		'RUS',
 		''
 	],
 
 	licence_old_game: [
 		'',
-		'да',
-		'нет'
+		'так',
+		'ні'
 	],
 
 	lang_video_les: [
 		'',
-		'Русский',
-		'Английский',
-		'Русский + Английский',
-		'Немецкий',
-		'Украинский',
-		'Другой'
+		'Українська',
+		'Українська + англійська',
+		'Англійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_video_les_abr: [
 		'',
-		'RUS',
-		'ENG',
-		'RUS/ENG',
-		'DEU',
 		'UKR',
+		'UKR/ENG',
+		'ENG',
+		'DEU',
+		'RUS',
 		''
 	],
 
 	type_vlesson: [
 		'',
-		'Видеоурок',
-		'Мультимедийный диск',
-		'Другой'
+		'Відеоурок',
+		'Мультимедійний диск',
+		'Інший'
 	],
 
 	type_vlesson_abr: [
 		'',
-		'Видеоурок',
+		'Відеоурок',
 		'ММ',
 		''
 	],
@@ -3940,7 +3981,7 @@ TPL.selects = {
 		'Patch',
 		'Maps',
 		'Mods',
-		'RUS',
+		'UKR',
 		'ENG',
 		'Pack',
 		'Crack',
@@ -3952,12 +3993,12 @@ TPL.selects = {
 
 	lang_other_game: [
 		'',
-		'русский',
-		'английский',
-		'русский + английский',
-		'немецкий',
-		'не важно',
-		'Другой'
+		'українська',
+		'українська + англійська',
+		'англійська',
+		'німецька',
+		'російська',
+		'інша'
 	],
 
 	format_smart: [
@@ -3998,7 +4039,7 @@ TPL.selects = {
 		'',
 		'DivX',
 		'XviD',
-		'Другой MPEG4',
+		'Інший MPEG4',
 		'Widows Media',
 		'H.264',
 		'Flash',
@@ -4035,8 +4076,8 @@ TPL.selects = {
 
 	publishing_type_mob: [
 		'',
-		'Пиратка',
-		'Лицензия',
+		'Піратка',
+		'Ліцензія',
 		'Demo',
 		'Trial'
 	],
@@ -4065,20 +4106,20 @@ TPL.selects = {
 	],
 
 	launch_xbox: [
-		'&raquo; Возможность запуска на xbox 360',
-		'Да',
-		'Нет',
-		'Не знаю, проверьте, пожалуйста, сами и напишите о результате в теме'
+		'&raquo; Можливість запуску на Xbox 360',
+		'Є',
+		'Немає',
+		'Не знаю, перевірте, будь ласка, самі й напишіть у темі'
 	],
 
 	launch_pc: [
-		'&raquo; Возможность запуска на PC',
-		'Нет, запуск на PC невозможен.',
-		'Ищите порт этой игры в разделе *Игры для PC*'
+		'&raquo; Можливість запуску на PC',
+		'Немає',
+		'Шукайте порт цієї гри в розділі *Ігри для PC*'
 	],
 
 	video_codec_3d: [
-		'&raquo; Видео кодек',
+		'&raquo; Відеокодек',
 		'Divx',
 		'xVid',
 		'Mpeg2',
@@ -4088,7 +4129,7 @@ TPL.selects = {
 	],
 
 	audio_codec_3d: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'MP3',
 		'AC3',
 		'AAC',
@@ -4100,7 +4141,7 @@ TPL.selects = {
 	],
 
 	video_quality_3d_1: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'DVD5',
 		'DVD9',
 		'DVDrip',
@@ -4119,12 +4160,12 @@ TPL.selects = {
 	],
 
 	video_quality_3d_2: [
-		'&raquo; Качество',
+		'&raquo; Якість',
 		'720p',
 		'1080p',
 		'1080i',
 		'(Custom)',
-		'(Сжатый)'
+		'(стиснутий)'
 	],
 
 	container_3d: [
@@ -4142,45 +4183,45 @@ TPL.selects = {
 	format_3d: [
 		'&raquo; Формат 3D',
 		'Blu-ray 3D',
-		'Анаглиф red-cyan',
-		'Анаглиф green-magenta',
-		'Анаглиф yellow-blue',
-		'Чересстрочный / Interlace',
-		'OverUnder / Вертикальная стереопара',
-		'Half OverUnder / Вертикальная анаморфная стереопара',
-		'SideBySide / Горизонтальная стереопара',
-		'Half SideBySide / Горизонтальная анаморфная стереопара',
-		'SeparateFiles / Раздельная стереопара'
+		'Анагліф red-cyan',
+		'Анагліф green-magenta',
+		'Анагліф yellow-blue',
+		'Черезрядковий / Interlace',
+		'OverUnder / Вертикальна стереопара',
+		'Half OverUnder / Вертикальна анаморфна стереопара',
+		'SideBySide / Горизонтальна стереопара',
+		'Half SideBySide / Горизонтальна анаморфна стереопара',
+		'SeparateFiles / Розділена стереопара'
 	],
 
 	format_3d_abr: [
 		'',
 		'BD3D',
-		'Anaglyph / Анаглиф',
-		'Anaglyph / Анаглиф',
-		'Anaglyph / Анаглиф',
-		'Interlaced / интерлейс',
-		'OverUnder / Вертикальная стереопара',
-		'Half OverUnder / Вертикальная анаморфная стереопара',
-		'SideBySide / Горизонтальная стереопара',
-		'Half SideBySide / Горизонтальная анаморфная стереопара',
-		'SeparateFiles / Раздельная стереопара'
+		'Anaglyph / Анагліф',
+		'Anaglyph / Анагліф',
+		'Anaglyph / Анагліф',
+		'Interlaced / Інтерлейс',
+		'OverUnder / Вертикальна стереопара',
+		'Half OverUnder / Вертикальна анаморфна стереопара',
+		'SideBySide / Горизонтальна стереопара',
+		'Half SideBySide / Горизонтальна анаморфна стереопара',
+		'SeparateFiles / Розділена стереопара'
 	],
 
 	angle_3d: [
-		'&raquo;  Порядок ракурсов',
-		'левый ракурс первый',
-		'правый ракурс первый'
+		'&raquo;  Порядок ракурсів',
+		'лівий ракурс перший',
+		'правий ракурс перший'
 	],
 
 	update_game: [
 		'',
-		'Да',
-		'Нет'
+		'Так',
+		'Ні'
 	],
 
 	audio_codec_anime_loss: [
-		'&raquo; Аудио кодек',
+		'&raquo; Аудіокодек',
 		'FLAC (*.flac) ',
 		'APE (*.ape)',
 		'WavPack (*.wv)',
@@ -4198,21 +4239,22 @@ TPL.selects = {
 	],
 
 	lang_anime_transl: [
-		'&raquo; Язык',
-		'Русский',
-		'Японский',
-		'Английский',
-		'Корейский',
-		'Китайский',
-		'Испанский',
-		'Итальянский',
-		'Немецкий',
-		'Другой'
+		'&raquo; Мова',
+		'Українська',
+		'Японська',
+		'Англійська',
+		'Корейська',
+		'Китайська',
+		'Іспанська',
+		'Італійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_anime_transl_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'JAP',
 		'ENG',
 		'KOR',
@@ -4220,25 +4262,27 @@ TPL.selects = {
 		'ESP',
 		'ITA',
 		'GER',
+		'RUS',
 		''
 	],
 
 	lang_anime_transl_2: [
-		'&raquo; Язык',
-		'Русский',
-		'Японский',
-		'Английский',
-		'Корейский',
-		'Китайский',
-		'Испанский',
-		'Итальянский',
-		'Немецкий',
-		'Другой'
+		'&raquo; Мова',
+		'Українська',
+		'Японська',
+		'Англійська',
+		'Корейська',
+		'Китайська',
+		'Іспанська',
+		'Італійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_anime_transl_2_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'JAP',
 		'ENG',
 		'KOR',
@@ -4246,25 +4290,27 @@ TPL.selects = {
 		'ESP',
 		'ITA',
 		'GER',
+		'RUS',
 		''
 	],
 
 	lang_anime_transl_3: [
-		'&raquo; Язык',
-		'Русский',
-		'Японский',
-		'Английский',
-		'Корейский',
-		'Китайский',
-		'Испанский',
-		'Итальянский',
-		'Немецкий',
-		'Другой'
+		'&raquo; Мова',
+		'Українська',
+		'Японська',
+		'Англійська',
+		'Корейська',
+		'Китайська',
+		'Іспанська',
+		'Італійська',
+		'Німецька',
+		'Російська',
+		'Інша'
 	],
 
 	lang_anime_transl_3_abr: [
 		'',
-		'RUS',
+		'UKR',
 		'JAP',
 		'ENG',
 		'KOR',
@@ -4272,16 +4318,17 @@ TPL.selects = {
 		'ESP',
 		'ITA',
 		'GER',
+		'RUS',
 		''
 	],
 
 	country_anime: [
 		'',
-		'Япония',
-		'Япония/США',
+		'Японія',
+		'Японія/США',
 		'Корея',
 		'Китай',
-		'Другая'
+		'Інша'
 	],
 
 	// dummy
@@ -4336,7 +4383,7 @@ TPL.el_abrs = [
 	'lang_comp_vlesson_abr',
 	'type_comp_vlesson_abr',
 	'lang_notes_abr',
-	'rus_sub_abr',
+	'ukr_sub_abr',
 	'lang_video_les_abr',
 	'type_vlesson_abr',
 	'publishing_type_mob_abr',
@@ -4354,7 +4401,7 @@ function preg_quote (str) {
 
 <!-- IF EDIT_TPL -->
 TPL.build_el_attr_select = function(){
-	var s = '<select><option value="">&raquo;&raquo; Элементы формы/Названия &nbsp;</option>';
+	var s = '<select><option value="">&raquo;&raquo; Елементи форми/Назви &nbsp;</option>';
 	var q = /"/g;  //"
 	$.each(TPL.el_attr, function(name,at){
 		var v = at[1].replace(q, '&quot;');
@@ -4366,9 +4413,9 @@ TPL.build_el_attr_select = function(){
 };
 
 TPL.build_el_id_select = function(){
-	var s = '<select><option value="">&raquo;&raquo; Другие элементы &nbsp;</option>';
+	var s = '<select><option value="">&raquo;&raquo; Інші елементи &nbsp;</option>';
 	s += '<option value="`текст...`">Текст...</option>';
-	s += '<option value="`BR`">Новая строка</option>';
+	s += '<option value="`BR`">Новий рядок</option>';
 	var q = /"/g;
 	$.each(TPL.el_id, function(id,desc){
 		var v = desc.replace(q, '&quot;');
@@ -4381,7 +4428,7 @@ TPL.build_el_id_select = function(){
 
 // preview post html
 ajax.posts = function(message, res_id) {
-	$('#'+res_id).html('<i class="loading-1">загружается...</i>');
+	$('#'+res_id).html('<i class="loading-1">завантаження...</i>');
 	ajax.exec({
 		action  : 'posts',
 		type    : 'view_message',
@@ -4417,7 +4464,7 @@ ajax.topic_tpl = function(mode, params) {
 
 		case 'assign':
 			if (params.tpl_id === -1) {
-				if (!window.confirm('Отключить шаблоны в этом форуме?')) {
+				if (!window.confirm('Відключити шаблони у цьому форумі?')) {
 					return false;
 				}
 			}
@@ -4430,10 +4477,10 @@ ajax.topic_tpl = function(mode, params) {
 			break;
 
 		case 'save':
-			if (!window.confirm('Сохранить изменения для шаблона "'+ $('#tpl-name-old-save').text() +'"?')) {
+			if (!window.confirm('Зберегти зміни для шаблону "'+ $('#tpl-name-old-save').text() +'"?')) {
 				return false;
 			}
-			$('#tpl-load-resp').html('<i class="loading-1">сохраняется...</i>');
+			$('#tpl-load-resp').html('<i class="loading-1">збереження...</i>');
 			ajax.exec({
 				action        : 'topic_tpl',
 				mode          : 'save',
@@ -4449,7 +4496,7 @@ ajax.topic_tpl = function(mode, params) {
 			break;
 
 		case 'new':
-			$('#tpl-new-resp').html('<i class="loading-1">сохраняется...</i>');
+			$('#tpl-new-resp').html('<i class="loading-1">збереження...</i>');
 			ajax.exec({
 				action        : 'topic_tpl',
 				mode          : 'new',
@@ -4492,11 +4539,11 @@ ajax.callback.topic_tpl = function(data) {
 			$('#forum_tpl_select option[value='+ data.tpl_id +']').html('&nbsp;'+ data.tpl_name);
 			$('#tpl-name-old-save').html(data.tpl_name);
 			$('#tpl-last-edit-tst').val(data.timestamp);
-			$('#tpl-load-resp').html('сохранено');
+			$('#tpl-load-resp').html('Зміни успішно збережено');
 			break;
 
 		case 'new':
-			$('#tpl-new-resp').html('новый шаблон создан (в списке выбора он появится после перезагрузки страницы)');
+			$('#tpl-new-resp').html('Шаблон успішно створено (у списку він з\'явиться після перезавантаження сторінки).');
 			break;
 	}
 };
@@ -4524,7 +4571,7 @@ function tpl_fill_form ()
 			}
 		}
 		else {
-			var v = TPL.el_titles[id] || 'значение не найдено';
+			var v = TPL.el_titles[id] || 'значення не знайдено';
 			$el.val(v);
 		}
 	});
@@ -4596,8 +4643,8 @@ function tpl_submit ()
 <div class="nav">
 	<p class="floatL"><a href="{U_INDEX}">{T_INDEX}</a></p>
 	<p class="floatR">
-		<!-- IF CAN_EDIT_TPL and not EDIT_TPL --><a href="{EDIT_TPL_URL}" class="adm">Редактировать шаблон</a> &nbsp;&middot;&nbsp;<!-- ENDIF -->
-		<a href="{REGULAR_TOPIC_HREF}">Создать обычную тему</a>
+		<!-- IF CAN_EDIT_TPL and not EDIT_TPL --><a href="{EDIT_TPL_URL}" class="adm">Редагувати шаблон</a> &nbsp;&middot;&nbsp;<!-- ENDIF -->
+		<a href="{REGULAR_TOPIC_HREF}">Створити звичайну тему</a>
 	</p>
 	<div class="clear"></div>
 </div>
@@ -4617,7 +4664,7 @@ $(function(){
 <!-- IF TPL_RULES_HTML -->
 <table class="forumline">
 <tr>
-	<th>Правила оформления</th>
+	<th>Правила оформлення</th>
 </tr>
 <tr>
 	<td class="row1">
@@ -4636,7 +4683,7 @@ $(function(){
 <col class="row2" width="25%">
 <thead>
 <tr>
-	<th colspan="2">Создание шаблона для релиза</th>
+	<th colspan="2">Створення шаблону для релізу</th>
 </tr>
 </thead>
 
@@ -4669,9 +4716,9 @@ $(function(){
 	<tr>
 		<td>
 			<input type="text" id="tpl-row-src" value="" style="width: 100%;" /><br />
-			<a class="med" href="#" onclick="$('#tpl-row-src').val(''); return false;">очистить</a> &nbsp;&middot;&nbsp;
-			<a class="med" href="#" onclick="$('#tpl-src-form').val( $('#tpl-src-form').val() +'\n<-'+ $('#tpl-row-src').val() +' ->' ).focus(); return false;">добавить в форму</a> &nbsp;&middot;&nbsp;
-			<a class="med" href="#" onclick="$('#tpl-row-src').trigger('keypress', [13]).focus(); return false;" title="Нажать Enter">обновить результат (enter)</a>
+			<a class="med" href="#" onclick="$('#tpl-row-src').val(''); return false;">очистити</a> &nbsp;&middot;&nbsp;
+			<a class="med" href="#" onclick="$('#tpl-src-form').val( $('#tpl-src-form').val() +'\n<-'+ $('#tpl-row-src').val() +' ->' ).focus(); return false;">додати до форми</a> &nbsp;&middot;&nbsp;
+			<a class="med" href="#" onclick="$('#tpl-row-src').trigger('keypress', [13]).focus(); return false;" title="Нажать Enter">оновити результат (enter)</a>
 		</td>
 	</tr>
 	</table>
@@ -4687,23 +4734,23 @@ $(function(){
 		<div>
 			<div class="med">
 				<div class="floatL">форма: <a href="#tpl-help-form" class="menu-root menu-alt1">[?]</a></div>
-				<div class="floatR"><a class="adm bold" href="#" onclick="$('#rel-preview, #rel-construct').toggle(); $('#tpl-src-form').focus(); return false;">[ Конструктор/Элементы ]</a> <a href="#tpl-help-preview" class="menu-root menu-alt1">[?]</a></div>
+				<div class="floatR"><a class="adm bold" href="#" onclick="$('#rel-preview, #rel-construct').toggle(); $('#tpl-src-form').focus(); return false;">[ Конструктор/Елементи ]</a> <a href="#tpl-help-preview" class="menu-root menu-alt1">[?]</a></div>
 				<div class="clear"></div>
 			</div>
 			<textarea id="tpl-src-form" rows="16" cols="10" wrap="off" style="width: 100%"></textarea>
-			<div class="med">название: <a href="#tpl-help-title" class="menu-root menu-alt1">[?]</a></div>
+			<div class="med">назва: <a href="#tpl-help-title" class="menu-root menu-alt1">[?]</a></div>
 			<textarea id="tpl-src-title" rows="2" cols="10" style="width: 100%"></textarea>
 		</div>
 		<div style="padding-top: 2px;">
 			<div class="floatL" style="padding-top: 2px;">
-				<a id="toggle-info-a" class="adm bold" href="#" onclick="ajax.topic_tpl('toggle_info'); return false;">[ Инфо/Изменить ]</a> &nbsp;
-				<a id="toggle-new-a" class="adm bold" href="#" onclick="ajax.topic_tpl('toggle_new'); return false;">[ Создать новый ]</a> &nbsp;
-				<a class="adm bold" href="#" onclick="ajax.topic_tpl('assign', {tpl_id: -1}); return false;">[ Отключить ]</a> &nbsp;
+				<a id="toggle-info-a" class="adm bold" href="#" onclick="ajax.topic_tpl('toggle_info'); return false;">[ Інфо/Змінити ]</a> &nbsp;
+				<a id="toggle-new-a" class="adm bold" href="#" onclick="ajax.topic_tpl('toggle_new'); return false;">[ Створити новий ]</a> &nbsp;
+				<a class="adm bold" href="#" onclick="ajax.topic_tpl('assign', {tpl_id: -1}); return false;">[ Відключити ]</a> &nbsp;
 				<a href="#tpl-help-ctl" class="menu-root menu-alt1">[?]</a>
 			</div>
 			<div class="floatR">
-				<input id="tpl-build-msg-btn" type="button" value="Создать сообщение" onclick="tpl_build_msg(false);" style="display: none;" />&nbsp;
-				<input id="tpl-build-form-btn" type="button" value="Создать форму" onclick="tpl_build_form();" />&nbsp;
+				<input id="tpl-build-msg-btn" type="button" value="Створити повідомлення" onclick="tpl_build_msg(false);" style="display: none;" />&nbsp;
+				<input id="tpl-build-form-btn" type="button" value="Створити форму" onclick="tpl_build_form();" />&nbsp;
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -4711,19 +4758,19 @@ $(function(){
 		<div id="tpl-info-block" style="display: none;" class="tpl-adm-block med row3">
 			<br />
 			<fieldset>
-			<legend>Включить/Загрузить</legend>
+			<legend>Увімкнути/Завантажити</legend>
 			<div style="padding: 2px 12px 6px;">
-			Шаблоны: &nbsp;
+			Шаблони: &nbsp;
 			<!-- IF TPL_SELECT -->{TPL_SELECT} &nbsp;
-			<input type="button" value="Включить в этом форуме" class="bold" onclick="ajax.topic_tpl('assign', {tpl_id: $('#forum_tpl_select').val()})" /> &nbsp;
-			<input type="button" value="Загрузить" onclick="ajax.topic_tpl('load')" /> &nbsp;
-			<!-- ELSE -->Нет щаблонов для релизов<!-- ENDIF -->
+			<input type="button" value="Увімкнути у цьому форумі" class="bold" onclick="ajax.topic_tpl('assign', {tpl_id: $('#forum_tpl_select').val()})" /> &nbsp;
+			<input type="button" value="Завантажити" onclick="ajax.topic_tpl('load')" /> &nbsp;
+			<!-- ELSE -->Немає шаблонів для релізів<!-- ENDIF -->
 			<br /><br />
 			<span class="gen">
 			<!-- IF NO_TPL_ASSIGNED -->
-			В этом форуме шаблоны <b>не включены</b><br />
+			У цьому форумі шаблони <b>вимкнено</b><br />
 			<!-- ELSE -->
-			Сейчас в этом форуме включен шаблон <b>{TPL_NAME}</b><br />
+			Зараз у цьому форумі увімкнено шаблон <b>{TPL_NAME}</b><br />
 			<!-- ENDIF -->
 			</span>
 			</div>
@@ -4732,23 +4779,23 @@ $(function(){
 
 			<div <!-- IF NO_TPL_ASSIGNED -->style="display: none;"<!-- ENDIF --> id="tpl-save-block">
 			<fieldset>
-			<legend>Сохранить изменения для шаблона <b id="tpl-name-old-save">{TPL_NAME}</b></legend>
+			<legend>Зберегти зміни для шаблону <b id="tpl-name-old-save">{TPL_NAME}</b></legend>
 			<div style="padding: 2px 12px 6px;">
-			<div class="label">Новое название шаблона:</div>
+			<div class="label">Нова назва шаблону:</div>
 			<input type="text" id="tpl-name-save" size="60" value="{TPL_NAME}" maxlength="60" class="bold" style="width: 75%" /><br />
 
-			<div class="label"><a href="{POST_URL}{TPL_RULES_POST_ID}#{TPL_RULES_POST_ID}" id="tpl-rules-link" target="_blank">Правила</a> (ссылка на сообщение с правилами или номер сообщения):</div>
+			<div class="label"><a href="{POST_URL}{TPL_RULES_POST_ID}#{TPL_RULES_POST_ID}" id="tpl-rules-link" target="_blank">Правила</a> (посилання на повідомлення із правилами або номер повідомлення):</div>
 			<input type="text" id="tpl-rules-save" size="60" value="{TPL_RULES_POST_ID}" style="width: 75%" /><br />
 
-			<div class="label">Комментарий:</div>
+			<div class="label">Коментар:</div>
 			<textarea id="tpl-comment-save" rows="2" cols="80" class="editor" style="width: 90%">{TPL_COMMENT}</textarea>
 
-			<div class="label">Последний раз редактировалось: <i id="tpl-last-edit-time">{TPL_LAST_EDIT_TIME}</i> by <b id="tpl-last-edit-by">{TPL_LAST_EDIT_USER}</b></div>
+			<div class="label">Востаннє редаговано: <i id="tpl-last-edit-time">{TPL_LAST_EDIT_TIME}</i> користувачем <b id="tpl-last-edit-by">{TPL_LAST_EDIT_USER}</b></div>
 			<br />
 
 			<input type="hidden" id="tpl-id-save" value="{TPL_ID}">
 			<input type="hidden" id="tpl-last-edit-tst" value="{TPL_LAST_EDIT_TIMESTAMP}">
-			<input type="button" class="bold" value="Сохранить изменения" onclick="ajax.topic_tpl('save')" />
+			<input type="button" class="bold" value="Зберегти зміни" onclick="ajax.topic_tpl('save')" />
 			<br />
 			</div>
 			</fieldset>
@@ -4758,16 +4805,16 @@ $(function(){
 		</div>
 
 		<div id="tpl-new-block" style="display: none;" class="tpl-adm-block med row3">
-			<div class="label">Название шаблона: *</div>
+			<div class="label">Назва шаблону: *</div>
 			<input type="text" id="tpl-name-new" size="60" value="" maxlength="60" class="bold" style="width: 75%" /><br />
 
-			<div class="label">Правила (ссылка на сообщение с правилами или номер сообщения):</div>
+			<div class="label">Правила (посилання на повідомлення з правилами чи номер повідомлення):</div>
 			<input type="text" id="tpl-rules-new" size="60" value="" style="width: 75%" /><br />
 
-			<div class="label">Комментарий:</div>
+			<div class="label">Коментар:</div>
 			<textarea id="tpl-comment-new" rows="2" cols="10" class="editor" style="width: 100%"></textarea><br />
 
-			<input type="button" class="bold" value="Создать новый шаблон" onclick="ajax.topic_tpl('new');" /><br /><br />
+			<input type="button" class="bold" value="Створити новий шаблон" onclick="ajax.topic_tpl('new');" /><br /><br />
 			<div id="tpl-new-resp"></div>
 		</div>
 	</div>
@@ -4775,7 +4822,7 @@ $(function(){
 	<td valign="top">
 	<div style="width: 98%">
 		<div>
-			<p class="med">сообщение: <a href="#tpl-help-msg" class="menu-root menu-alt1">[?]</a></p>
+			<p class="med">повідомлення: <a href="#tpl-help-msg" class="menu-root menu-alt1">[?]</a></p>
 			<textarea id="tpl-src-msg" rows="20" cols="10" wrap="off" class="editor" style="width: 100%"></textarea>
 			<div id="msg-attr-list" class="pad_4 med"></div>
 		</div>
@@ -4785,14 +4832,14 @@ $(function(){
 </tbody>
 
 <tbody id="preview-block" style="display: none;">
-<tr><td colspan="2" class="row3">результат [ <a class="med" href="#" onclick="$('#preview-block').hide(); return false;">скрыть</a> ]</td></tr>
+<tr><td colspan="2" class="row3">результат [ <a class="med" href="#" onclick="$('#preview-block').hide(); return false;">сховати</a> ]</td></tr>
 <tr>
 	<td colspan="2">
 	<div style="width: 99%">
 		<div><input type="text" id="preview-title" size="60" value="" class="bold" style="width: 100%" /></div>
 		<div><textarea id="preview-msg" rows="15" cols="10" wrap="off" class="editor" style="width: 100%"></textarea></div>
 		<div class="tCenter">
-			<input type="button" value="Создать HTML" onclick="ajax.posts( $('#preview-msg').val(), 'preview-html-body' );" class="bold" />
+			<input type="button" value="Створити HTML" onclick="ajax.posts( $('#preview-msg').val(), 'preview-html-body' );" class="bold" />
 		</div>
 	</div>
 	</td>
@@ -4807,14 +4854,14 @@ $(function(){
 <tfoot>
 <tr>
 	<td colspan="2">
-	<div class="tRight med">[ <u class="clickable" onclick="$('#tpl-howto').toggle();">Инструкция</u> ]</div>
+	<div class="tRight med">[ <u class="clickable" onclick="$('#tpl-howto').toggle();">Інструкція</u> ]</div>
 	<div id="tpl-howto" class="med pad_12" style="display: none;">
-	После заполнения поля <i>форма</i> нажмите кнопку <i>Создать форму</i><br /><br />
-	В поле <i>сообщение</i> добавьте элементам необходимые атрибуты (req, spoiler и т.д.)<br /><br />
-	Заполните созданную форму (вручную либо автозаполнителем)<br /><br />
-	Кнопки <i>Продолжить</i> и <i>Создать сообщение</i> создают ббкод сообщения<br /><br />
-	Кнопка <i>Создать HTML</i> - создает HTML сообщения<br /><br />
-	Заполните поле <i>название</i>
+	Після заповнення поля <i>Форма</i> натисніть кнопку <i>Створити форму</i><br /><br />
+	У полі <i>Повідомлення</i> додайте до елементів необхідні атрибути (req, spoiler тощо)<br /><br />
+	Заповніть створену форму (вручну або автозаповненням)<br /><br />
+	Кнопки <i>Продовжити</i> та <i>Створити повідомлення</i> створюють BB-код повідомлення<br /><br />
+	Кнопка <i>Створити HTML</i> створює HTML повідомлення<br /><br />
+	Заповніть поле <i>Назва</i>
 	</div>
 	</td>
 </tr>
@@ -4838,22 +4885,22 @@ $(function(){
 <col class="row2" width="80%">
 <thead>
 <tr>
-	<th colspan="2">Заполните форму для релиза<!-- IF EDIT_TPL --> &nbsp; [ <u class="clickable" onclick="tpl_fill_form();">Заполнить</u> ]<!-- ENDIF --></th>
+	<th colspan="2">Заповніть форму для релізу<!-- IF EDIT_TPL --> &nbsp; [ <u class="clickable" onclick="tpl_fill_form();">Заповнити</u> ]<!-- ENDIF --></th>
 </tr>
 </thead>
 <tbody id="rel-tpl">
 </tbody>
 <tfoot>
 <tr>
-	<td colspan="2" class="pad_8 tCenter bold">На следующей странице проверьте оформление и загрузите torrent файл</td>
+	<td colspan="2" class="pad_8 tCenter bold">На наступній сторінці перевірте правильність оформлення і додайте torrent-файл</td>
 </tr>
 <tr>
 	<td class="catBottom" colspan="2">
 		<!-- IF EDIT_TPL -->
-		<input type="button" value="Заполнить" style="width: 120px;" onclick="tpl_fill_form();" />&nbsp;&nbsp;
-		<input type="button" value="Продолжить" class="bold" style="width: 150px;" onclick="tpl_build_msg(true);" />
+		<input type="button" value="Заповнити" style="width: 120px;" onclick="tpl_fill_form();" />&nbsp;&nbsp;
+		<input type="button" value="Продовжити" class="bold" style="width: 150px;" onclick="tpl_build_msg(true);" />
 		<!-- ELSE -->
-		<input type="button" value="Продолжить" class="bold" style="width: 150px;" onclick="tpl_submit(true);" />
+		<input type="button" value="Продовжити" class="bold" style="width: 150px;" onclick="tpl_submit(true);" />
 		<!-- ENDIF -->
 	</td>
 </tr>
@@ -4863,81 +4910,81 @@ $(function(){
 
 <!-- IF EDIT_TPL -->
 <div id="tpl-help-form" class="menu-sub tpl-help-msg" style="width: 800px;">
-	<h4>Скрипт для построения формы</h4>
+	<h4>Скрипт для побудови форми</h4>
 	<br />
-	Формат: <b class="hlp-1">&lt;-</b><b>название_строки_формы</b> &nbsp; <b>элементы</b><b class="hlp-1">-&gt;</b>
+	Формат: <b class="hlp-1">&lt;-</b><b>назва_рядка_форми</b> &nbsp; <b>елементи</b><b class="hlp-1">-&gt;</b>
 	<br /><br />
-	Каждый элемент задается в виде: <b class="hlp-1">ТИП</b>[<b>имя_элемента</b>,<b class="hlp-2">опциональные_атрибуты</b>]
+	Кожен елемент задається у вигляді: <b class="hlp-1">ТИП</b>[<b>назва_елемента</b>,<b class="hlp-2">необов'язкові_параметри</b>]
 	<br /><br />
-	<b>INP</b> - однострочное поле для ввода текста, опционально можно указать количество вводимых символов и ширину поля<br />
-	<b>INP[genre,200,70]</b> - можно ввести максимум 200 символов, ширина поля 70 символов (ширину больше 80-ти делать не нужно)
+	<b>INP</b> - однорядкове поле для вводу тексту, додатково можна вказати максимальну кількість символів та ширину поля<br />
+	<b>INP[genre,200,70]</b> - можна ввести максимум 200 символів, ширина поля 70 символів (ширину більшою 80-ти робити не потрібно)
 	<br /><br />
-	<b>TXT</b> - многострочное поле для ввода текста, опционально можно указать высоту<br />
-	<b>TXT[casting,10]</b> - высота поля будет 10 строк
+	<b>TXT</b> - багаторядкове поле для вводу тексту, додатково можна вказати висоту<br />
+	<b>TXT[casting,10]</b> - висота поля буде 10 рядків
 	<br /><br />
-	<b>SEL</b> - раскрывающийся список с выбором<br />
+	<b>SEL</b> - випадний список із вибором<br />
 	<b>SEL[video_quality]</b>
 	<br /><br />
-	<b>E</b> - статичный либо скрытый элемент (обычно не имеющий названия и не являющийся полем ввода текста)<br />
-	<b>E[load_pic_btn]</b> - кнопка загрузки картинки
+	<b>E</b> - статичний або прихований елемент (зазвичай не має назви і не є полем вводу тексту)<br />
+	<b>E[load_pic_btn]</b> - кнопка завантаження зображення
 	<br /><br />
-	<b>T</b> - вставляет только название элемента<br />
-	<b>T[rus_sub]</b> - добавляет в форму название элемента <b>Русские субтитры</b>
+	<b>T</b> - вставляє лише назву елемента<br />
+	<b>T[ukr_sub]</b> - додає до форми назву елемента <b>Українські субтитри</b>
 	<br /><br />
-	<b class="hlp-2">`</b><b class="hlp-1">текст...</b><b class="hlp-2">`</b> - любой текст и спец. элементы типа `BR` (добавить перевод строки)<br />
-	<b class="hlp-2">`</b>на русском<b class="hlp-2">`</b> - добавляет в форму текст <i>на русском</i>
+	<b class="hlp-2">`</b><b class="hlp-1">текст...</b><b class="hlp-2">`</b> - будь-який текст та спец. елементи типу `BR` (перехід на новий рядок)<br />
+	<b class="hlp-2">`</b>українською<b class="hlp-2">`</b> - додає до форми текст <i>українською</i>
 </div>
 
 <div id="tpl-help-title" class="menu-sub tpl-help-msg" style="width: 800px;">
-	<h4>Скрипт для построения названия топика</h4>
+	<h4>Скрипт для побудови назви релізу</h4>
 	<br />
-	Формат: <b class="hlp-1">&lt;-</b><b>группа элементов</b><b class="hlp-1">-&gt;</b><b class="hlp-2">объединитель для этой группы</b>
+	Формат: <b class="hlp-1">&lt;-</b><b>група елементів</b><b class="hlp-1">-&gt;</b><b class="hlp-2">розділювач для цієї групи</b>
 	<br /><br />
-	пример:<br />
+	наприклад:<br />
 	<p class="gen bold pad_8">
-		<b class="hlp-1">&lt;-</b>title_rus title_eng<b class="hlp-1">-&gt;</b><b class="hlp-2">/</b>
+		<b class="hlp-1">&lt;-</b>title_ukr title_eng<b class="hlp-1">-&gt;</b><b class="hlp-2">/</b>
 		<b class="hlp-1">&lt;-</b>director year<b class="hlp-1">-&gt;</b><b class="hlp-2">(,)</b>
 		<b class="hlp-1">&lt;-</b>genre video_quality<b class="hlp-1">-&gt;</b><b class="hlp-2">[,]</b>
 	</p>
-	создаст:<br />
+	створить:<br />
 	<p class="gen bold pad_8">
-		Название <b class="hlp-2">/</b> Оригинальное название
-		<b class="hlp-2">(</b>Режиссер<b class="hlp-2">,</b> 2000 г.<b class="hlp-2">)</b>
+		Назва <b class="hlp-2">/</b> Оригінальна назва
+		<b class="hlp-2">(</b>Режисер<b class="hlp-2">,</b> 2000 р.<b class="hlp-2">)</b>
 		<b class="hlp-2">[</b>Жанр<b class="hlp-2">,</b> DVDRip<b class="hlp-2">]</b>
 	</p>
 </div>
 
 <div id="tpl-help-msg" class="menu-sub tpl-help-msg" style="width: 600px;">
-	<h4>Скрипт для построения сообщения</h4>
+	<h4>Скрипт для побудови повідомлення</h4>
 	<br />
-	Формат: <b>имя_элемента</b>[<i>атрибут1,атрибут2</i>]
+	Формат: <b>назва_елемента</b>[<i>атрибут1,атрибут2</i>]
 	<br /><br />
-	При создании формы (кнопка <i>Создать форму</i> и при построении того что видит юзер)
-	этот скрипт каждый раз проверяется на соответстие элементам формы. При этом отсутствующие в форме элементы из него удаляются,
-	а прописанные в форме, но в нем не найденные, добавляются.
+	При створенні форми (кнопка <i>Створити форму</i> і при побудові того, що бачить користувач)
+	цей скрипт щоразу перевіряє на відповідність елементи форми. При цьому відсутні у формі елементи з нього видаляються,
+	а написані у формі, але в ньому відсутні, додаються.
 	<br /><br />
-	Порядок элементов зависит от того как они прописаны в форме
+	Порядок елементів залежить від того, як вони прописані у формі.
 	<br /><br />
-	Описание атрибутов - во всплывающей подсказке (наведите мышку на любой атрибут в списке снизу)
+	Опис атрибутів міститься у виринаючій підказці (наведіть мишею на будь-який атрибут у списку знизу)
 </div>
 
 <div id="tpl-help-preview" class="menu-sub tpl-help-msg" style="width: 400px;">
-	<h4>Конструктор и предпросмотр элементов</h4>
+	<h4>Конструктор і попередній перегляд елементів</h4>
 	<br />
-	В IE часть функций не работает!
+	В IE частина функцій не працює!
 	<br /><br />
-	Подставляет в строку конструктора текущую строку из формы<br />
-	В конструкторе для обновления предпросмотра нужно нажать enter<br />
-	Скрытые элементы выделены красным цветом<br />
+	Підставляє в рядок конструктора поточний рядок із форми.<br />
+	У конструкторі для оновления попереднього перегляду слід натиснути enter.<br />
+	Приховані елементи виділені червоним кольором.<br />
 </div>
 
 <div id="tpl-help-ctl" class="menu-sub tpl-help-msg" style="width: 400px;">
-	Клик по <b class="adm">[ Инфо/Изменить ]</b> открывает/закрывает окно опций (так же работают другие кнопки)
+	Кнопка <b class="adm">[ Інфо/Змінити ]</b> відкриває/закриває вікно опцій (так само працюють інші кнопки)
 </div>
 <!-- ENDIF -->
 
 <div style="display: none;">
-	<!-- TPL.el_id элементы, для E[el] в форму подставляется $(el).html() -->
+	<!-- TPL.el_id елементи, для E[el] в форму подставляется $(el).html() -->
 	<div id="tpl-abr-box"></div>
 	<script type="text/javascript">
 	$(function(){
@@ -4961,41 +5008,41 @@ $(function(){
 <!-- pictures (knopKI) -->
 
 <!--load_pic_btn-->
-<div id="load_pic_btn"><input type="button" style="width: 140px;" value="Загрузить картинку" onclick="window.open('http://fastpic.ru', '_blank'); return false;" /></div>
+<div id="load_pic_btn"><input type="button" style="width: 140px;" value="Завантажити зображення" onclick="window.open('http://fastpic.ru', '_blank'); return false;" /></div>
 <!--/load_pic_btn-->
 
 <!-- knopIKI (urls) -->
 
 <!--load_pic_faq_url-->
-<div id="load_pic_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=101116" target="_blank"><b>Как залить картинку на бесплатный хост</b></a> </div>
+<div id="load_pic_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=101116" target="_blank"><b>Як завантажити зображення на безкоштовний хостинг</b></a> </div>
 <!--/load_pic_faq_url-->
 
 <!--manga_type_faq_url-->
-<div id="manga_type_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=2168864#types" target="_blank"><b>Подробнее о типах</b></a> </div>
+<div id="manga_type_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=2168864#types" target="_blank"><b>Детальніше про типи</b></a> </div>
 <!--/manga_type_faq_url-->
 
 <!--make_screenlist_faq_url-->
-<div id="make_screenlist_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=48687" target="_blank"><b>Как сделать скриншот / скринлист</b></a> </div>
+<div id="make_screenlist_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=48687" target="_blank"><b>Як зробити скріншот / скрінліст</b></a> </div>
 <!--/make_screenlist_faq_url-->
 
 <!--translation_rules_faq_url-->
-<div id="translation_rules_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=33482343#33482343" target="_blank"><b>Правила обозначения переводов</b></a> </div>
+<div id="translation_rules_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=33482343#33482343" target="_blank"><b>Правила позначення перекладів</b></a> </div>
 <!--/translation_rules_faq_url-->
 
 <!--make_sample_faq_url-->
-<div id="make_sample_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=8415" target="_blank"><b>Как сделать сэмпл видео</b></a> </div>
+<div id="make_sample_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=8415" target="_blank"><b>Як зробити семпл відео</b></a> </div>
 <!--/make_sample_faq_url-->
 
 <!--dvd_reqs_faq_url-->
-<div id="dvd_reqs_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=27157356#descr" target="_blank"><b>Требования и примеры для DVD</b></a> </div>
+<div id="dvd_reqs_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=27157356#descr" target="_blank"><b>Вимоги і приклади для DVD</b></a> </div>
 <!--/dvd_reqs_faq_url-->
 
 <!--hd_reqs_faq_url-->
-<div id="hd_reqs_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=2277258#53" target="_blank"><b>Требования и примеры для HD</b></a> </div>
+<div id="hd_reqs_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=2277258#53" target="_blank"><b>Вимоги і приклади для HD</b></a> </div>
 <!--/hd_reqs_faq_url-->
 
 <!--videofile_info_faq_url-->
-<div id="videofile_info_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=48686" target="_blank"><b>Как получить информацию о видео файле</b></a> </div>
+<div id="videofile_info_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=48686" target="_blank"><b>Як отримати інформацію про відеофайл</b></a> </div>
 <!--/videofile_info_faq_url-->
 
 <!--bdinfo_faq_url-->
@@ -5007,31 +5054,31 @@ $(function(){
 <!--/dvdinfo_faq_url-->
 
 <!--make_poster_faq_url-->
-<div id="make_poster_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=1381634" target="_blank"><b>Инструкция по изготовлению постера</b></a> </div>
+<div id="make_poster_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=1381634" target="_blank"><b>Інструкція із виготовлення постера</b></a> </div>
 <!--/make_poster_faq_url-->
 
 <!--pred_alt1_faq_url-->
-<div id="pred_alt1_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=648002#8" target="_blank"><b>О ссылках на предыдущие и альтернативные раздачи</b></a> </div>
+<div id="pred_alt1_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=648002#8" target="_blank"><b>Про посилання на попередні та альтернативні роздачі</b></a> </div>
 <!--/pred_alt1_faq_url-->
 
 <!--quality_decl_faq_url-->
-<div id="quality_decl_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=27840514#27840514" target="_blank"><b>об обозначениях качества</b></a> </div>
+<div id="quality_decl_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=27840514#27840514" target="_blank"><b>про позначення якості</b></a> </div>
 <!--/quality_decl_faq_url-->
 
 <!--pred_alt2_faq_url-->
-<div id="pred_alt2_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=4960586#4960586" target="_blank"><b>О ссылках на предыдущие и альтернативные раздачи</b></a> </div>
+<div id="pred_alt2_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=4960586#4960586" target="_blank"><b>Про посилання на попередні та альтернативні роздачі</b></a> </div>
 <!--/pred_alt2_faq_url-->
 
 <!--pred_alt3_faq_url-->
-<div id="pred_alt3_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=6734641#6734641" target="_blank"><b>О ссылках на предыдущие и альтернативные раздачи</b></a> </div>
+<div id="pred_alt3_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?p=6734641#6734641" target="_blank"><b>Про посилання на попередні та альтернативні роздачі</b></a> </div>
 <!--/pred_alt3_faq_url-->
 
 <!--pred_alt4_faq_url-->
-<div id="pred_alt4_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=460883#8" target="_blank"><b>О ссылках на предыдущие и альтернативные раздачи</b></a> </div>
+<div id="pred_alt4_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=460883#8" target="_blank"><b>Про посилання на попередні та альтернативні роздачі</b></a> </div>
 <!--/pred_alt4_faq_url-->
 
 <!--dvdinfo_faq_url-->
-<div id="dvdinfo_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=101263" target="_blank"><b>Как получить информацию о DVD-Video</b></a> </div>
+<div id="dvdinfo_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=101263" target="_blank"><b>Як отримати інформацію про DVD-Video</b></a> </div>
 <!--/dvdinfo_faq_url-->
 
 <!--tyt_faq_url-->
@@ -5039,23 +5086,23 @@ $(function(){
 <!--/tyt_faq_url-->
 
 <!--wtf_faq_url-->
-<div id="wtf_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=488848#other" target="_blank"><b>Что это значит?</b></a> </div>
+<div id="wtf_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=488848#other" target="_blank"><b>Що це означає?</b></a> </div>
 <!--/wtf_faq_url-->
 
 <!--faq_catalog-->
-<div id="faq_catalog"> <a href="http://rutracker.org/forum/viewtopic.php?t=1123827#3" target="_blank"><b>инструкция.</b></a> </div>
+<div id="faq_catalog"> <a href="http://rutracker.org/forum/viewtopic.php?t=1123827#3" target="_blank"><b>інструкція</b></a> </div>
 <!--/faq_catalog-->
 
 <!--faq_pops-->
-<div id="faq_pops"> <a href="http://rutracker.org/forum/viewtopic.php?t=1077368" target="_blank"><b>Что такое Popsloader?</b></a> </div>
+<div id="faq_pops"> <a href="http://rutracker.org/forum/viewtopic.php?t=1077368" target="_blank"><b>Що таке Popsloader?</b></a> </div>
 <!--/faq_pops-->
 
 <!--faq_code-->
-<div id="faq_code"> <a href="http://rutracker.org/forum/viewtopic.php?p=24015560#24015560" target="_blank"><b>Как узнать код диcка?</b></a> </div>
+<div id="faq_code"> <a href="http://rutracker.org/forum/viewtopic.php?p=24015560#24015560" target="_blank"><b>Як дізнатися код диcка?</b></a> </div>
 <!--/faq_code-->
 
 <!--faq_code_PS-->
-<div id="faq_code_PS"> <a href="http://rutracker.org/forum/viewtopic.php?p=40704481#40704481" target="_blank"><b>Как узнать код диcка?</b></a> </div>
+<div id="faq_code_PS"> <a href="http://rutracker.org/forum/viewtopic.php?p=40704481#40704481" target="_blank"><b>Як дізнатися код диcка?</b></a> </div>
 <!--/faq_code_PS-->
 
 <!--faq_pegi-->
@@ -5063,43 +5110,43 @@ $(function(){
 <!--/faq_pegi-->
 
 <!--faq_screen_psp-->
-<div id="faq_screen_psp"> <a href="http://rutracker.org/forum/viewtopic.php?t=457909" target="_blank"><b>Как сделать скриншоты с PSP</b></a> </div>
+<div id="faq_screen_psp"> <a href="http://rutracker.org/forum/viewtopic.php?t=457909" target="_blank"><b>Як зробити скріншоти з PSP</b></a> </div>
 <!--/faq_screen_psp-->
 
 <!--dvdinfo_faq_ur_2l-->
-<div id="dvdinfo_faq_url_2"> <a href="http://www.cinemasquid.com/blu-ray/tools/dvdinfo" target="_blank"><b>Как получить информацию о DVD Video файле</b></a></div>
+<div id="dvdinfo_faq_url_2"> <a href="http://www.cinemasquid.com/blu-ray/tools/dvdinfo" target="_blank"><b>Як отримати інформацію про DVD-Video файл</b></a></div>
 <!--/dvdinfo_faq_url_2-->
 
 <!--quality_faq-->
-<div id="quality_faq"> <a href="http://rutracker.org/forum/viewtopic.php?t=2198792" target="_blank"><b>Обозначение качества видео</b></a></div>
+<div id="quality_faq"> <a href="http://rutracker.org/forum/viewtopic.php?t=2198792" target="_blank"><b>Позначення якості відео</b></a></div>
 <!--/quality_faq-->
 
 <!--comparison_anime-->
-<div id="comparison_anime"> <a href="http://rutracker.org/forum/viewtopic.php?t=1907922#4" target="_blank"><b>Сравнения с другими раздачами.</b></a></div>
+<div id="comparison_anime"> <a href="http://rutracker.org/forum/viewtopic.php?t=1907922#4" target="_blank"><b>Порівняння з іншими роздачами.</b></a></div>
 <!--/comparison_anime-->
 
 <!--file_list-->
-<div id="file_list"> <a href="http://rutracker.org/forum/viewtopic.php?p=21307338#21307338" target="_blank"><b>Как создать список файлов?</b></a></div>
+<div id="file_list"> <a href="http://rutracker.org/forum/viewtopic.php?p=21307338#21307338" target="_blank"><b>Як створити список файлів?</b></a></div>
 <!--/file_list-->
 
 <!--faq_traclist-->
-<div id="faq_traclist"> <a href="http://rutracker.org/forum/viewtopic.php?t=2525182" target="_blank"><b>Как быстро создать треклист с указанием битрейта</b></a></div>
+<div id="faq_traclist"> <a href="http://rutracker.org/forum/viewtopic.php?t=2525182" target="_blank"><b>Як швидко створити трекліст із зазначенням бітрейту?</b></a></div>
 <!--/faq_traclist-->
 
 <!--faq_isbn-->
-<div id="faq_isbn"> <a href="http://rutracker.org/forum/viewtopic.php?t=2083213" target="_blank"><b>Что такое ISBN/ISSN?</b></a> </div>
+<div id="faq_isbn"> <a href="http://rutracker.org/forum/viewtopic.php?t=2083213" target="_blank"><b>Що таке ISBN/ISSN?</b></a> </div>
 <!--/faq_isbn-->
 
 <!--faq_scrn_books-->
-<div id="faq_scrn_books"> <a href="http://rutracker.org/forum/viewtopic.php?t=1566885" target="_blank"><b>Как сделать примеры страниц (скриншоты) для раздачи?</b></a> </div>
+<div id="faq_scrn_books"> <a href="http://rutracker.org/forum/viewtopic.php?t=1566885" target="_blank"><b>Як зробити приклади сторінок (скріншоти) для роздачі?</b></a> </div>
 <!--/faq_scrn_books-->
 
 <!--faq_ps_image-->
-<div id="faq_ps_image"> <a href="http://rutracker.org/forum/viewtopic.php?t=3893250" target="_blank"><b>FAQ по снятию образа для Ps1</b></a> </div>
+<div id="faq_ps_image"> <a href="http://rutracker.org/forum/viewtopic.php?t=3893250" target="_blank"><b>FAQ зі зняття образу для Ps1</b></a> </div>
 <!--/faq_ps_image-->
 
 <!--faq_mac_scrn-->
-<div id="faq_mac_scrn"> <a href="http://rutracker.org/forum/viewtopic.php?t=1749166" target="_blank"><b>Создание скриншотов в Mac OS</b></a> </div>
+<div id="faq_mac_scrn"> <a href="http://rutracker.org/forum/viewtopic.php?t=1749166" target="_blank"><b>Створення скріншотів у Mac OS</b></a> </div>
 <!--/faq_mac_scrn-->
 
 <!--test_dash-->
@@ -5115,11 +5162,11 @@ $(function(){
 <!--/psp_psx-->
 
 <!--series-->
-<input type="hidden" id="series" value="Серии:">
+<input type="hidden" id="series" value="Серії:">
 <!--/series-->
 
 <!--series_of-->
-<input type="hidden" id="series_of" value="из">
+<input type="hidden" id="series_of" value="із">
 <!--/series_of-->
 
 <!--season-->
@@ -5130,9 +5177,9 @@ $(function(){
 <input type="hidden" id="point" value=",">
 <!--/point-->
 
-<!--d_rus-->
-<input type="hidden" id="d_rus" value="в 3Д /">
-<!--/d_rus-->
+<!--d_ukr-->
+<input type="hidden" id="d_ukr" value="у 3Д /">
+<!--/d_ukr-->
 
 <!--d_eng-->
 <input type="hidden" id="d_eng" value="3D">
@@ -5147,11 +5194,11 @@ $(function(){
 <!--/Dreamcast-->
 
 <!--genre_faq_url-->
-<div id="genre_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=2090617" target="_blank"><b>Как определить жанр</b></a> </div>
+<div id="genre_faq_url"> <a href="http://rutracker.org/forum/viewtopic.php?t=2090617" target="_blank"><b>Як визначити жанр?</b></a> </div>
 <!--/genre_faq_url-->
 
 <!--faq_game-->
-<div id="faq_game"> <a href="http://rutracker.org/forum/viewtopic.php?t=2706502" target="_blank"><b>Превью</b></a> </div>
+<div id="faq_game"> <a href="http://rutracker.org/forum/viewtopic.php?t=2706502" target="_blank"><b>Попередній перегляд</b></a> </div>
 <!--/faq_game-->
 
 <!--number-->
@@ -5166,4 +5213,4 @@ $(function(){
 	<textarea id="tpl-src-msg-val" rows="10" cols="10">{TPL_SRC_MSG_VAL}</textarea>
 </div>
 
-<noscript><div class="warningBox2 bold tCenter">Для показа необходимo включить JavaScript</div></noscript>
+<noscript><div class="warningBox2 bold tCenter">Для відображення шаблонів слід увімкнути JavaScript</div></noscript>
