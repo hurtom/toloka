@@ -35,7 +35,15 @@ sudo apt-get -y install docker-ce
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.13.0/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
 ```
+4. Користування командами docker без прав адміністратора (опціонально)
 
+  - Необхідно додати користувача у групу _docker_
+    
+```
+ sudo usermod -aG docker $(whoami) 
+```
+
+   - Щоб зміни вступили в силу, необхідно перезайти
 ### macOS
 
 1. Встановіть [brew](https://brew.sh/)
